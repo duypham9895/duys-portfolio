@@ -1,0 +1,18 @@
+---
+import { personal } from "../data/personal";
+---
+
+<footer class="fade-in text-center py-8 mt-4 border-t border-white/[0.04]">
+  <p class="text-sm text-[#a1a1aa] mb-3">
+    Interested in working together?
+  </p>
+  <a
+    href={`mailto:${personal.contact.email}`}
+    class="text-primary hover:underline text-sm font-medium"
+  >
+    {personal.contact.email}
+  </a>
+  <p class="text-[11px] text-[#52525b] mt-6">
+    Built with Astro &middot; {new Date().getFullYear()}
+  </p>
+</footer>

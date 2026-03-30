@@ -1,0 +1,26 @@
+---
+import { skillGroups } from "../data/skills";
+---
+
+<div class="card fade-in" id="skills">
+  <h2 class="section-label">Skills</h2>
+  <div class="space-y-[18px]">
+    {skillGroups.map((group) => (
+      <div>
+        <p class="text-[11px] text-[#71717a] mb-2.5 uppercase tracking-[1.5px] font-medium">
+          {group.category}
+        </p>
+        <div class="flex flex-wrap gap-2">
+          {group.skills.map((skill) => (
+            <span class:list={["skill-tag", { primary: skill.primary }]}>
+              {skill.icon && (
+                <img src={skill.icon} alt={skill.title} width="16" height="16" class="w-4 h-4" loading="lazy" />
+              )}
+              {skill.title}
+            </span>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

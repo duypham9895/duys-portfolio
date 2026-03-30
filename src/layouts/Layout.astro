@@ -1,0 +1,81 @@
+---
+import "../styles/global.css";
+import Sidebar from "../components/Sidebar.astro";
+import { personal } from "../data/personal";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0a0a0b" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content="https://duypham.me/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": personal.fullName,
+      "url": "https://duypham.me",
+      "jobTitle": personal.title,
+      "email": personal.contact.email,
+      "sameAs": personal.socials.map(s => s.url),
+    })} />
+  </head>
+  <body>
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg"
+    >
+      Skip to content
+    </a>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-5 max-w-[1160px] mx-auto px-6 py-6 pb-16 min-h-screen">
+      <Sidebar />
+      <main id="main-content" class="grid grid-cols-1 md:grid-cols-2 gap-4 content-start">
+        <slot />
+      </main>
+    </div>
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.05, rootMargin: "50px" }
+      );
+
+      document.querySelectorAll(".fade-in").forEach((el, i) => {
+        (el as HTMLElement).style.transitionDelay = `${Math.min(i * 100, 300)}ms`;
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>

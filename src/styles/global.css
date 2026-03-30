@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#0a0a0b] text-[#fafafa] antialiased;
+  }
+
+  /* Focus-visible for keyboard navigation */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white/[0.025] border border-white/[0.06] rounded-[20px] p-7
+           transition-all duration-300 ease-out;
+  }
+
+  .card:hover {
+    @apply border-white/[0.12] -translate-y-[2px] shadow-[0_4px_24px_rgba(0,0,0,0.3)];
+  }
+
+  .section-label {
+    @apply text-[11px] uppercase tracking-[2.5px] text-primary font-semibold mb-4;
+  }
+
+  .social-icon {
+    @apply w-[44px] h-[44px] rounded-[14px] bg-white/[0.04] border border-white/[0.07]
+           flex items-center justify-center text-[#a1a1aa] text-xs font-medium
+           transition-all duration-200 cursor-pointer;
+  }
+
+  .social-icon:hover {
+    @apply bg-primary/10 border-primary/20 text-primary;
+  }
+
+  .skill-tag {
+    @apply bg-white/[0.04] border border-white/[0.07] px-4 py-2 rounded-[10px]
+           text-xs text-[#d4d4d8] transition-all duration-200 flex items-center gap-2;
+  }
+
+  .skill-tag:hover {
+    @apply bg-primary/[0.08] border-primary/20 text-primary;
+  }
+
+  .skill-tag.primary {
+    @apply bg-primary/[0.08] border-primary/[0.18] text-primary;
+  }
+
+  /* Scroll animation */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
