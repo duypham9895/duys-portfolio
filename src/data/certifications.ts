@@ -10,13 +10,13 @@ export const certifications: readonly Certification[] = [
     name: "Certificate of Completion: Claude 101",
     organization: "Anthropic",
     date: "Mar 2026",
-    credentialUrl: "https://www.linkedin.com/in/phamanhduy/details/certifications/",
+    credentialUrl: "https://verify.skilljar.com/c/jz4vxd8txn3d",
   },
   {
     name: "Product Management: An Introduction",
     organization: "Coursera",
     date: "Mar 2025",
-    credentialUrl: "https://www.coursera.org/account/accomplishments/certificate/M0LM18T2RR2G",
+    credentialUrl: "https://www.coursera.org/account/accomplishments/verify/M0LM18T2RR2G",
   },
   {
     name: "Go: The Complete Developer's Guide (Golang)",
