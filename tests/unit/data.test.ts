@@ -104,8 +104,8 @@ describe("skills data", () => {
 });
 
 describe("certifications data", () => {
-  it("has 4 certifications", () => {
-    expect(certifications).toHaveLength(4);
+  it("has 6 certifications", () => {
+    expect(certifications).toHaveLength(6);
   });
 
   it("each cert has required fields", () => {

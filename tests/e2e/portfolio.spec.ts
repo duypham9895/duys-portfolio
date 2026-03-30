@@ -49,7 +49,7 @@ test.describe("Portfolio page", () => {
 
   test("has Certifications section", async ({ page }) => {
     await expect(page.locator("#certs")).toBeVisible();
-    await expect(page.locator("#certs a")).toHaveCount(4);
+    await expect(page.locator("#certs a")).toHaveCount(6);
   });
 
   test("social links are present and valid", async ({ page }) => {
