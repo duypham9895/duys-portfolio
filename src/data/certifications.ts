@@ -7,6 +7,12 @@ export interface Certification {
 
 export const certifications: readonly Certification[] = [
   {
+    name: "Product Management: Foundations & Stakeholder Collaboration",
+    organization: "Coursera",
+    date: "Apr 2026",
+    credentialUrl: "https://www.coursera.org/account/accomplishments/records/91QLZM797KP2",
+  },
+  {
     name: "Certificate of Completion: Claude 101",
     organization: "Anthropic",
     date: "Mar 2026",
