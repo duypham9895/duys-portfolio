@@ -35,5 +35,5 @@ export const personal: Personal = {
     { title: "Telegram", url: "https://t.me/phamanhduy", icon: "telegram" },
     { title: "Zalo", url: "https://zalo.me/0963769049", icon: "zalo" },
   ],
-  resumeUrl: "",
+  resumeUrl: "/resume.pdf",
 };
