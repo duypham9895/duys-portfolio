@@ -81,9 +81,9 @@ const RESUME_BULLETS: Record<string, readonly string[]> = {
     "Transitioned from Software Engineer to Product Manager through demonstrated product ownership and cross-functional leadership",
   ],
   "Bizzi Vietnam": [
-    "Led development of AI-powered invoice extraction pipeline, reducing manual data entry for enterprise clients including Mega Market, Circle K, and The Coffee House",
+    "Led development of AI-powered invoice extraction pipeline, reducing manual data entry for major enterprise clients",
     "Designed and shipped PO email processing service end-to-end, from database schema to production deployment",
-    "Delivered Oracle and SAP enterprise integrations, enabling automated data exchange across 3 major retail chains",
+    "Delivered Oracle and SAP enterprise integrations, enabling automated data exchange across multiple retail chains",
   ],
 };
 
