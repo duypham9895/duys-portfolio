@@ -28,5 +28,9 @@ pnpm-debug.log*
 # test artifacts
 test-results/
 
+# generated resume PDF
+public/resume.pdf
+
 # yarn legacy
 .yarn/
+.vercel
