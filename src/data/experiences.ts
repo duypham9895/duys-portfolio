@@ -31,7 +31,7 @@ export const experiences: readonly Experience[] = [
     description: [
       "Built AI models for VAT invoice data extraction (YOLO, Faster RCNN, VietOCR)",
       "Designed PO email processing service from scratch (DB, APIs, Serverless, deployment)",
-      "Integrated Oracle & SAP for Mega Market, Circle K, The Coffee House",
+      "Integrated Oracle & SAP for major enterprise retail clients",
     ],
   },
 ] as const;
