@@ -46,6 +46,11 @@ jobs:
 
       - run: npm install -g vercel@latest
 
+      - run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
       - name: Pull Vercel environment
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
