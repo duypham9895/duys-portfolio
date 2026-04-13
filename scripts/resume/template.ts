@@ -90,7 +90,7 @@ export function renderTemplate(data: ResumeData): string {
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       font-size: 10px;
-      line-height: 1.5;
+      line-height: 1.45;
       color: #2d2d2d;
       background: #ffffff;
       -webkit-print-color-adjust: exact;
@@ -114,7 +114,7 @@ export function renderTemplate(data: ResumeData): string {
       width: 66mm;
       background: #1a1a2e;
       color: #e0e0e0;
-      padding: 32px 16px 32px 20px;
+      padding: 24px 16px 24px 20px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
@@ -125,11 +125,11 @@ export function renderTemplate(data: ResumeData): string {
     }
 
     .sidebar-name {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 700;
       color: #ffffff;
       line-height: 1.15;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .sidebar-title {
@@ -137,12 +137,12 @@ export function renderTemplate(data: ResumeData): string {
       font-weight: 600;
       color: #FA5252;
       letter-spacing: 0.3px;
-      margin-bottom: 28px;
+      margin-bottom: 20px;
       line-height: 1.4;
     }
 
     .sidebar-section {
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
 
     .sidebar-section:last-child {
@@ -155,8 +155,8 @@ export function renderTemplate(data: ResumeData): string {
       text-transform: uppercase;
       letter-spacing: 2.5px;
       color: #FA5252;
-      margin-bottom: 12px;
-      padding-bottom: 6px;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
       border-bottom: 1px solid rgba(250, 82, 82, 0.25);
     }
 
@@ -164,10 +164,10 @@ export function renderTemplate(data: ResumeData): string {
     .contact-item {
       display: flex;
       align-items: center;
-      gap: 9px;
-      margin-bottom: 9px;
+      gap: 8px;
+      margin-bottom: 7px;
       font-size: 8.5px;
-      line-height: 1.4;
+      line-height: 1.3;
       color: #c0c0c0;
     }
 
@@ -188,7 +188,7 @@ export function renderTemplate(data: ResumeData): string {
 
     /* Skills in sidebar */
     .sidebar-skill-group {
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
     .sidebar-skill-group:last-child {
@@ -222,7 +222,7 @@ export function renderTemplate(data: ResumeData): string {
 
     /* Certifications in sidebar */
     .cert-row {
-      margin-bottom: 10px;
+      margin-bottom: 7px;
     }
 
     .cert-row:last-child {
@@ -245,7 +245,7 @@ export function renderTemplate(data: ResumeData): string {
     /* ─── Main Content ─── */
     .main {
       flex: 1;
-      padding: 32px 28px 32px 26px;
+      padding: 24px 28px 24px 26px;
       display: flex;
       flex-direction: column;
     }
@@ -256,14 +256,14 @@ export function renderTemplate(data: ResumeData): string {
       text-transform: uppercase;
       letter-spacing: 2px;
       color: #1a1a2e;
-      margin-bottom: 12px;
-      padding-bottom: 6px;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
       border-bottom: 2px solid #FA5252;
     }
 
     /* Highlights */
     .highlights-section {
-      margin-bottom: 22px;
+      margin-bottom: 16px;
     }
 
     .highlights-grid {
@@ -274,18 +274,18 @@ export function renderTemplate(data: ResumeData): string {
     .highlight-card {
       flex: 1;
       text-align: center;
-      padding: 12px 6px 10px;
+      padding: 10px 6px 8px;
       background: #f8f8fa;
       border-radius: 6px;
       border: 1px solid #eeeef0;
     }
 
     .highlight-metric {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 800;
       color: #FA5252;
       line-height: 1.1;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
     .highlight-label {
@@ -298,22 +298,22 @@ export function renderTemplate(data: ResumeData): string {
 
     /* Summary */
     .summary-section {
-      margin-bottom: 22px;
+      margin-bottom: 16px;
     }
 
     .summary-text {
-      font-size: 10px;
+      font-size: 9.5px;
       color: #444;
-      line-height: 1.7;
+      line-height: 1.6;
     }
 
     /* Experience */
     .experience-section {
-      flex: 1;
+      /* no flex: 1 — let content flow naturally so Products section stays tight */
     }
 
     .exp-item {
-      margin-bottom: 22px;
+      margin-bottom: 16px;
     }
 
     .exp-item:last-child {
@@ -328,7 +328,7 @@ export function renderTemplate(data: ResumeData): string {
     }
 
     .exp-role {
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
       color: #1a1a2e;
     }
@@ -337,7 +337,7 @@ export function renderTemplate(data: ResumeData): string {
       font-size: 10px;
       color: #FA5252;
       font-weight: 500;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
     }
 
     .exp-dates {
@@ -352,10 +352,10 @@ export function renderTemplate(data: ResumeData): string {
     }
 
     .exp-bullets li {
-      font-size: 9.5px;
+      font-size: 9px;
       color: #444;
-      line-height: 1.7;
-      margin-bottom: 5px;
+      line-height: 1.6;
+      margin-bottom: 3px;
     }
 
     .exp-bullets li:last-child {
@@ -369,17 +369,17 @@ export function renderTemplate(data: ResumeData): string {
 
     /* Products */
     .products-section {
-      margin-top: 22px;
+      margin-top: 16px;
     }
 
     .products-grid {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 7px;
     }
 
     .product-card {
-      padding: 10px 14px;
+      padding: 8px 12px;
       background: #f8f8fa;
       border-radius: 6px;
       border-left: 3px solid #FA5252;
@@ -407,9 +407,9 @@ export function renderTemplate(data: ResumeData): string {
     }
 
     .product-desc {
-      font-size: 9px;
+      font-size: 8.5px;
       color: #555;
-      line-height: 1.55;
+      line-height: 1.5;
     }
   </style>
 </head>
