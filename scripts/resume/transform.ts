@@ -145,9 +145,12 @@ export function transform(): ResumeData {
     year: extractYear(cert.date),
   }));
 
-  const links: ResumeLink[] = personal.socials
-    .filter((s) => s.title === "LinkedIn" || s.title === "GitHub")
-    .map((s) => ({ label: s.title, url: s.url }));
+  const links: ResumeLink[] = [
+    { label: "Website", url: "https://www.duypham.me" },
+    ...personal.socials
+      .filter((s) => s.title === "LinkedIn" || s.title === "GitHub")
+      .map((s) => ({ label: s.title, url: s.url })),
+  ];
 
   return {
     name: personal.fullName,
