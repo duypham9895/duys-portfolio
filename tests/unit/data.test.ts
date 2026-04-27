@@ -13,10 +13,12 @@ describe("personal data", () => {
     expect(personal.title).toBe("Associate Product Manager");
   });
 
-  it("has bio with 2 paragraphs", () => {
+  it("has bio with 2 paragraphs covering both companies", () => {
     expect(personal.bio).toHaveLength(2);
     expect(personal.bio[0]).toContain("Product Manager");
-    expect(personal.bio[1]).toContain("Ringkas");
+    const fullBio = personal.bio.join(" ");
+    expect(fullBio).toContain("Ringkas");
+    expect(fullBio).toContain("Bizzi");
   });
 
   it("has contact info", () => {
@@ -42,20 +44,33 @@ describe("personal data", () => {
 });
 
 describe("experiences data", () => {
-  it("has 2 experiences", () => {
-    expect(experiences).toHaveLength(2);
+  it("has 3 experiences", () => {
+    expect(experiences).toHaveLength(3);
   });
 
-  it("Ringkas is first (current role)", () => {
+  it("exactly one current role (endDate null)", () => {
+    const current = experiences.filter((exp) => exp.endDate === null);
+    expect(current).toHaveLength(1);
+    expect(current[0].companyName).toContain("Ringkas");
+    expect(current[0].jobTitle).toBe("Associate Product Manager");
+  });
+
+  it("APM Ringkas is first (current role)", () => {
     expect(experiences[0].companyName).toContain("Ringkas");
     expect(experiences[0].endDate).toBeNull();
     expect(experiences[0].jobTitle).toBe("Associate Product Manager");
   });
 
-  it("Bizzi is second (past role)", () => {
-    expect(experiences[1].companyName).toContain("Bizzi");
-    expect(experiences[1].endDate).toBe("Aug 2022");
+  it("SWE Ringkas is second (prior internal role)", () => {
+    expect(experiences[1].companyName).toContain("Ringkas");
+    expect(experiences[1].endDate).toBe("Jul 2024");
     expect(experiences[1].jobTitle).toBe("Software Engineer");
+  });
+
+  it("Bizzi is third (earliest role)", () => {
+    expect(experiences[2].companyName).toContain("Bizzi");
+    expect(experiences[2].endDate).toBe("Aug 2022");
+    expect(experiences[2].jobTitle).toBe("Software Engineer");
   });
 
   it("each experience has description bullets", () => {
@@ -75,8 +90,8 @@ describe("experiences data", () => {
 });
 
 describe("skills data", () => {
-  it("has 4 skill groups", () => {
-    expect(skillGroups).toHaveLength(4);
+  it("has 5 skill groups", () => {
+    expect(skillGroups).toHaveLength(5);
   });
 
   it("Product Management is first group", () => {
