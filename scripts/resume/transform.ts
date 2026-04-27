@@ -65,7 +65,7 @@ function stripMarkdownBold(text: string): string {
 }
 
 const HIGHLIGHTS: readonly ResumeHighlight[] = [
-  { metric: "1", label: "First-of-Kind Launch" },
+  { metric: "1", label: "Indonesia-First AI Launch" },
   { metric: "SE→PM", label: "Career Growth" },
   { metric: "5+", label: "Years Experience" },
 ];

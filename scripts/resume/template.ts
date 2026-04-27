@@ -124,8 +124,16 @@ export function renderTemplate(data: ResumeData): string {
       font-weight: 600;
       color: #FA5252;
       letter-spacing: 0.3px;
-      margin-bottom: 20px;
+      margin-bottom: 6px;
       line-height: 1.4;
+    }
+
+    .sidebar-location {
+      font-size: 9px;
+      font-weight: 500;
+      color: #c0c0c0;
+      margin-bottom: 20px;
+      letter-spacing: 0.2px;
     }
 
     .sidebar-section {
@@ -405,6 +413,7 @@ export function renderTemplate(data: ResumeData): string {
     <aside class="sidebar">
       <div class="sidebar-name">${escapeHtml(data.name)}</div>
       <div class="sidebar-title">${escapeHtml(data.title)}</div>
+      <div class="sidebar-location">${escapeHtml(data.contact.location)}</div>
 
       <div class="sidebar-section">
         <div class="sidebar-section-title">Contact</div>
@@ -415,10 +424,6 @@ export function renderTemplate(data: ResumeData): string {
         <div class="contact-item">
           <span class="contact-icon">P</span>
           <span>${escapeHtml(data.contact.phone)}</span>
-        </div>
-        <div class="contact-item">
-          <span class="contact-icon">L</span>
-          <span>${escapeHtml(data.contact.location)}</span>
         </div>
         ${data.links
           .map(
