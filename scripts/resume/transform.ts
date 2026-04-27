@@ -31,12 +31,6 @@ export interface ResumeCertification {
   readonly year: string;
 }
 
-export interface ResumeProduct {
-  readonly name: string;
-  readonly description: string;
-  readonly scope: string;
-}
-
 export interface ResumeData {
   readonly name: string;
   readonly title: string;
@@ -49,7 +43,6 @@ export interface ResumeData {
   readonly links: readonly ResumeLink[];
   readonly highlights: readonly ResumeHighlight[];
   readonly experience: readonly ResumeExperience[];
-  readonly products: readonly ResumeProduct[];
   readonly skillGroups: readonly ResumeSkillGroup[];
   readonly certifications: readonly ResumeCertification[];
 }
@@ -67,56 +60,13 @@ function sortPrimariesFirst(
   return [...primaries, ...others];
 }
 
-/**
- * Resume-specific experience bullets, rewritten for PM impact framing.
- * The website data (experiences.ts) uses general descriptions.
- * The resume needs: action verb + scope + scale + outcome.
- */
-const RESUME_BULLETS: Record<string, readonly string[]> = {
-  "Ringkas (PT Ringkas Asia Technology)": [
-    "Own end-to-end loan origination platform serving multiple banking partners across Southeast Asian markets",
-    "Drive product strategy for AI-powered document processing and conversational AI platform, reducing manual lending operations",
-    "Built and manage central configuration hub governing feature flags and rollout controls across all products and markets",
-    "Author PRDs, define API contracts, and align cross-border architecture decisions between Vietnam and Indonesia engineering teams",
-    "Transitioned from Software Engineer to Product Manager through demonstrated product ownership and cross-functional leadership",
-  ],
-  "Bizzi Vietnam": [
-    "Led development of AI-powered invoice extraction pipeline, reducing manual data entry for major enterprise clients",
-    "Designed and shipped PO email processing service end-to-end, from database schema to production deployment",
-    "Delivered Oracle and SAP enterprise integrations, enabling automated data exchange across multiple retail chains",
-  ],
-};
-
-const RESUME_SUMMARY =
-  "Software Engineer turned Product Manager with 5+ years in fintech and AI. " +
-  "Own three platform products at Ringkas spanning loan origination, AI document processing, " +
-  "and configuration management, coordinating engineering teams across Vietnam and Indonesia.";
-
-const PRODUCTS: readonly ResumeProduct[] = [
-  {
-    name: "LOS Core",
-    description:
-      "Loan origination platform powering end-to-end mortgage workflows for multiple banking partners across Southeast Asian markets",
-    scope: "Multi-market",
-  },
-  {
-    name: "RISA",
-    description:
-      "AI-powered platform combining document processing, data extraction, and conversational AI to automate lending operations",
-    scope: "AI / ML",
-  },
-  {
-    name: "Tarvos",
-    description:
-      "Central configuration hub managing feature flags, system configs, and rollout controls across all products and markets",
-    scope: "Cross-platform",
-  },
-];
+function stripMarkdownBold(text: string): string {
+  return text.replace(/\*\*([^*]+)\*\*/g, "$1");
+}
 
 const HIGHLIGHTS: readonly ResumeHighlight[] = [
-  { metric: "3", label: "Products Owned" },
+  { metric: "1", label: "First-of-Kind Launch" },
   { metric: "SE→PM", label: "Career Growth" },
-  { metric: "2", label: "Markets" },
   { metric: "5+", label: "Years Experience" },
 ];
 
@@ -125,7 +75,7 @@ export function transform(): ResumeData {
     title: exp.jobTitle,
     company: exp.companyName,
     dates: `${exp.startDate} — ${exp.endDate ?? "Present"}`,
-    bullets: RESUME_BULLETS[exp.companyName] ?? exp.description,
+    bullets: exp.description,
   }));
 
   const resumeSkillGroups: ResumeSkillGroup[] = skillGroups.map((group) => ({
@@ -155,7 +105,7 @@ export function transform(): ResumeData {
   return {
     name: personal.fullName,
     title: personal.title,
-    summary: RESUME_SUMMARY,
+    summary: stripMarkdownBold(personal.bio[0]),
     contact: {
       email: personal.contact.email,
       phone: personal.contact.phone,
@@ -164,7 +114,6 @@ export function transform(): ResumeData {
     links,
     highlights: HIGHLIGHTS,
     experience,
-    products: PRODUCTS,
     skillGroups: resumeSkillGroups,
     certifications: resumeCerts,
   };

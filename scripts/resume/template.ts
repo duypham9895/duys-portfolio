@@ -47,19 +47,6 @@ export function renderTemplate(data: ResumeData): string {
     )
     .join("\n");
 
-  const productsHtml = data.products
-    .map(
-      (p) => `
-        <div class="product-card">
-          <div class="product-top">
-            <span class="product-name">${escapeHtml(p.name)}</span>
-            <span class="product-scope">${escapeHtml(p.scope)}</span>
-          </div>
-          <div class="product-desc">${escapeHtml(p.description)}</div>
-        </div>`
-    )
-    .join("\n");
-
   const certsHtml = data.certifications
     .map(
       (cert) => `
@@ -468,13 +455,6 @@ export function renderTemplate(data: ResumeData): string {
       <section class="experience-section">
         <div class="main-section-title">Experience</div>
         ${experienceHtml}
-      </section>
-
-      <section class="products-section">
-        <div class="main-section-title">Products I Own</div>
-        <div class="products-grid">
-          ${productsHtml}
-        </div>
       </section>
     </main>
   </div>

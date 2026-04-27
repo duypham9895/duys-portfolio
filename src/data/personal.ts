@@ -21,8 +21,8 @@ export const personal: Personal = {
   fullName: "Duy Pham",
   title: "Associate Product Manager",
   bio: [
-    "Software Engineer turned Associate Product Manager with 5+ years building fintech platforms and AI systems. I use deep technical understanding to ship products that solve real problems for users across Southeast Asia.",
-    "Currently at Ringkas, working on a loan origination platform, an AI-powered chatbot and document processing system, and a central configuration hub, coordinating across engineering teams in Vietnam and Indonesia. Previously at Bizzi Vietnam, where I built AI models for invoice data extraction and integrated enterprise systems.",
+    "Software Engineer-turned-**Associate Product Manager** at **Ringkas**, an Indonesian fintech, coordinating across engineering teams in Vietnam and Indonesia. I bring engineering depth to product work — reading source code to root-cause issues, coordinating cross-functional launches, and translating operational pain into shipped features. Most recently led the launch of **Ringkas AI Financial Assistant**, a first-of-its-kind product in Indonesia's fintech market.",
+    "Previously at **Bizzi Vietnam**, where I built AI models for **VAT invoice data extraction** and integrated enterprise systems for **Oracle/SAP** retail clients.",
   ],
   contact: {
     location: "Ho Chi Minh City, Vietnam",

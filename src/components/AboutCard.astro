@@ -1,19 +1,22 @@
 ---
+import { personal } from "../data/personal";
+
+function renderBoldedHtml(text: string): string {
+  return text.replace(
+    /\*\*([^*]+)\*\*/g,
+    '<strong class="text-[#fafafa] font-medium">$1</strong>'
+  );
+}
 ---
 
 <div class="card fade-in" id="about">
   <h2 class="section-label">About Me</h2>
-  <p class="text-sm text-[#a1a1aa] leading-[1.85] mb-4">
-    Software Engineer turned <strong class="text-[#fafafa] font-medium">Associate Product Manager</strong> with
-    <strong class="text-[#fafafa] font-medium">5+ years</strong> building fintech platforms and AI systems.
-    I use deep technical understanding to ship products that solve real problems for users across Southeast Asia.
-  </p>
-  <p class="text-sm text-[#a1a1aa] leading-[1.85]">
-    Currently at <strong class="text-[#fafafa] font-medium">Ringkas</strong>, working on a
-    <strong class="text-[#fafafa] font-medium">loan origination platform</strong>, an
-    <strong class="text-[#fafafa] font-medium">AI-powered chatbot and document processing system</strong>, and a
-    central configuration hub, coordinating across engineering teams in Vietnam and Indonesia. Previously at
-    <strong class="text-[#fafafa] font-medium">Bizzi Vietnam</strong>, where I built AI models for invoice
-    data extraction and integrated enterprise systems for clients like Mega Market, Circle K, and The Coffee House.
-  </p>
+  {
+    personal.bio.map((paragraph) => (
+      <p
+        class="text-sm text-[#a1a1aa] leading-[1.85] mb-4 last:mb-0"
+        set:html={renderBoldedHtml(paragraph)}
+      />
+    ))
+  }
 </div>

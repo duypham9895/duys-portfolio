@@ -15,18 +15,30 @@ export const skillGroups: readonly SkillGroup[] = [
     skills: [
       { title: "PRD Writing", primary: true },
       { title: "API Design Review", primary: true },
-      { title: "Cross-team Coordination" },
+      { title: "SQL for Analytics", primary: true },
+      { title: "Cross-functional Launch Coordination" },
       { title: "Stakeholder Management" },
-      { title: "Agile / Scrum" },
+      { title: "Compliance & Risk Coordination" },
     ],
   },
   {
     category: "Technical",
     skills: [
       { title: "System Architecture" },
-      { title: "Microservices" },
       { title: "AI / ML Products", primary: true },
       { title: "LLM / Chatbot" },
+      { title: "Source Code Investigation" },
+    ],
+  },
+  {
+    category: "Tools & Workflow",
+    skills: [
+      { title: "Notion", primary: true },
+      { title: "Figma" },
+      { title: "Postman" },
+      { title: "Claude Code (CLI)", primary: true },
+      { title: "GitLab" },
+      { title: "GitHub" },
     ],
   },
   {
