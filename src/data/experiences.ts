@@ -15,11 +15,12 @@ export const experiences: readonly Experience[] = [
     startDate: "Aug 2024",
     endDate: null,
     description: [
-      "Led Indonesia's first AI Financial Assistant launch (private beta Feb 2025, public Jul 2025) — aligned 5 functions; reached 38K+ conversations and 1,900+ transactions",
-      "Lifted OCR success rate from 40% to over 85% — traced source for FE+BE redundant resizing/crop bugs, then drove cross-team fix",
-      "Owned security questionnaire response for a major Indonesian e-wallet partner — coordinated Engineering, AI, Compliance using SWE-era system knowledge; enabled deal closure",
-      "Surfaced Ops/CS workflow pain via hands-on SQL incident triage and shipped resulting CRs: Advanced Filter, cross-org switch, AI cost guardrails, real-time event notifications",
-      "Diagnosed reCAPTCHA v3 site-key failures in client browsers; proposed v2 fallback that eliminated a login-blocker (3-4 monthly tickets reduced to zero)",
+      "Led Indonesia-first AI Financial Assistant launch via 3-phase rollout PRD (cost gates, admin-panel feature-flag transitions); reached 38K+ conversations, 1,900+ transactions",
+      "Capped anonymous AI Financial Assistant usage ($1/day, $200 global) — 5x higher for authenticated users; protected runway and drove registration funnel",
+      "Paused OCR vendor-swap PRD to investigate first — lifted success rate from 40% to over 85% by tracing redundant FE+BE preprocessing",
+      "Built Vision-Language-Model (VLM) OCR POC with AI team — quantified 89% cost reduction with 48% latency tradeoff to inform vendor decision",
+      "Owned security questionnaire response for a top-3 Indonesian e-wallet partner — coordinated Engineering, AI, Compliance using SWE-era system knowledge; enabled deal closure",
+      "Wrote PRDs translating Ops/CS pain (surfaced via hands-on SQL triage) into shipped CRs post-HoP approval: Advanced Filter, cross-org switch, real-time event notifications",
     ],
   },
   {
