@@ -10,15 +10,15 @@ import { certifications } from "../data/certifications";
         href={cert.credentialUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="group flex items-center justify-between p-3.5 bg-white/[0.02] border border-white/[0.04] rounded-xl hover:border-primary/20 transition-colors"
+        class="group flex items-center justify-between p-3.5 bg-bg border border-border rounded-xl hover:border-accent transition-colors"
       >
         <div>
-          <h3 class="text-[13px] font-medium">{cert.name}</h3>
-          <p class="text-[11px] text-[#71717a] mt-1">
+          <h3 class="text-[13px] font-medium text-text">{cert.name}</h3>
+          <p class="text-[11px] text-muted mt-1">
             {cert.organization} &middot; {cert.date}
           </p>
         </div>
-        <svg class="w-4 h-4 text-[#52525b] group-hover:text-primary transition-colors flex-shrink-0 ml-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg class="w-4 h-4 text-muted group-hover:text-accent transition-colors flex-shrink-0 ml-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M7 17L17 7M17 7H7M17 7v10" />
         </svg>
       </a>

@@ -3,17 +3,20 @@ import { Image } from "astro:assets";
 import avatarImg from "../assets/avatar.jpg";
 import { personal } from "../data/personal";
 import { socialIcons } from "../data/icons";
+import ThemeToggle from "./ThemeToggle.astro";
 
 const { fullName, title, contact, socials, resumeUrl } = personal;
 ---
 
 <aside class="relative lg:sticky lg:top-6 h-fit max-w-[400px] mx-auto lg:max-w-none">
-  <div class="bg-white/[0.025] border border-white/[0.06] rounded-3xl px-6 pt-9 pb-7 text-center relative overflow-hidden">
-    <!-- Avatar glow -->
-    <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-[240px] h-[240px] bg-primary/[0.15] rounded-full blur-3xl pointer-events-none"></div>
+  <div class="bg-surface border border-border rounded-3xl px-6 pt-9 pb-7 text-center relative overflow-hidden">
+    <!-- Theme toggle: top-right -->
+    <div class="absolute top-4 right-4 z-20">
+      <ThemeToggle />
+    </div>
 
     <!-- Avatar -->
-    <div class="relative z-10 mx-auto mb-5 w-[180px] h-[180px] rounded-full p-[3px] bg-gradient-to-br from-primary to-primary-dark">
+    <div class="relative z-10 mx-auto mb-5 w-[180px] h-[180px] rounded-full p-[3px]" style="background: var(--accent);">
       <Image
         src={avatarImg}
         alt={fullName}
@@ -25,20 +28,20 @@ const { fullName, title, contact, socials, resumeUrl } = personal;
       />
     </div>
 
-    <h1 class="text-[22px] font-bold relative z-10">{fullName}</h1>
-    <p class="text-sm text-[#a1a1aa] mt-2 leading-relaxed relative z-10">
+    <h1 class="text-[22px] font-bold relative z-10 text-text">{fullName}</h1>
+    <p class="text-sm text-muted mt-2 leading-relaxed relative z-10">
       {title}
     </p>
 
     <!-- Divider -->
-    <div class="h-px bg-white/[0.06] my-5"></div>
+    <div class="h-px bg-border my-5"></div>
 
     <!-- Contact info -->
     <div class="text-left space-y-3">
       {Object.entries(contact).map(([key, value]) => (
-        <div class="border-b border-white/[0.06] pb-3 last:border-b-0 last:pb-0">
-          <span class="text-[10px] text-[#71717a] uppercase tracking-wider block mb-1">{key}</span>
-          <span class="text-[13px] text-[#a1a1aa] block break-all">{value}</span>
+        <div class="border-b border-border pb-3 last:border-b-0 last:pb-0">
+          <span class="text-[10px] text-muted uppercase tracking-wider block mb-1">{key}</span>
+          <span class="text-[13px] text-text block break-all">{value}</span>
         </div>
       ))}
     </div>
@@ -64,7 +67,7 @@ const { fullName, title, contact, socials, resumeUrl } = personal;
         href={resumeUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="block w-full border border-primary/40 text-primary py-3.5 rounded-[14px] text-[13px] font-semibold mt-5 hover:bg-primary/10 hover:border-primary/60 transition-all text-center"
+        class="block w-full bg-accent text-bg py-3.5 rounded-[14px] text-[13px] font-semibold mt-5 hover:bg-accent-hover transition-colors text-center"
       >
         View Resume
       </a>

@@ -4,7 +4,7 @@ import { personal } from "../data/personal";
 function renderBoldedHtml(text: string): string {
   return text.replace(
     /\*\*([^*]+)\*\*/g,
-    '<strong class="text-[#fafafa] font-medium">$1</strong>'
+    '<strong class="text-text font-medium">$1</strong>'
   );
 }
 ---
@@ -14,7 +14,7 @@ function renderBoldedHtml(text: string): string {
   {
     personal.bio.map((paragraph) => (
       <p
-        class="text-sm text-[#a1a1aa] leading-[1.85] mb-4 last:mb-0"
+        class="text-sm text-muted leading-[1.85] mb-4 last:mb-0"
         set:html={renderBoldedHtml(paragraph)}
       />
     ))
