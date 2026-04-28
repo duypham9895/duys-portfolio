@@ -5,11 +5,11 @@ import { personal } from "../data/personal";
 import { socialIcons } from "../data/icons";
 import ThemeToggle from "./ThemeToggle.astro";
 
-const { fullName, title, contact, socials, resumeUrl } = personal;
+const { fullName, title, contact, socials, resumeUrls } = personal;
 ---
 
-<aside class="relative lg:sticky lg:top-6 h-fit max-w-[400px] mx-auto lg:max-w-none">
-  <div class="bg-surface border border-border rounded-3xl px-6 pt-9 pb-7 text-center relative overflow-hidden">
+<aside class="relative lg:sticky lg:top-6 h-fit">
+  <div class="bg-surface border border-border rounded-xl px-6 pt-9 pb-7 text-center relative overflow-hidden">
     <!-- Theme toggle: top-right -->
     <div class="absolute top-4 right-4 z-20">
       <ThemeToggle />
@@ -61,16 +61,17 @@ const { fullName, title, contact, socials, resumeUrl } = personal;
       ))}
     </div>
 
-    <!-- Resume button (hidden until PDF is ready) -->
-    {resumeUrl && (
-      <a
-        href={resumeUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="block w-full bg-accent text-bg py-3.5 rounded-[14px] text-[13px] font-semibold mt-5 hover:bg-accent-hover transition-colors text-center"
-      >
-        View Resume
-      </a>
-    )}
+    <!-- Resume button — href swapped to match active theme by ThemeToggle/FOUC script -->
+    <a
+      id="resume-link"
+      href={resumeUrls.light}
+      data-resume-light={resumeUrls.light}
+      data-resume-dark={resumeUrls.dark}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="block w-full bg-accent text-bg py-3.5 rounded-[14px] text-[13px] font-semibold mt-5 hover:bg-accent-hover transition-colors text-center"
+    >
+      View Resume
+    </a>
   </div>
 </aside>

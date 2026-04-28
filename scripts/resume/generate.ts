@@ -1,41 +1,52 @@
-import { chromium } from "playwright";
+import { chromium, type Browser } from "playwright";
 import { writeFileSync, unlinkSync, mkdirSync, existsSync } from "fs";
 import { join } from "path";
 import { transform } from "./transform";
-import { renderTemplate } from "./template";
+import { renderTemplate, type ResumeTheme } from "./template";
 
-const OUTPUT_PATH = join(process.cwd(), "public", "resume.pdf");
-const TEMP_HTML = join("/tmp", `resume-${Date.now()}.html`);
+const PUBLIC_DIR = join(process.cwd(), "public");
+const THEMES: readonly ResumeTheme[] = ["light", "dark"];
 
-async function generate(): Promise<void> {
-  const data = transform();
-  const html = renderTemplate(data);
+async function renderPdf(browser: Browser, html: string, outputPath: string): Promise<void> {
+  const tempHtml = join("/tmp", `resume-${Date.now()}-${Math.random().toString(36).slice(2)}.html`);
+  writeFileSync(tempHtml, html, "utf-8");
 
-  writeFileSync(TEMP_HTML, html, "utf-8");
-
-  const publicDir = join(process.cwd(), "public");
-  if (!existsSync(publicDir)) {
-    mkdirSync(publicDir, { recursive: true });
-  }
-
-  const browser = await chromium.launch();
+  const page = await browser.newPage();
   try {
-    const page = await browser.newPage();
-    await page.goto(`file://${TEMP_HTML}`, { waitUntil: "networkidle" });
+    await page.goto(`file://${tempHtml}`, { waitUntil: "networkidle" });
     await page.pdf({
-      path: OUTPUT_PATH,
+      path: outputPath,
       format: "A4",
       printBackground: true,
       margin: { top: "0", right: "0", bottom: "0", left: "0" },
     });
-    console.log(`Resume PDF generated at ${OUTPUT_PATH}`);
+  } finally {
+    await page.close();
+    try {
+      unlinkSync(tempHtml);
+    } catch {
+      // best-effort cleanup
+    }
+  }
+}
+
+async function generate(): Promise<void> {
+  const data = transform();
+
+  if (!existsSync(PUBLIC_DIR)) {
+    mkdirSync(PUBLIC_DIR, { recursive: true });
+  }
+
+  const browser = await chromium.launch();
+  try {
+    for (const theme of THEMES) {
+      const html = renderTemplate(data, theme);
+      const outputPath = join(PUBLIC_DIR, `resume-${theme}.pdf`);
+      await renderPdf(browser, html, outputPath);
+      console.log(`Resume PDF (${theme}) generated at ${outputPath}`);
+    }
   } finally {
     await browser.close();
-    try {
-      unlinkSync(TEMP_HTML);
-    } catch {
-      // temp file cleanup is best-effort
-    }
   }
 }
 

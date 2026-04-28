@@ -1,5 +1,47 @@
 import type { ResumeData } from "./transform";
 
+export type ResumeTheme = "light" | "dark";
+
+interface Palette {
+  readonly pageBg: string;
+  readonly surface: string;
+  readonly surfaceAlt: string;
+  readonly text: string;
+  readonly muted: string;
+  readonly mutedSoft: string;
+  readonly border: string;
+  readonly accent: string;
+  readonly accent2: string;
+  readonly accentSoftBg: string;
+}
+
+const PALETTES: Record<ResumeTheme, Palette> = {
+  light: {
+    pageBg: "#fbfaf7",
+    surface: "#f2ede4",
+    surfaceAlt: "#eae3d5",
+    text: "#1f1d1a",
+    muted: "#8b7355",
+    mutedSoft: "#a8946f",
+    border: "#e2d9c8",
+    accent: "#b8541f",
+    accent2: "#b8923a",
+    accentSoftBg: "rgba(184, 84, 31, 0.10)",
+  },
+  dark: {
+    pageBg: "#1a1816",
+    surface: "#252220",
+    surfaceAlt: "#302c29",
+    text: "#f2ede4",
+    muted: "#a8946f",
+    mutedSoft: "#8b7355",
+    border: "#3a352f",
+    accent: "#e07a3e",
+    accent2: "#d4b05a",
+    accentSoftBg: "rgba(224, 122, 62, 0.12)",
+  },
+};
+
 function escapeHtml(text: string): string {
   return text
     .replace(/&/g, "&amp;")
@@ -8,7 +50,9 @@ function escapeHtml(text: string): string {
     .replace(/"/g, "&quot;");
 }
 
-export function renderTemplate(data: ResumeData): string {
+export function renderTemplate(data: ResumeData, theme: ResumeTheme = "light"): string {
+  const p = PALETTES[theme];
+
   const highlightsHtml = data.highlights
     .map(
       (h) => `
@@ -78,8 +122,8 @@ export function renderTemplate(data: ResumeData): string {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       font-size: 10px;
       line-height: 1.45;
-      color: #2d2d2d;
-      background: #ffffff;
+      color: ${p.text};
+      background: ${p.pageBg};
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
@@ -94,13 +138,14 @@ export function renderTemplate(data: ResumeData): string {
       width: 210mm;
       height: 297mm;
       display: flex;
+      background: ${p.pageBg};
     }
 
     /* ─── Sidebar ─── */
     .sidebar {
       width: 66mm;
-      background: #1a1a2e;
-      color: #e0e0e0;
+      background: ${p.surface};
+      color: ${p.text};
       padding: 24px 16px 24px 20px;
       flex-shrink: 0;
       display: flex;
@@ -108,13 +153,13 @@ export function renderTemplate(data: ResumeData): string {
     }
 
     .sidebar a {
-      color: #c0c0c0;
+      color: ${p.text};
     }
 
     .sidebar-name {
       font-size: 22px;
       font-weight: 700;
-      color: #ffffff;
+      color: ${p.text};
       line-height: 1.15;
       margin-bottom: 3px;
     }
@@ -122,7 +167,7 @@ export function renderTemplate(data: ResumeData): string {
     .sidebar-title {
       font-size: 10px;
       font-weight: 600;
-      color: #FA5252;
+      color: ${p.accent};
       letter-spacing: 0.3px;
       margin-bottom: 6px;
       line-height: 1.4;
@@ -131,7 +176,7 @@ export function renderTemplate(data: ResumeData): string {
     .sidebar-location {
       font-size: 9px;
       font-weight: 500;
-      color: #c0c0c0;
+      color: ${p.muted};
       margin-bottom: 20px;
       letter-spacing: 0.2px;
     }
@@ -149,10 +194,10 @@ export function renderTemplate(data: ResumeData): string {
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 2.5px;
-      color: #FA5252;
+      color: ${p.accent};
       margin-bottom: 8px;
       padding-bottom: 4px;
-      border-bottom: 1px solid rgba(250, 82, 82, 0.25);
+      border-bottom: 1px solid ${p.border};
     }
 
     /* Contact */
@@ -163,7 +208,7 @@ export function renderTemplate(data: ResumeData): string {
       margin-bottom: 7px;
       font-size: 8.5px;
       line-height: 1.3;
-      color: #c0c0c0;
+      color: ${p.text};
     }
 
     .contact-icon {
@@ -172,8 +217,8 @@ export function renderTemplate(data: ResumeData): string {
       justify-content: center;
       width: 18px;
       height: 18px;
-      background: rgba(250, 82, 82, 0.12);
-      color: #FA5252;
+      background: ${p.accentSoftBg};
+      color: ${p.accent};
       border-radius: 4px;
       font-size: 8px;
       font-weight: 700;
@@ -193,7 +238,7 @@ export function renderTemplate(data: ResumeData): string {
     .sidebar-skill-label {
       font-size: 8.5px;
       font-weight: 600;
-      color: #ffffff;
+      color: ${p.text};
       margin-bottom: 6px;
       letter-spacing: 0.2px;
     }
@@ -207,9 +252,9 @@ export function renderTemplate(data: ResumeData): string {
     .sidebar-skill {
       display: inline-block;
       font-size: 7.5px;
-      color: #d0d0d0;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: ${p.text};
+      background: ${p.surfaceAlt};
+      border: 1px solid ${p.border};
       border-radius: 3px;
       padding: 3px 7px;
       line-height: 1.3;
@@ -226,14 +271,14 @@ export function renderTemplate(data: ResumeData): string {
 
     .cert-name {
       font-size: 8px;
-      color: #e0e0e0;
+      color: ${p.text};
       line-height: 1.4;
       font-weight: 500;
     }
 
     .cert-detail {
       font-size: 7px;
-      color: #777;
+      color: ${p.muted};
       margin-top: 2px;
     }
 
@@ -243,6 +288,7 @@ export function renderTemplate(data: ResumeData): string {
       padding: 24px 28px 24px 26px;
       display: flex;
       flex-direction: column;
+      background: ${p.pageBg};
     }
 
     .main-section-title {
@@ -250,10 +296,10 @@ export function renderTemplate(data: ResumeData): string {
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 2px;
-      color: #1a1a2e;
+      color: ${p.text};
       margin-bottom: 10px;
       padding-bottom: 5px;
-      border-bottom: 2px solid #FA5252;
+      border-bottom: 2px solid ${p.accent};
     }
 
     /* Highlights */
@@ -270,15 +316,15 @@ export function renderTemplate(data: ResumeData): string {
       flex: 1;
       text-align: center;
       padding: 10px 6px 8px;
-      background: #f8f8fa;
+      background: ${p.surface};
       border-radius: 6px;
-      border: 1px solid #eeeef0;
+      border: 1px solid ${p.border};
     }
 
     .highlight-metric {
       font-size: 18px;
       font-weight: 800;
-      color: #FA5252;
+      color: ${p.accent};
       line-height: 1.1;
       margin-bottom: 2px;
     }
@@ -288,7 +334,7 @@ export function renderTemplate(data: ResumeData): string {
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      color: #999;
+      color: ${p.muted};
     }
 
     /* Summary */
@@ -298,7 +344,7 @@ export function renderTemplate(data: ResumeData): string {
 
     .summary-text {
       font-size: 9.5px;
-      color: #444;
+      color: ${p.text};
       line-height: 1.6;
     }
 
@@ -325,19 +371,19 @@ export function renderTemplate(data: ResumeData): string {
     .exp-role {
       font-size: 11.5px;
       font-weight: 700;
-      color: #1a1a2e;
+      color: ${p.text};
     }
 
     .exp-company {
       font-size: 10px;
-      color: #FA5252;
+      color: ${p.accent};
       font-weight: 500;
       margin-bottom: 5px;
     }
 
     .exp-dates {
       font-size: 9px;
-      color: #999;
+      color: ${p.muted};
       white-space: nowrap;
       font-weight: 500;
     }
@@ -348,7 +394,7 @@ export function renderTemplate(data: ResumeData): string {
 
     .exp-bullets li {
       font-size: 9px;
-      color: #444;
+      color: ${p.text};
       line-height: 1.6;
       margin-bottom: 3px;
     }
@@ -358,7 +404,7 @@ export function renderTemplate(data: ResumeData): string {
     }
 
     .exp-bullets li::marker {
-      color: #FA5252;
+      color: ${p.accent2};
       font-size: 8px;
     }
 
@@ -375,9 +421,9 @@ export function renderTemplate(data: ResumeData): string {
 
     .product-card {
       padding: 8px 12px;
-      background: #f8f8fa;
+      background: ${p.surface};
       border-radius: 6px;
-      border-left: 3px solid #FA5252;
+      border-left: 3px solid ${p.accent};
     }
 
     .product-top {
@@ -390,12 +436,12 @@ export function renderTemplate(data: ResumeData): string {
     .product-name {
       font-size: 10px;
       font-weight: 700;
-      color: #1a1a2e;
+      color: ${p.text};
     }
 
     .product-scope {
       font-size: 8px;
-      color: #999;
+      color: ${p.muted};
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -403,7 +449,7 @@ export function renderTemplate(data: ResumeData): string {
 
     .product-desc {
       font-size: 8.5px;
-      color: #555;
+      color: ${p.text};
       line-height: 1.5;
     }
   </style>

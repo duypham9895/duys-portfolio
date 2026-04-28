@@ -4,6 +4,11 @@ export interface Social {
   readonly icon: string;
 }
 
+export interface ResumeUrls {
+  readonly light: string;
+  readonly dark: string;
+}
+
 export interface Personal {
   readonly fullName: string;
   readonly title: string;
@@ -14,7 +19,7 @@ export interface Personal {
     readonly phone: string;
   };
   readonly socials: readonly Social[];
-  readonly resumeUrl: string;
+  readonly resumeUrls: ResumeUrls;
 }
 
 export const personal: Personal = {
@@ -35,5 +40,8 @@ export const personal: Personal = {
     { title: "Telegram", url: "https://t.me/phamanhduy", icon: "telegram" },
     { title: "Zalo", url: "https://zalo.me/0963769049", icon: "zalo" },
   ],
-  resumeUrl: "/resume.pdf",
+  resumeUrls: {
+    light: "/resume-light.pdf",
+    dark: "/resume-dark.pdf",
+  },
 };

@@ -28,8 +28,10 @@ pnpm-debug.log*
 # test artifacts
 test-results/
 
-# generated resume PDF
+# generated resume PDFs
 public/resume.pdf
+public/resume-light.pdf
+public/resume-dark.pdf
 
 # yarn legacy
 .yarn/

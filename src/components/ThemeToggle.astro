@@ -67,9 +67,17 @@
     const current = (): Theme =>
       document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 
+    const updateResumeLink = (theme: Theme): void => {
+      const link = document.getElementById("resume-link");
+      if (!link) return;
+      const href = link.getAttribute(`data-resume-${theme}`);
+      if (href) link.setAttribute("href", href);
+    };
+
     const apply = (theme: Theme): void => {
       document.documentElement.dataset.theme = theme;
       button.setAttribute("aria-label", labelFor(theme));
+      updateResumeLink(theme);
       try {
         localStorage.setItem("theme", theme);
       } catch {}
@@ -86,8 +94,10 @@
     mq.addEventListener("change", (e) => {
       try {
         if (!localStorage.getItem("theme")) {
-          document.documentElement.dataset.theme = e.matches ? "dark" : "light";
-          button.setAttribute("aria-label", labelFor(current()));
+          const next: Theme = e.matches ? "dark" : "light";
+          document.documentElement.dataset.theme = next;
+          button.setAttribute("aria-label", labelFor(next));
+          updateResumeLink(next);
         }
       } catch {}
     });

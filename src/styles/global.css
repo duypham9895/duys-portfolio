@@ -41,7 +41,7 @@
 
 @layer base {
   body {
-    background-color: var(--bg);
+    background-color: var(--surface);
     color: var(--text);
     -webkit-font-smoothing: antialiased;
   }

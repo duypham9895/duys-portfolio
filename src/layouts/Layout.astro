@@ -19,8 +19,8 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#1a1816" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f2ede4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#252220" media="(prefers-color-scheme: dark)" />
 
     {/* Anti-FOUC: resolve theme synchronously before paint. */}
     <script is:inline>
@@ -31,6 +31,13 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
             ? stored
             : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
           document.documentElement.dataset.theme = theme;
+          document.addEventListener("DOMContentLoaded", function () {
+            var link = document.getElementById("resume-link");
+            if (link) {
+              var href = link.getAttribute("data-resume-" + theme);
+              if (href) link.setAttribute("href", href);
+            }
+          });
         } catch (e) {
           document.documentElement.dataset.theme = "light";
         }
