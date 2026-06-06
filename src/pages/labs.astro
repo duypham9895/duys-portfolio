@@ -1,0 +1,182 @@
+---
+import Layout from "../layouts/Layout.astro";
+import LabCard from "../components/LabCard.astro";
+import Footer from "../components/Footer.astro";
+import { buildingLabs, labs, liveLabs } from "../data/labs";
+
+const githubCount = labs.filter((lab) => lab.githubUrl).length;
+const statuses = ["All", "Live", "Building"] as const;
+---
+
+<Layout
+  title="Duy Labs — Side Projects by Duy Pham"
+  description="A living catalog of Duy Pham's side projects, experiments, live products, and GitHub repositories under duypham.me and beyond."
+>
+  <section class="md:col-span-2 card fade-in labs-hero" aria-labelledby="labs-title">
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-[680px]">
+        <p class="section-label">Labs</p>
+        <h2 id="labs-title" class="text-[2.55rem] md:text-[3.35rem] leading-[0.98] font-bold text-text">
+          Duy Labs
+        </h2>
+        <p class="text-base md:text-lg text-muted leading-[1.75] mt-5">
+          A map of side projects, experiments, tools, and small product ideas I am building around
+          <span class="text-text font-semibold">duypham.me</span>.
+        </p>
+      </div>
+
+      <div class="labs-stats" aria-label="Labs summary">
+        <div>
+          <strong>{labs.length}</strong>
+          <span>projects</span>
+        </div>
+        <div>
+          <strong>{liveLabs.length}</strong>
+          <span>live</span>
+        </div>
+        <div>
+          <strong>{githubCount}</strong>
+          <span>repos</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="labs-status-nav" aria-label="Labs status shortcuts">
+      {statuses.map((status) => (
+        <a href={status === "All" ? "#labs-grid" : `#${status.toLowerCase()}`}>
+          {status}
+        </a>
+      ))}
+      <a href="https://github.com/duypham9895" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+  </section>
+
+  <section class="md:col-span-2" aria-labelledby="live">
+    <div class="labs-section-head">
+      <div>
+        <h2 id="live" class="text-2xl font-bold text-text">Live and active</h2>
+        <p class="text-sm text-muted mt-2 leading-relaxed">
+          Public projects with live URLs, repositories, current status, and a quick read on what each one does.
+        </p>
+      </div>
+      <span>{liveLabs.length} online</span>
+    </div>
+
+    <div id="labs-grid" class="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-4">
+      {liveLabs.map((project) => <LabCard project={project} />)}
+      {buildingLabs.map((project) => <LabCard project={project} />)}
+    </div>
+  </section>
+
+  <section id="building" class="md:col-span-2 card labs-note" aria-label="Labs note">
+    <div>
+      <h2 class="text-xl font-bold text-text">Always in motion</h2>
+      <p class="text-sm text-muted leading-[1.8] mt-3">
+        Some projects are stable, some are prototypes, and a few are still becoming useful. The page stays focused on
+        what is live, what is being built, and where the code lives.
+      </p>
+    </div>
+  </section>
+
+  <div class="md:col-span-2">
+    <Footer />
+  </div>
+</Layout>
+
+<style>
+  .labs-hero {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .labs-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.6rem;
+    min-width: min(100%, 320px);
+  }
+
+  .labs-stats div {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--bg) 44%, transparent);
+    padding: 0.95rem;
+  }
+
+  .labs-stats strong {
+    display: block;
+    color: var(--text);
+    font-size: 1.55rem;
+    line-height: 1;
+  }
+
+  .labs-stats span {
+    display: block;
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-top: 0.42rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .labs-status-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.6rem;
+  }
+
+  .labs-status-nav a {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text);
+    background: var(--surface-hover);
+    padding: 0.58rem 0.9rem;
+    font-size: 0.78rem;
+    font-weight: 750;
+    transition: border-color 150ms ease, color 150ms ease;
+  }
+
+  .labs-status-nav a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .labs-section-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .labs-section-head span {
+    border: 1px solid rgba(47, 158, 143, 0.32);
+    border-radius: 999px;
+    color: #2f9e8f;
+    background: rgba(47, 158, 143, 0.12);
+    padding: 0.45rem 0.7rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .labs-note {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .labs-stats {
+      grid-template-columns: 1fr;
+    }
+
+    .labs-section-head {
+      align-items: start;
+      flex-direction: column;
+    }
+  }
+</style>

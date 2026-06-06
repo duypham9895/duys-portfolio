@@ -6,6 +6,11 @@ import { socialIcons } from "../data/icons";
 import ThemeToggle from "./ThemeToggle.astro";
 
 const { fullName, title, contact, socials, resumeUrls } = personal;
+const pathname = Astro.url.pathname;
+const navLinks = [
+  { href: "/", label: "Portfolio", active: pathname === "/" },
+  { href: "/labs", label: "Labs", active: pathname.startsWith("/labs") },
+];
 ---
 
 <aside class="relative lg:sticky lg:top-6 h-fit">
@@ -35,6 +40,23 @@ const { fullName, title, contact, socials, resumeUrls } = personal;
 
     <!-- Divider -->
     <div class="h-px bg-border my-5"></div>
+
+    <nav class="grid grid-cols-2 gap-2 mb-5" aria-label="Site navigation">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            "rounded-[12px] border px-3 py-2.5 text-[12px] font-semibold transition-colors",
+            link.active
+              ? "bg-accent text-bg border-accent"
+              : "bg-surface-hover text-muted border-border hover:border-accent hover:text-accent",
+          ]}
+          aria-current={link.active ? "page" : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
 
     <!-- Contact info -->
     <div class="text-left space-y-3">
