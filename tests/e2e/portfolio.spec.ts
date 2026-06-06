@@ -30,11 +30,14 @@ test.describe("Portfolio page", () => {
     await expect(page.locator("#about")).toContainText("Bizzi Vietnam");
   });
 
-  test("has Experience section with 2 jobs", async ({ page }) => {
+  test("has Experience section with 3 roles", async ({ page }) => {
     await expect(page.locator("#experience")).toBeVisible();
-    await expect(page.locator("#experience h3")).toHaveCount(2);
+    await expect(page.locator("#experience h3")).toHaveCount(3);
     await expect(page.locator("#experience h3").first()).toContainText(
       "Associate Product Manager"
+    );
+    await expect(page.locator("#experience h3").nth(1)).toContainText(
+      "Software Engineer"
     );
     await expect(page.locator("#experience h3").last()).toContainText(
       "Software Engineer"

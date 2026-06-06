@@ -1,10 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <defs>
-    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FA5252"/>
-      <stop offset="100%" stop-color="#DD2476"/>
-    </linearGradient>
-  </defs>
-  <circle cx="16" cy="16" r="16" fill="url(#g)"/>
-  <text x="16" y="21" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="white">DP</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Duy Pham Terminal Compass logo">
+  <rect width="32" height="32" rx="8" fill="#252220" />
+  <path
+    d="M10.25 10.25H15.9C21.05 10.25 24.25 12.75 24.25 16C24.25 19.25 21.05 21.75 15.9 21.75H10.25V10.25Z"
+    fill="none"
+    stroke="#F2EDE4"
+    stroke-width="2.5"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M16 10.25L24.75 16L16 21.75"
+    fill="none"
+    stroke="#E07A3E"
+    stroke-width="2.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <circle cx="24.75" cy="16" r="1.5" fill="#D4B05A" />
+  <path
+    d="M10.25 25H24.25"
+    fill="none"
+    stroke="#D4B05A"
+    stroke-width="2.15"
+    stroke-linecap="round"
+  />
 </svg>

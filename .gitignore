@@ -28,6 +28,9 @@ pnpm-debug.log*
 # test artifacts
 test-results/
 
+# local isolated worktrees
+.worktrees/
+
 # generated resume PDFs
 public/resume.pdf
 public/resume-light.pdf
