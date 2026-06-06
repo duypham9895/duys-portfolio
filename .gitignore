@@ -28,6 +28,9 @@ pnpm-debug.log*
 # test artifacts
 test-results/
 
+# local agent scratch artifacts
+.superpowers/
+
 # local isolated worktrees
 .worktrees/
 
