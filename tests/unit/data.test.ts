@@ -3,6 +3,7 @@ import { personal } from "../../src/data/personal";
 import { experiences } from "../../src/data/experiences";
 import { skillGroups } from "../../src/data/skills";
 import { certifications } from "../../src/data/certifications";
+import { labs } from "../../src/data/labs";
 
 describe("personal data", () => {
   it("has correct name", () => {
@@ -135,6 +136,30 @@ describe("certifications data", () => {
   it("no Basic-level certs remain", () => {
     certifications.forEach((cert) => {
       expect(cert.name).not.toMatch(/\(Basic\)/);
+    });
+  });
+});
+
+describe("labs data", () => {
+  it("has a useful starter catalog", () => {
+    expect(labs.length).toBeGreaterThanOrEqual(4);
+  });
+
+  it("has unique slugs", () => {
+    const slugs = labs.map((lab) => lab.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
+  });
+
+  it("has at least one live project", () => {
+    expect(labs.some((lab) => lab.status === "Live")).toBe(true);
+  });
+
+  it("uses valid project links when provided", () => {
+    labs.forEach((lab) => {
+      if (lab.liveUrl) expect(lab.liveUrl).toMatch(/^https:\/\//);
+      if (lab.githubUrl) expect(lab.githubUrl).toMatch(/^https:\/\//);
+      expect(lab.tags.length).toBeGreaterThan(0);
+      expect(lab.description.length).toBeGreaterThan(20);
     });
   });
 });
