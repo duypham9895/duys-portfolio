@@ -2,5 +2,5 @@
   "framework": "astro",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "installCommand": "npm install && npx playwright install chromium"
+  "installCommand": "npm install && npx playwright install --with-deps chromium"
 }
