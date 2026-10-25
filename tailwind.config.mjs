@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  // Kit Room was approved on browser defaults; src/styles/kit-room.css owns the base styles.
+  corePlugins: { preflight: false },
   theme: {
     extend: {
       colors: {
@@ -22,14 +24,7 @@ export default {
         text: "var(--text)",
       },
       fontFamily: {
-        sans: [
-          "Inter",
-          "SF Pro Display",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "system-ui",
-          "sans-serif",
-        ],
+        sans: ["Archivo", "system-ui", "sans-serif"],
       },
     },
   },

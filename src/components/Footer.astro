@@ -1,18 +1,35 @@
 ---
 import { personal } from "../data/personal";
+
+interface Props {
+  /** The /labs page uses the slim footer: no lead line. */
+  slim?: boolean;
+}
+
+const { slim = false } = Astro.props;
+const linkedIn = personal.socials.find((social) => social.title === "LinkedIn");
+const email = personal.contact.email;
+const city = personal.contact.location.split(",")[0];
 ---
 
-<footer class="fade-in text-center py-8 mt-4 border-t border-border">
-  <p class="text-sm text-muted mb-3">
-    Interested in working together?
-  </p>
-  <a
-    href={`mailto:${personal.contact.email}`}
-    class="text-accent hover:underline underline-offset-4 text-sm font-medium"
-  >
-    {personal.contact.email}
-  </a>
-  <p class="text-[11px] text-muted mt-6">
-    Built with Astro &middot; {new Date().getFullYear()}
-  </p>
+<footer class:list={["footer", { slim }]}>
+  <span class="stripes" aria-hidden="true"></span>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div>
+        <span class="cafe-k"><span class="stripes mini" aria-hidden="true"></span><span class="label">Café stop</span></span>
+        {!slim && <p class="lead">Hiring for a Technical Product Manager, or want to compare notes on AI products in fintech?</p>}
+        <a class="mail" href={`mailto:${email}`}>{email}</a>
+      </div>
+      <div class="footer-cta">
+        <a class="btn btn-primary" href={`mailto:${email}`}>Email</a>
+        {linkedIn && <a class="btn btn-ghost" href={linkedIn.url} target="_blank" rel="noopener">LinkedIn</a>}
+        <a class="btn btn-ghost" href={personal.resumeUrl} target="_blank" rel="noopener">Resume (PDF)</a>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <span class="label">Built with Astro · {new Date().getFullYear()}</span>
+      <span class="label">{personal.fullName} · {city}</span>
+    </div>
+  </div>
 </footer>

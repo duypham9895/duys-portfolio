@@ -44,7 +44,7 @@ export const labs: readonly LabProject[] = [
     name: "Easel",
     slug: "easel",
     description:
-      "A couples wellbeing app concept that turns cycle tracking into phase-aware guidance and timely support signals.",
+      "A couples wellbeing app concept that turns menstrual-cycle tracking into phase-aware guidance and timely support signals.",
     status: "Live",
     type: "AI companion",
     tags: ["AI", "Wellbeing", "TypeScript"],
@@ -91,6 +91,15 @@ export const labs: readonly LabProject[] = [
     accent: "#4c9f70",
   },
 ];
+
+/** Slugs shown in the home Labs preview, in display order. */
+export const featured: readonly string[] = ["split-bill", "pm-assessment-gym", "evoyage"];
+
+export const featuredLabs: readonly LabProject[] = featured.map((slug) => {
+  const lab = labs.find((item) => item.slug === slug);
+  if (!lab) throw new Error(`Unknown featured lab: ${slug}`);
+  return lab;
+});
 
 export const liveLabs = labs.filter((lab) => lab.status === "Live");
 export const buildingLabs = labs.filter((lab) => lab.status === "Building");

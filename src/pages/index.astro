@@ -1,34 +1,31 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import AboutCard from "../components/AboutCard.astro";
+import Hero from "../components/Hero.astro";
+import Navbar from "../components/Navbar.astro";
+import SelectedWork from "../components/SelectedWork.astro";
 import ExperienceCard from "../components/ExperienceCard.astro";
+import AboutCard from "../components/AboutCard.astro";
 import SkillsCard from "../components/SkillsCard.astro";
+import LabsPreview from "../components/LabsPreview.astro";
 import CertsCoursesCard from "../components/CertsCoursesCard.astro";
 import Footer from "../components/Footer.astro";
 ---
 
 <Layout
-  title="Duy Pham — Associate Product Manager"
-  description="Duy Pham — Associate Product Manager with 5+ years building fintech platforms and AI systems across Southeast Asia. Previously a Software Engineer."
+  title="Duy Pham — Associate Product Manager · Technical PM direction"
+  description="Duy Pham — Associate Product Manager in Indonesian mortgage (KPR) fintech, working toward Technical Product Manager roles. 5+ years across software engineering and product, in fintech and B2B SaaS."
 >
-  <!-- About: full width -->
-  <div class="md:col-span-2">
-    <AboutCard />
-  </div>
+  <Fragment slot="header">
+    <Hero />
+    <Navbar />
+  </Fragment>
 
-  <!-- Experience: full width -->
-  <div class="md:col-span-2">
-    <ExperienceCard />
-  </div>
-
-  <!-- Skills: left half -->
+  <SelectedWork />
+  <ExperienceCard />
+  <AboutCard />
   <SkillsCard />
-
-  <!-- Certs & Courses: right half -->
+  <LabsPreview />
   <CertsCoursesCard />
 
-  <!-- Footer: full width -->
-  <div class="md:col-span-2">
-    <Footer />
-  </div>
+  <Footer slot="footer" />
 </Layout>

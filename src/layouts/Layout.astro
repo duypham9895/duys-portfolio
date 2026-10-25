@@ -1,14 +1,16 @@
 ---
 import "../styles/global.css";
-import Sidebar from "../components/Sidebar.astro";
+import "../styles/kit-room.css";
 import { personal } from "../data/personal";
 
 interface Props {
   title: string;
   description: string;
+  /** Extra class on <body>, e.g. "page-labs". */
+  bodyClass?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, bodyClass } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
@@ -19,28 +21,19 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#f2ede4" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#252220" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#FAFAF7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0B1120" media="(prefers-color-scheme: dark)" />
 
-    {/* Anti-FOUC: resolve theme synchronously before paint. */}
+    {/* Anti-FOUC: resolve the theme before paint and flag that JS runs (filters, menus). */}
     <script is:inline>
       (function () {
-        try {
-          var stored = localStorage.getItem("theme");
-          var theme = stored === "light" || stored === "dark"
-            ? stored
-            : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-          document.documentElement.dataset.theme = theme;
-          document.addEventListener("DOMContentLoaded", function () {
-            var link = document.getElementById("resume-link");
-            if (link) {
-              var href = link.getAttribute("data-resume-" + theme);
-              if (href) link.setAttribute("href", href);
-            }
-          });
-        } catch (e) {
-          document.documentElement.dataset.theme = "light";
+        var t = null;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (t !== "light" && t !== "dark") {
+          t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         }
+        document.documentElement.setAttribute("data-theme", t);
+        document.documentElement.classList.add("js");
       })();
     </script>
     <meta property="og:title" content={title} />
@@ -55,7 +48,10 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
     <title>{title}</title>
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -67,38 +63,38 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
       "sameAs": personal.socials.map(s => s.url),
     })} />
   </head>
-  <body>
-    <a
-      href="#main-content"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-accent focus:text-bg focus:px-4 focus:py-2 focus:rounded-lg"
-    >
-      Skip to content
-    </a>
+  <body class={bodyClass}>
+    <a class="skip" href="#main">Skip to content</a>
 
-    <div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-5 max-w-[1160px] mx-auto px-6 py-6 pb-16 min-h-screen">
-      <Sidebar />
-      <main id="main-content" class="grid grid-cols-1 md:grid-cols-2 gap-4 content-start">
-        <slot />
-      </main>
-    </div>
+    <slot name="header" />
+
+    <main id="main" class="wrap">
+      <slot />
+    </main>
+
+    <slot name="footer" />
 
     <script>
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.05, rootMargin: "50px" }
-      );
-
-      document.querySelectorAll(".fade-in").forEach((el, i) => {
-        (el as HTMLElement).style.transitionDelay = `${Math.min(i * 100, 300)}ms`;
-        observer.observe(el);
-      });
+      // Reveal: patches below the first screen rise as they approach; never hidden by default.
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!reduce && "IntersectionObserver" in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            let i = 0;
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              (entry.target as HTMLElement).style.setProperty("--d", `${i++ * 60}ms`);
+              entry.target.classList.add("go");
+              io.unobserve(entry.target);
+            });
+          },
+          { rootMargin: "0px 0px 15% 0px", threshold: 0 },
+        );
+        const vh = window.innerHeight;
+        document.querySelectorAll(".reveal").forEach((el) => {
+          if (el.getBoundingClientRect().top > vh * 1.15) io.observe(el);
+        });
+      }
     </script>
   </body>
 </html>

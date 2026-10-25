@@ -3,6 +3,8 @@ name: Deploy to Vercel
 on:
   push:
     branches: [develop]
+  pull_request:
+    branches: [develop]
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -30,6 +32,20 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Scan built pages for banned content
+        run: node scripts/qa/scan-dist.mjs
+
+      - name: Run e2e tests
+        run: npm run test:e2e
+
+      - name: Upload resume PDFs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resume-pdf
+          path: public/resume*.pdf
+          if-no-files-found: warn
 
   deploy:
     name: Deploy

@@ -1,18 +1,16 @@
 import { writeFileSync } from "fs";
 import { exec } from "child_process";
+import { tmpdir } from "os";
+import { join } from "path";
 import { transform } from "./transform";
-import { renderTemplate, type ResumeTheme } from "./template";
+import { renderTemplate } from "./template";
 
-const argTheme = process.argv[2];
-const theme: ResumeTheme = argTheme === "dark" ? "dark" : "light";
-const PREVIEW_PATH = `/tmp/resume-preview-${theme}.html`;
+const PREVIEW_PATH = join(tmpdir(), "resume-preview.html");
 
-const data = transform();
-const html = renderTemplate(data, theme);
-writeFileSync(PREVIEW_PATH, html, "utf-8");
+writeFileSync(PREVIEW_PATH, renderTemplate(transform()), "utf-8");
 
-console.log(`Preview (${theme}) written to ${PREVIEW_PATH}`);
-exec(`open ${PREVIEW_PATH}`, (error) => {
+console.log(`Preview written to ${PREVIEW_PATH}`);
+exec(`open "${PREVIEW_PATH}"`, (error) => {
   if (error) {
     console.log(`Open it manually: file://${PREVIEW_PATH}`);
   }
