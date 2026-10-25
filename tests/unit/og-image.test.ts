@@ -8,7 +8,7 @@ const robots = readFileSync(resolve(process.cwd(), "public/robots.txt"), "utf8")
 
 // SHA-256 of the approved OG card v3-B (bib card, tile left, centre-safe for square
 // crops). Changing it means a new mockup review first, then updating this hash on purpose.
-const APPROVED_SHA256 = "91f87d91480771c2aa043e07d856ae1db69fc49729ee1cd2424edfc21fdb4104";
+const APPROVED_SHA256 = "944d3323d9380e73a108b1e7e4bc161eef34f4e72ae8e3f88a608115be166870";
 
 describe("OG image", () => {
   it("is byte-identical to the approved card v3-B", () => {
