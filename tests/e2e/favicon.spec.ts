@@ -1,7 +1,9 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { expect, test } from "@playwright/test";
 
 test.describe("Favicon", () => {
-  test("links to the Terminal Compass SVG favicon", async ({ page, request }) => {
+  test("links to the Kit Room plaque SVG favicon", async ({ page, request }) => {
     await page.goto("/");
 
     const faviconHref = await page
@@ -10,17 +12,24 @@ test.describe("Favicon", () => {
 
     expect(faviconHref).toBe("/favicon.svg");
 
-    const faviconUrl = new URL(faviconHref!, page.url()).toString();
-    const response = await request.get(faviconUrl);
+    const response = await request.get(new URL(faviconHref!, page.url()).toString());
     expect(response.ok()).toBe(true);
     expect(response.headers()["content-type"]).toContain("image/svg+xml");
 
-    const svg = await response.text();
-    expect(svg).toContain("#252220");
-    expect(svg).toContain("#F2EDE4");
-    expect(svg).toContain("#E07A3E");
-    expect(svg).toContain("#D4B05A");
-    expect(svg).not.toContain("<text");
-    expect(svg).not.toContain("linearGradient");
+    // The unit test pins public/favicon.svg to the approved design; here we prove
+    // the site serves that exact file.
+    expect(await response.text()).toBe(readFileSync(resolve(process.cwd(), "public/favicon.svg"), "utf8"));
+  });
+
+  test("links an apple-touch-icon PNG", async ({ page, request }) => {
+    await page.goto("/");
+
+    const href = await page.locator('link[rel="apple-touch-icon"]').getAttribute("href");
+    expect(href).toBe("/apple-touch-icon.png");
+
+    const response = await request.get(new URL(href!, page.url()).toString());
+    expect(response.ok()).toBe(true);
+    expect(response.headers()["content-type"]).toContain("image/png");
+    expect((await response.body()).equals(readFileSync(resolve(process.cwd(), "public/apple-touch-icon.png")))).toBe(true);
   });
 });
