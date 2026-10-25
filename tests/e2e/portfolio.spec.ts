@@ -70,6 +70,20 @@ test.describe("Portfolio page", () => {
       await expect(tip).toBeHidden();
     });
 
+    test("gap tooltip opens on hover, also after an unrelated Escape", async ({ page }) => {
+      await page.setViewportSize({ width: 1280, height: 800 });
+      const tip = page.locator(".gap-tip");
+      await page.locator(".gap-zone").hover();
+      await expect(tip).toBeVisible();
+
+      // Pointer away from the strip, Escape pressed elsewhere: the next hover must still open the tooltip.
+      await page.locator(".hero h1").hover();
+      await expect(tip).toBeHidden();
+      await page.keyboard.press("Escape");
+      await page.locator(".gap-zone").hover();
+      await expect(tip).toBeVisible();
+    });
+
     test("has About section", async ({ page }) => {
       await expect(page.locator("#about")).toBeVisible();
     });
@@ -180,12 +194,49 @@ test.describe("Theme tokens", () => {
   });
 });
 
+test.describe("Theme toggle", () => {
+  test.use({ colorScheme: "light" });
+
+  test("click flips data-theme, persists across reload and onto /labs", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/");
+    const html = page.locator("html");
+    await expect(html).toHaveAttribute("data-theme", "light");
+
+    const toggle = page.locator(".theme-toggle:visible").first();
+    await expect(toggle).toHaveAttribute("aria-label", "Switch to dark theme");
+    await toggle.click();
+    await expect(html).toHaveAttribute("data-theme", "dark");
+    await expect(toggle).toHaveAttribute("aria-label", "Switch to light theme");
+
+    await page.reload();
+    await expect(html).toHaveAttribute("data-theme", "dark");
+
+    await page.goto("/labs");
+    await expect(html).toHaveAttribute("data-theme", "dark");
+  });
+});
+
 test.describe("Responsive layout", () => {
   test("desktop: hero and main visible", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto("/");
     await expect(page.locator("header.hero")).toBeVisible();
     await expect(page.locator("main")).toBeVisible();
+  });
+
+  test("mobile: the between-roles divider reads as one sentence", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/");
+    await expect(page.locator(".strip")).toBeHidden();
+    const divider = page.locator("ol.seasons > li.m-break");
+    await expect(divider).toBeVisible();
+    await expect(divider).not.toHaveAttribute("role");
+    await expect(divider.locator("ul")).toHaveCount(0);
+    const text = `${await divider.locator(".ln").textContent()} ${await divider.locator("p").textContent()}`;
+    expect(text.replace(/\s+/g, " ").trim()).toBe(
+      "Between roles · SEP–NOV 2022. Courses completed: React (Udemy, Sep 2022), JavaScript Intermediate (HackerRank, Oct 2022), Go (Udemy, Nov 2022).",
+    );
   });
 
   test("mobile: Menu opens and closes after picking a link", async ({ page }) => {

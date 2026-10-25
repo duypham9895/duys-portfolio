@@ -26,6 +26,11 @@ const BETWEEN = "Between roles";
 const TIP_TITLE = "Base training";
 const shortDate = (date: string): string => date.replace(/ \d{2}(\d{2})$/, " $1"); // "Sep 2022" → "Sep 22"
 const coursesIn = (gap: StripGapSegment) => datedWithin(certifications, gap);
+// One sentence for the divider row: "Courses completed: React (Udemy, Sep 2022), …".
+const coursesSentence = (gap: StripGapSegment): string =>
+  `Courses completed: ${coursesIn(gap)
+    .map((course) => `${course.courseLabel ?? course.shortName} (${course.organization}, ${course.date})`)
+    .join(", ")}.`;
 
 const earliest = roleSegments[0]?.experience.startDate;
 const dateLine = (experience: (typeof experiences)[number]): string =>
@@ -89,12 +94,9 @@ const dateLine = (experience: (typeof experiences)[number]): string =>
       return (
         <>
           {gap && (
-            <li class="m-break" role="separator" aria-label={`${BETWEEN} · ${gap.label}`}>
-              <span class="ln">{BETWEEN} · {gap.label}</span>
-              <p>Courses completed:</p>
-              <ul class="gap-courses">
-                {coursesIn(gap).map((course) => <li><b>{shortDate(course.date)}</b><span>{course.shortName} · {course.organization}</span></li>)}
-              </ul>
+            <li class="m-break">
+              <span class="ln">{BETWEEN} · {gap.label}<span class="sr-only">.</span></span>
+              <p>{coursesSentence(gap)}</p>
             </li>
           )}
           <li class:list={["season", "reveal", { lead: i === 0 }]} style={`--band: ${BAND[chronoIndex(experience)]}`}>
@@ -123,8 +125,11 @@ const dateLine = (experience: (typeof experiences)[number]): string =>
     strip.addEventListener("mouseleave", reset);
     strip.addEventListener("focusout", reset);
   });
+  // Only dismiss when a gap tooltip is actually showing, so an unrelated Escape doesn't block the next hover.
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
-    document.querySelectorAll(".strip").forEach((strip) => strip.classList.add("dismissed"));
+    document.querySelectorAll(".strip").forEach((strip) => {
+      if (strip.querySelector(".gap-zone:hover, .gap-zone:focus-visible, .gap-tip:hover")) strip.classList.add("dismissed");
+    });
   });
 </script>

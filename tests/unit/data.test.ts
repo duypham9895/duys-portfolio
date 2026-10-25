@@ -173,11 +173,16 @@ describe("case studies data", () => {
     expect(pillar.title).toBe("Why partners can't rewrite the AI agents they run");
     const options = pillar.rows.find((r) => r.label === "Options")?.options ?? [];
     expect(options).toHaveLength(2);
-    expect(options.find((o) => o.chosen)?.key).toBe("B");
+    expect(options.find((o) => o.chosen)?.key).toBe("2");
     const decision = pillar.rows.find((r) => r.label === "Decision")?.paragraphs.join(" ") ?? "";
-    expect(decision).toContain("I recommended option B");
+    expect(decision).toContain("I recommended option 2");
+    expect(decision).toContain("in return");
     expect(decision).toContain("Ringkas's review");
     expect(decision).toContain("planned, not yet built");
+    const outcome = pillar.rows.find((r) => r.label === "Outcome")?.paragraphs.join(" ") ?? "";
+    expect(outcome).toContain("uses it in enterprise tenders");
+    const all = pillar.rows.flatMap((r) => [...r.paragraphs, ...(r.options ?? []).map((o) => o.text)]).join(" ");
+    expect(all).not.toContain("bids");
   });
 });
 

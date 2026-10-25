@@ -24,7 +24,7 @@ It also applies Duy's gap-label pick **B**.
 **Goal:** Ship the approved Kit Room v2 design (home + `/labs`), the Night Stage dark theme, the corrected content (Duy's inputs) and the single-column ATS resume into the Astro site. Work on branch `feat/kit-room-theme` from `develop` and open a PR. **Do not merge**; Duy merges.
 
 **Approved sources of truth:**
-- Design: `docs/mockups/cycling-theme/kit-room-v2.html` (home) and `kit-room-v2-labs.html` (labs). Night Stage dark, the left-to-right strip and no avatar are already applied there. Canvas: https://claude.ai/artifact/Wzua4hMLLxHLnoG4UAyhyL
+- Design: `docs/mockups/cycling-theme/kit-room-v2.html` (home) and `kit-room-v2-labs.html` (labs). Night Stage dark, the left-to-right strip and no avatar are already applied there.
 - Content: `docs/mockups/cycling-theme/INPUTS.md` (authoritative; its "Approvals" section records that Duy approved the v2 copy, the DRAFT blocks included, on 2026-10-25), then `src/data/*.ts`.
 - Resume: `docs/mockups/cycling-theme/resume/resume.html` + `render.mjs` + `RESEARCH.md`.
 - **Gap label (Duy picked B on 2026-10-25):**
@@ -215,7 +215,7 @@ It also applies Duy's gap-label pick **B**.
   2. **one feature commit**: lib + data + components + pages + resume generator + all unit tests (data, content-rules, seasonStrip, guard, resume text)
   3. e2e tests
   4. this plan file, with no private client names
-- **`docs/mockups/` is NOT committed [R2-public].** The repo is PUBLIC, and `INPUTS.md` plus the superseded mockups hold a confidential client name, internal team details and retracted claims.
+- **`docs/mockups/` is NOT committed [R2-public].** The repo is PUBLIC, and `INPUTS.md` plus the superseded mockups are private working material.
   - They stay local and untracked.
   - The PR says so, and Duy decides later whether a redacted subset goes public.
 - Before each commit, grep the staged diff for the private terms and the `BANNED` list (`git diff --cached`).
@@ -292,7 +292,7 @@ It also applies Duy's gap-label pick **B**.
   - the CI artifact note
   - **a "Copy items to confirm before merge" list:**
     - positioning line
-    - case-study prose, including case 02 having no Options row
+    - case-study prose, including the case 02 version B copy
     - About lines
     - footer lead
     - home Labs intro

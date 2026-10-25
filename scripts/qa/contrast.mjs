@@ -2,6 +2,8 @@
 // Usage: node scripts/qa/contrast.mjs [baseUrl]   (default http://localhost:4321)
 // Text needs 4.5:1 (3:1 when large); interactive controls need a 3:1 boundary (WCAG 1.4.11).
 // Static chips are labels, not controls, and .gap-zone is an intentionally invisible hover target.
+// Every <details> is opened and the gap tooltip forced visible first, so hidden-by-default states are measured.
+// A text-only <summary> (no border, no fill) is a text control: its text is checked, not a 3:1 boundary.
 import { chromium } from "@playwright/test";
 
 const BASE = (process.argv[2] ?? "http://localhost:4321").replace(/\/$/, "");
@@ -9,7 +11,7 @@ const PAGES = ["/", "/labs"];
 const WIDTHS = [1440, 390];
 const THEMES = ["light", "dark"];
 const UI_SELECTOR =
-  "input, select, textarea, button:not(.gap-zone), .btn, .filters button, .theme-toggle, [role=button]";
+  "input, select, textarea, button:not(.gap-zone), .btn, .filters button, .theme-toggle, [role=button], summary, .socials a";
 
 /** Runs in the page: returns every text and UI pair with its colors and ratio. */
 function collectPairs(uiSelector) {
@@ -88,8 +90,11 @@ function collectPairs(uiSelector) {
     const s = getComputedStyle(el);
     const outside = bgOf(el.parentElement).color;
     const fill = over(rgba(s.backgroundColor), outside);
+    const hasBorder = parseFloat(s.borderTopWidth) > 0 && rgba(s.borderTopColor)[3] > 0;
+    const hasFill = rgba(s.backgroundColor)[3] > 0;
+    if (el.tagName === "SUMMARY" && !hasBorder && !hasFill) continue; // text-only: covered by the text pass
     const candidates = [{ what: "fill", c: fill }];
-    if (parseFloat(s.borderTopWidth) > 0) candidates.push({ what: "border", c: over(rgba(s.borderTopColor), outside) });
+    if (hasBorder) candidates.push({ what: "border", c: over(rgba(s.borderTopColor), outside) });
     const best = candidates.map((x) => ({ ...x, r: ratio(x.c, outside) })).sort((a, b) => b.r - a.r)[0];
     pairs.push({
       kind: "ui", el: label(el), text: (el.textContent || el.getAttribute("aria-label") || "").trim().slice(0, 40),
@@ -107,7 +112,11 @@ for (const path of PAGES) {
       const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: "reduce" });
       const page = await context.newPage();
       await page.goto(BASE + path, { waitUntil: "networkidle" });
-      await page.evaluate((t) => document.documentElement.setAttribute("data-theme", t), theme);
+      await page.evaluate((t) => {
+        document.documentElement.setAttribute("data-theme", t);
+        document.querySelectorAll("details").forEach((d) => (d.open = true));
+        document.querySelectorAll(".gap-tip").forEach((tip) => (tip.style.display = "block"));
+      }, theme);
       await page.waitForTimeout(400);
       const pairs = (await page.evaluate(collectPairs, UI_SELECTOR)).sort((a, b) => a.ratio - b.ratio);
       const fails = pairs.filter((p) => p.ratio < p.min);

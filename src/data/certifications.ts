@@ -2,6 +2,8 @@ export interface Certification {
   readonly name: string;
   /** Short form for aria-labels, e.g. "Claude 101". */
   readonly shortName: string;
+  /** Bare course name for the between-roles sentence, e.g. "React". Falls back to shortName. */
+  readonly courseLabel?: string;
   readonly organization: string;
   readonly date: string;
   readonly credentialUrl: string;
@@ -32,6 +34,7 @@ export const certifications: readonly Certification[] = [
   {
     name: "Go: The Complete Developer's Guide (Golang)",
     shortName: "Go: The Complete Developer's Guide",
+    courseLabel: "Go",
     organization: "Udemy",
     date: "Nov 2022",
     credentialUrl: "https://ude.my/UC-e42bf207-582f-468e-a55a-508f47ab5436",
@@ -39,6 +42,7 @@ export const certifications: readonly Certification[] = [
   {
     name: "React - The Complete Guide",
     shortName: "React - The Complete Guide",
+    courseLabel: "React",
     organization: "Udemy",
     date: "Sep 2022",
     credentialUrl: "https://ude.my/UC-4e7ddc8d-97e9-48d7-aaf8-d7d7bb598bc8",
@@ -53,6 +57,7 @@ export const certifications: readonly Certification[] = [
   {
     name: "JavaScript (Intermediate)",
     shortName: "JavaScript (Intermediate)",
+    courseLabel: "JavaScript Intermediate",
     organization: "HackerRank",
     date: "Oct 2022",
     credentialUrl: "https://www.hackerrank.com/certificates/iframe/3f36d699fb65",

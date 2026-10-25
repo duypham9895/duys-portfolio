@@ -98,13 +98,8 @@ export const caseStudies: readonly CaseStudy[] = [
     rows: [
       {
         label: "Context",
-        paragraphs: ["Pillar is built so B2B partners can run their own AI agents, in two parts:"],
-        arch: [
-          { name: "Pillar Portal", description: "Where partners configure their agent." },
-          {
-            name: "Pillar ChatApp",
-            description: "An embeddable widget SDK that serves the agent to their customers.",
-          },
+        paragraphs: [
+          "Pillar is built so B2B partners can run their own AI agents. They configure the agent in Pillar Portal, and Pillar ChatApp, an embeddable widget SDK, serves it to their customers.",
         ],
       },
       {
@@ -117,9 +112,9 @@ export const caseStudies: readonly CaseStudy[] = [
         label: "Options",
         paragraphs: [],
         options: [
-          { key: "A", text: "Let partners edit the whole agent: model, prompt and skills." },
+          { key: "1", text: "Let partners edit the whole agent: model, prompt and skills." },
           {
-            key: "B",
+            key: "2",
             text: "Keep Ringkas's base prompt and template fixed, and let partners append their own instructions on top.",
             chosen: true,
           },
@@ -129,7 +124,9 @@ export const caseStudies: readonly CaseStudy[] = [
         label: "Decision",
         key: true,
         paragraphs: [
-          "I recommended option B, and it is what we built. Ringkas defines the base prompt, model and skills; partners append their instructions on top. The trade-off: partners get less freedom to change the core, and every agent runs on a base Ringkas controls.",
+          "I recommended option 2, and it is what we built.",
+          "Ringkas defines the base prompt, model and skills, and partners append their instructions on top.",
+          "The trade-off: partners get less freedom to change the core, and in return every agent runs on a base Ringkas controls.",
           "I also proposed the upgrade rule: when a partner moves to a newer template, the chat link their customers already use keeps working, their settings carry over, and the agent goes back through Ringkas's review before it answers again.",
           "Separately, I wrote the decision memo for a privacy layer that masks customers' personal data before it reaches any third-party model. Leadership approved it; it is planned, not yet built.",
         ],
@@ -138,7 +135,7 @@ export const caseStudies: readonly CaseStudy[] = [
         label: "Outcome",
         key: true,
         paragraphs: [
-          "Deployed to production. Ringkas demos it and bids with it in enterprise tenders; the widget SDK is rolling out to its first enterprise client.",
+          "Deployed to production. Ringkas demos it and uses it in enterprise tenders, and the widget SDK is rolling out to its first enterprise client.",
         ],
       },
     ],

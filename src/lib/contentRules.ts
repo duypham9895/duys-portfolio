@@ -26,7 +26,7 @@ function leadOnly(body: string): BannedPattern {
 }
 
 /**
- * Claims Duy retracted or never verified (INPUTS #3, #5, #7, #9, #10, #12b).
+ * Wording the site must not use: unverified claims and terms outside the approved copy.
  * Every pattern is case-insensitive and carries its own anchors.
  */
 export const BANNED: readonly BannedPattern[] = [

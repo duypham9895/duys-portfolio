@@ -16,11 +16,15 @@ const filters = [
     count: labs.filter((lab) => lab.status === status).length,
   })).filter((filter) => filter.count > 0),
 ];
+
+// Meta description count, computed from labs.ts so it never drifts.
+const WORDS = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"];
+const countWord = (n: number): string => WORDS[n] ?? String(n);
 ---
 
 <Layout
   title="Labs — Duy Pham"
-  description="Labs by Duy Pham: side builds to test product questions. Six projects with status, stack and links."
+  description={`Labs by Duy Pham: side builds to test product questions. ${countWord(labs.length)} projects with status, stack and links.`}
   bodyClass="page-labs"
 >
   <Topbar slot="header" />
