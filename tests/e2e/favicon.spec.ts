@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { expect, test } from "@playwright/test";
 
 test.describe("Favicon", () => {
-  test("links to the Kit Room plaque SVG favicon", async ({ page, request }) => {
+  test("links to the Kit Room stage-profile SVG favicon", async ({ page, request }) => {
     await page.goto("/");
 
     const faviconHref = await page
