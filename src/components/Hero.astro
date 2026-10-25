@@ -1,0 +1,97 @@
+---
+import { personal } from "../data/personal";
+
+const linkedIn = personal.socials.find((social) => social.title === "LinkedIn");
+// v2 order inside "Phone & other profiles"; LinkedIn is a primary CTA instead.
+const otherProfiles = ["Telegram", "Zalo", "GitHub"]
+  .map((title) => personal.socials.find((social) => social.title === title))
+  .filter((social) => social !== undefined);
+const tel = `tel:${personal.contact.phone.replace(/\s+/g, "")}`;
+---
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="topbar">
+      <a class="wordmark" href="#top" aria-label="Duy Pham, home">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 30V11a9 9 0 0 1 18 0v19z" fill="var(--bib)" stroke="var(--text)" stroke-width="2.5"></path><path d="M8.3 10a7.7 7.7 0 0 1 15.4 0z" fill="var(--stripe-1)"></path><rect x="11" y="16" width="10" height="3" fill="var(--text)"></rect></svg>
+        DUYPHAM.ME
+      </a>
+      <div class="topbar-right">
+        <a class="lablink" href="/labs">Labs →</a>
+      </div>
+    </div>
+
+    <div class="hero-grid">
+      <div class="bib">
+        <span class="stripes" aria-hidden="true"></span>
+        <span class="pin tl" aria-hidden="true"></span><span class="pin tr" aria-hidden="true"></span>
+        <span class="pin bl" aria-hidden="true"></span><span class="pin br" aria-hidden="true"></span>
+        <div class="bib-body">
+          <div class="bib-top">
+            <span class="label kicker-rc">Product · Mortgage (KPR) fintech</span>
+            <span class="label">Vietnam × Indonesia</span>
+          </div>
+          <p class="bib-name" aria-hidden="true">{personal.fullName}</p>
+          <div class="bib-lower">
+            <div class="bib-no">
+              <span class="num">2020</span>
+              <span class="label">Career start</span>
+            </div>
+            <div class="bib-id">
+              <h1><span class="sr-only">{personal.fullName}, </span>{personal.title}</h1>
+              <p class="pos">{personal.positioning}</p>
+              <p class="sub"><b>Ringkas</b> · 5+ years across engineering and product · Ho Chi Minh City</p>
+            </div>
+          </div>
+          <ul class="proof" aria-label="Verified results">
+            <li><span class="pk">OCR success</span><b>40% → 85%+</b></li>
+            <li><span class="pk">VLM POC</span><b>−89% cost, +48% latency</b><small>(benchmarked)</small></li>
+            <li><span class="pk">Pillar</span><b>B2B AI-agent platform in production</b></li>
+          </ul>
+          <div class="bib-actions">
+            <a class="btn btn-primary" href={`mailto:${personal.contact.email}`}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1"></rect><path d="m3 7 9 6 9-6"></path></svg>
+              Email
+            </a>
+            {linkedIn && (
+              <a class="btn btn-ghost" href={linkedIn.url} target="_blank" rel="noopener">
+                LinkedIn
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+              </a>
+            )}
+            <a class="btn btn-ghost" href={personal.resumeUrl} target="_blank" rel="noopener">
+              Resume (PDF)
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"></path></svg>
+            </a>
+          </div>
+        </div>
+        <div class="bib-foot" aria-hidden="true">
+          <span class="label">duypham.me</span>
+          <span class="label">Technical PM direction · Vietnam × Indonesia</span>
+        </div>
+      </div>
+
+      <div class="idcol">
+        <div class="idinfo">
+          <dl class="profile">
+            <div><dt class="label">Location</dt><dd>{personal.location}</dd></div>
+            <div><dt class="label">Languages</dt><dd>{personal.languages.join(" · ")}</dd></div>
+            <div><dt class="label">Education</dt><dd>{personal.education}</dd></div>
+            <div><dt class="label">Email</dt><dd><a href={`mailto:${personal.contact.email}`}>{personal.contact.email}</a></dd></div>
+          </dl>
+          <details class="more">
+            <summary>Phone &amp; other profiles</summary>
+            <div class="more-body">
+              <a href={tel}>{personal.contact.phone}</a>
+              <ul class="socials" aria-label="Other profiles">
+                {otherProfiles.map((social) => (
+                  <li><a href={social.url} target="_blank" rel="noopener">{social.title}</a></li>
+                ))}
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,39 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+
+// Home only. Rendered on "/", so in-page anchors are enough.
+const links = [
+  { href: "#work", label: "Work", menuLabel: "Selected work" },
+  { href: "#experience", label: "Experience" },
+  { href: "#about", label: "About" },
+  { href: "#skills", label: "Skills" },
+  { href: "#labs", label: "Labs" },
+  { href: "#certifications", label: "Certifications" },
+] as const;
+---
+
+<nav class="navbar" aria-label="Sections">
+  <div class="wrap">
+    <a class="nav-id" href="#top">DUY PHAM<small>APM · RINGKAS</small></a>
+    <ul class="nav-links">
+      {links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+    </ul>
+    <div class="nav-right">
+      <details class="menu">
+        <summary>Menu</summary>
+        <ul>
+          {links.map((link) => <li><a href={link.href}>{"menuLabel" in link ? link.menuLabel : link.label}</a></li>)}
+        </ul>
+      </details>
+      <ThemeToggle />
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Close the mobile menu after picking a section.
+  const menu = document.querySelector<HTMLDetailsElement>(".menu");
+  menu?.addEventListener("click", (event) => {
+    if ((event.target as HTMLElement).tagName === "A") menu.removeAttribute("open");
+  });
+</script>

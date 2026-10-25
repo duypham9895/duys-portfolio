@@ -1,22 +1,39 @@
 ---
 import { personal } from "../data/personal";
+import { experiences } from "../data/experiences";
+import { parseMonth } from "../lib/seasonStrip";
 
-function renderBoldedHtml(text: string): string {
-  return text.replace(
-    /\*\*([^*]+)\*\*/g,
-    '<strong class="text-text font-medium">$1</strong>'
-  );
-}
+// "Oct 2020 – now · Bizzi Vietnam → Ringkas", from the roles, oldest first.
+const chronological = [...experiences].sort(
+  (a, b) => parseMonth(a.startDate).getTime() - parseMonth(b.startDate).getTime(),
+);
+const companies = [...new Set(chronological.map((experience) => experience.shortCompany))];
+const span = `${chronological[0]?.startDate} – now · ${companies.join(" → ")}`;
 ---
 
-<div class="card fade-in" id="about">
-  <h2 class="section-label">About Me</h2>
-  {
-    personal.bio.map((paragraph) => (
-      <p
-        class="text-sm text-muted leading-[1.85] mb-4 last:mb-0"
-        set:html={renderBoldedHtml(paragraph)}
-      />
-    ))
-  }
-</div>
+<section class="section" id="about" aria-labelledby="h-about">
+  <div class="sec-head">
+    <div>
+      <div class="sec-kicker"><span class="stripes mini" aria-hidden="true"></span><span class="label">03 · How I work</span></div>
+      <h2 class="h" id="h-about">About</h2>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="patch span-12 about reveal">
+      <div>
+        <p class="opener">{personal.about.opener}</p>
+        <span class="label">{span}</span>
+      </div>
+      <ol class="hiw">
+        {personal.about.howIWork.map((item) => (
+          <li>
+            <div>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

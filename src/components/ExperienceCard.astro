@@ -1,41 +1,130 @@
 ---
 import { experiences } from "../data/experiences";
+import { certifications } from "../data/certifications";
+import { datedWithin, seasonStrip } from "../lib/seasonStrip";
+import type { StripGapSegment, StripRoleSegment } from "../lib/seasonStrip";
+import { renderInline } from "../lib/inlineMarkup";
+
+// Built at deploy time, so "Now" is the build date.
+const strip = seasonStrip(experiences, new Date());
+const roleSegments = strip.segments.filter((s): s is StripRoleSegment => s.kind === "role");
+
+// Chronological colour per role, oldest first: kit ink, cobalt, jersey yellow (v2 strip + season bands).
+const SEGMENT_CLASS = ["seg-a", "seg-b", "seg-c"] as const;
+const BAND = ["var(--stripe-2)", "var(--stripe-1)", "var(--stripe-3)"] as const;
+const chronoIndex = (experience: (typeof experiences)[number]): number =>
+  roleSegments.findIndex((segment) => segment.experience === experience);
+
+// The gap that directly follows a role, if any (drawn on the strip, and as a divider row before that role's card).
+const gapAfter = (experience: (typeof experiences)[number]): StripGapSegment | undefined => {
+  const at = strip.segments.findIndex((s) => s.kind === "role" && s.experience === experience);
+  const next = strip.segments[at + 1];
+  return next?.kind === "gap" ? next : undefined;
+};
+
+const BETWEEN = "Between roles";
+const TIP_TITLE = "Base training";
+const shortDate = (date: string): string => date.replace(/ \d{2}(\d{2})$/, " $1"); // "Sep 2022" → "Sep 22"
+const coursesIn = (gap: StripGapSegment) => datedWithin(certifications, gap);
+
+const earliest = roleSegments[0]?.experience.startDate;
+const dateLine = (experience: (typeof experiences)[number]): string =>
+  `${experience.startDate} – ${experience.endDate ?? "Present"}${experience.domain ? ` · ${experience.domain}` : ""}`;
 ---
 
-<div class="card fade-in" id="experience">
-  <h2 class="section-label">Experience</h2>
-  <div class="relative pl-6">
-    <!-- Timeline line -->
-    <div class="absolute left-[5px] top-[10px] bottom-[10px] w-px bg-border"></div>
-
-    {experiences.map((exp, i) => (
-      <div class:list={["relative", { "mb-7": i < experiences.length - 1 }]}>
-        <!-- Timeline dot — mustard, the categorical accent -->
-        <div
-          class="absolute -left-6 top-2 w-[11px] h-[11px] rounded-full"
-          style="background: var(--accent-2); box-shadow: 0 0 0 3px var(--bg);"
-        ></div>
-
-        <div class="flex justify-between items-baseline flex-wrap gap-2">
-          <h3 class="text-base font-semibold text-text">{exp.jobTitle}</h3>
-          <span class="text-[11px] text-muted whitespace-nowrap">
-            {exp.startDate} — {exp.endDate ?? "Present"}
-          </span>
-        </div>
-        <a
-          href={exp.companyUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-[13px] text-accent block mt-1 mb-2.5 hover:underline underline-offset-4"
-        >
-          {exp.companyName}
-        </a>
-        <ul class="text-[12.5px] text-muted pl-4 leading-[1.75] list-disc">
-          {exp.description.map((item) => (
-            <li class="mb-1">{item}</li>
-          ))}
-        </ul>
-      </div>
-    ))}
+<section class="section" id="experience" aria-labelledby="h-exp">
+  <div class="sec-head">
+    <div>
+      <div class="sec-kicker"><span class="stripes mini" aria-hidden="true"></span><span class="label">02 · {earliest} – Present · roles listed newest first</span></div>
+      <h2 class="h" id="h-exp">Experience</h2>
+    </div>
   </div>
-</div>
+
+  {/* Season strip: chronological left → right on a true day scale, computed by src/lib/seasonStrip.ts. */}
+  <div class="strip">
+    <div class="strip-callout" aria-hidden="true">
+      {strip.segments.map((segment) =>
+        segment.kind === "gap" && (
+          <div class="gap-co" style={`left:${(segment.offset + segment.width / 2).toFixed(3)}%`}>{BETWEEN} · {segment.label}</div>
+        ),
+      )}
+    </div>
+    <div class="strip-track" aria-hidden="true">
+      {strip.segments.map((segment) =>
+        segment.kind === "gap" ? (
+          <span class="seg-gap" style={`width:${segment.width.toFixed(2)}%`}></span>
+        ) : (
+          <span class={SEGMENT_CLASS[chronoIndex(segment.experience)]} style={`width:${segment.width.toFixed(2)}%`}></span>
+        ),
+      )}
+    </div>
+    <div class="strip-names" aria-hidden="true">
+      {roleSegments.map((segment) => <span style={`width:${segment.labelWidth.toFixed(2)}%`}>{segment.label}</span>)}
+    </div>
+    <div class="strip-years" aria-hidden="true">
+      {strip.ticks.map((tick) => <span style={`left:${tick.position === 0 ? "0" : `${tick.position.toFixed(2)}%`}`}>{tick.label}</span>)}
+    </div>
+    {strip.segments.map((segment, i) => {
+      if (segment.kind !== "gap") return null;
+      const at = `${(segment.offset + segment.width / 2).toFixed(3)}%`;
+      const tipId = `gap-tip-${i}`;
+      return (
+        <>
+          <button class="gap-zone" type="button" style={`left:${at}`} aria-label={`${BETWEEN} · ${segment.label}`} aria-describedby={tipId}></button>
+          <div class="gap-tip" id={tipId} role="tooltip" style={`left:${at}`}>
+            <span class="tt">{TIP_TITLE} · {BETWEEN} · {segment.label}</span>
+            <p>Courses completed:</p>
+            <ul class="gap-courses">
+              {coursesIn(segment).map((course) => <li><b>{shortDate(course.date)}</b><span>{course.shortName} · {course.organization}</span></li>)}
+            </ul>
+          </div>
+        </>
+      );
+    })}
+  </div>
+
+  <ol class="seasons">
+    {experiences.map((experience, i) => {
+      const gap = gapAfter(experience);
+      return (
+        <>
+          {gap && (
+            <li class="m-break" role="separator" aria-label={`${BETWEEN} · ${gap.label}`}>
+              <span class="ln">{BETWEEN} · {gap.label}</span>
+              <p>Courses completed:</p>
+              <ul class="gap-courses">
+                {coursesIn(gap).map((course) => <li><b>{shortDate(course.date)}</b><span>{course.shortName} · {course.organization}</span></li>)}
+              </ul>
+            </li>
+          )}
+          <li class:list={["season", "reveal", { lead: i === 0 }]} style={`--band: ${BAND[chronoIndex(experience)]}`}>
+            <span class="band" aria-hidden="true"></span>
+            <div class="season-body">
+              <div class="slabel">{experience.tag && <span class="tag-same">{experience.tag}</span>}</div>
+              <h3>{experience.jobTitle}</h3>
+              <a class="co" href={experience.companyUrl} target="_blank" rel="noopener">{experience.companyName}</a>
+              <span class="label dates">{dateLine(experience)}</span>
+              {experience.scope && <p class="scope"><span class="label">Scope</span>{experience.scope}</p>}
+              <ul>
+                {experience.description.map((bullet) => <li set:html={renderInline(bullet)} />)}
+              </ul>
+            </div>
+          </li>
+        </>
+      );
+    })}
+  </ol>
+</section>
+
+<script>
+  // Escape dismisses the gap tooltip until the pointer leaves the strip or focus moves on (WCAG 1.4.13).
+  document.querySelectorAll<HTMLElement>(".strip").forEach((strip) => {
+    const reset = (): void => strip.classList.remove("dismissed");
+    strip.addEventListener("mouseleave", reset);
+    strip.addEventListener("focusout", reset);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    document.querySelectorAll(".strip").forEach((strip) => strip.classList.add("dismissed"));
+  });
+</script>

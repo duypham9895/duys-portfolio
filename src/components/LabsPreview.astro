@@ -1,0 +1,36 @@
+---
+import LabCard from "./LabCard.astro";
+import { featuredLabs, labs } from "../data/labs";
+
+const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+const word = (n: number): string => WORDS[n] ?? String(n);
+const capitalised = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
+const intro = `Side builds to test product questions. ${capitalised(word(featuredLabs.length))} of ${word(labs.length)} below.`;
+---
+
+<section class="section" id="labs" aria-labelledby="h-labs">
+  <div class="sec-head">
+    <div>
+      <div class="sec-kicker"><span class="stripes mini" aria-hidden="true"></span><span class="label">05 · Start list</span></div>
+      <h2 class="h" id="h-labs">Labs</h2>
+    </div>
+  </div>
+  <p class="labs-intro">{intro}</p>
+
+  <table class="startlist">
+    <caption class="sr-only">Selected side projects: number, project, status, last updated, links</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="label">No.</th>
+        <th scope="col" class="label">Project</th>
+        <th scope="col" class="label">Status</th>
+        <th scope="col" class="label">Updated</th>
+        <th scope="col" class="label">Links</th>
+      </tr>
+    </thead>
+    <tbody>
+      {featuredLabs.map((project, i) => <LabCard project={project} index={i + 1} />)}
+    </tbody>
+  </table>
+  <div class="alllabs"><a class="btn btn-ghost" href="/labs">All labs ({labs.length}) →</a></div>
+</section>

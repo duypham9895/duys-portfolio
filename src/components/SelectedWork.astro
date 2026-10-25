@@ -1,0 +1,75 @@
+---
+import { caseStudies } from "../data/caseStudies";
+import { renderInline } from "../lib/inlineMarkup";
+
+const metric = { strong: ['<span class="metric">', "</span>"] } as const;
+---
+
+<section class="section" id="work" aria-labelledby="h-work">
+  <div class="sec-head">
+    <div>
+      <div class="sec-kicker"><span class="stripes mini" aria-hidden="true"></span><span class="label">01 · Stage results</span></div>
+      <h2 class="h" id="h-work">Selected work</h2>
+    </div>
+    <p class="sec-lede">One decision write-up and one platform overview: what the problem was, what I did, what came of it.</p>
+  </div>
+
+  <div class="cases">
+    {caseStudies.map((study) => (
+      <article class="patch case reveal" aria-labelledby={`h-${study.id}`}>
+        <span class="stripes" aria-hidden="true"></span>
+        <header class="case-head">
+          <div>
+            <span class="label">{study.kicker}</span>
+            <h3 id={`h-${study.id}`}>{study.title}</h3>
+            <p class="case-tag">{study.tagline}</p>
+          </div>
+          <div class="case-stat">
+            <span class:list={["big", { word: study.stat.word }]}>{study.stat.value}</span>
+            <span class="label">{study.stat.label}</span>
+          </div>
+        </header>
+        <dl class="case-body">
+          {study.rows.map((row) => {
+            const single = row.paragraphs.length === 1 && !row.side && !row.arch && !row.options;
+            return (
+              <div class:list={["crow", { key: row.key }]}>
+                <dt class="label">{row.label}</dt>
+                <dd>
+                  {single ? (
+                    <Fragment set:html={renderInline(row.paragraphs[0], metric)} />
+                  ) : (
+                    <>
+                      {row.paragraphs.map((paragraph) => <p set:html={renderInline(paragraph, metric)} />)}
+                      {row.options && (
+                        <ol class="opts">
+                          {row.options.map((option) => (
+                            <li>
+                              <span class="ol">{option.key}</span>
+                              <span>{option.text}{option.chosen && <> <span class="tag-pick">Chosen</span></>}</span>
+                            </li>
+                          ))}
+                        </ol>
+                      )}
+                      {row.arch && (
+                        <ul class="arch">
+                          {row.arch.map((part) => <li><b>{part.name}</b><span>{part.description}</span></li>)}
+                        </ul>
+                      )}
+                      {row.side && (
+                        <div class="side">
+                          <span class="label">{row.side.label}</span>
+                          <p set:html={renderInline(row.side.body, metric)} />
+                        </div>
+                      )}
+                    </>
+                  )}
+                </dd>
+              </div>
+            );
+          })}
+        </dl>
+      </article>
+    ))}
+  </div>
+</section>

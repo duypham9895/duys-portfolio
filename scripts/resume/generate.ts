@@ -1,53 +1,48 @@
-import { chromium, type Browser } from "playwright";
-import { writeFileSync, unlinkSync, mkdirSync, existsSync } from "fs";
+import { copyFileSync, existsSync, mkdirSync, rmSync, writeFileSync } from "fs";
 import { join } from "path";
+import { BANNED, findViolations, loadPrivateTerms } from "../../src/lib/contentRules";
+import { extractBodyText } from "./bodyText";
+import { assertOnePage, renderPdf } from "./render";
+import { renderTemplate } from "./template";
 import { transform } from "./transform";
-import { renderTemplate, type ResumeTheme } from "./template";
 
 const PUBLIC_DIR = join(process.cwd(), "public");
-const THEMES: readonly ResumeTheme[] = ["light", "dark"];
+const RESUME_PATH = join(PUBLIC_DIR, "resume.pdf");
+const OVERFLOW_PATH = join(PUBLIC_DIR, "resume.overflow.pdf");
+/** Identical copies so links to the old light/dark files keep working. */
+const LEGACY_PATHS = [join(PUBLIC_DIR, "resume-light.pdf"), join(PUBLIC_DIR, "resume-dark.pdf")];
 
-async function renderPdf(browser: Browser, html: string, outputPath: string): Promise<void> {
-  const tempHtml = join("/tmp", `resume-${Date.now()}-${Math.random().toString(36).slice(2)}.html`);
-  writeFileSync(tempHtml, html, "utf-8");
-
-  const page = await browser.newPage();
-  try {
-    await page.goto(`file://${tempHtml}`, { waitUntil: "networkidle" });
-    await page.pdf({
-      path: outputPath,
-      format: "A4",
-      printBackground: true,
-      margin: { top: "0", right: "0", bottom: "0", left: "0" },
-    });
-  } finally {
-    await page.close();
-    try {
-      unlinkSync(tempHtml);
-    } catch {
-      // best-effort cleanup
-    }
+function assertCleanText(html: string): void {
+  const privateTerms = loadPrivateTerms();
+  const patterns = [...BANNED, ...(privateTerms ?? [])];
+  const violations = findViolations(extractBodyText(html), patterns);
+  if (violations.length > 0) {
+    const list = violations.map((v) => `"${v.match}" (${v.source})`).join(", ");
+    throw new Error(`Resume text contains banned content: ${list}`);
   }
 }
 
 async function generate(): Promise<void> {
-  const data = transform();
+  const html = renderTemplate(transform());
+  assertCleanText(html);
 
+  const pdf = await renderPdf(html);
   if (!existsSync(PUBLIC_DIR)) {
     mkdirSync(PUBLIC_DIR, { recursive: true });
   }
 
-  const browser = await chromium.launch();
   try {
-    for (const theme of THEMES) {
-      const html = renderTemplate(data, theme);
-      const outputPath = join(PUBLIC_DIR, `resume-${theme}.pdf`);
-      await renderPdf(browser, html, outputPath);
-      console.log(`Resume PDF (${theme}) generated at ${outputPath}`);
-    }
-  } finally {
-    await browser.close();
+    assertOnePage(pdf);
+  } catch (error) {
+    writeFileSync(OVERFLOW_PATH, pdf);
+    console.error(`Over-length render written to ${OVERFLOW_PATH}`);
+    throw error;
   }
+
+  writeFileSync(RESUME_PATH, pdf);
+  LEGACY_PATHS.forEach((path) => copyFileSync(RESUME_PATH, path));
+  rmSync(OVERFLOW_PATH, { force: true });
+  console.log(`Resume PDF (1 page) generated at ${RESUME_PATH}`);
 }
 
 generate().catch((error) => {

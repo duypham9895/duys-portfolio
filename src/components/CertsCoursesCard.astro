@@ -1,27 +1,42 @@
 ---
 import { certifications } from "../data/certifications";
+import { parseMonth } from "../lib/seasonStrip";
+
+const SHOWN = 3;
+const sorted = [...certifications].sort((a, b) => parseMonth(b.date).getTime() - parseMonth(a.date).getTime());
+const recent = sorted.slice(0, SHOWN);
+const older = sorted.slice(SHOWN);
+const year = (date: string): string => date.slice(-4);
 ---
 
-<div class="card fade-in" id="certs">
-  <h2 class="section-label">Certifications & Courses</h2>
-  <div class="flex flex-col gap-2.5">
-    {certifications.map((cert) => (
-      <a
-        href={cert.credentialUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="group flex items-center justify-between p-3.5 bg-bg border border-border rounded-xl hover:border-accent transition-colors"
-      >
-        <div>
-          <h3 class="text-[13px] font-medium text-text">{cert.name}</h3>
-          <p class="text-[11px] text-muted mt-1">
-            {cert.organization} &middot; {cert.date}
-          </p>
-        </div>
-        <svg class="w-4 h-4 text-muted group-hover:text-accent transition-colors flex-shrink-0 ml-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 17L17 7M17 7H7M17 7v10" />
-        </svg>
-      </a>
-    ))}
+<section class="section" id="certifications" aria-labelledby="h-certs">
+  <div class="sec-head">
+    <div>
+      <div class="sec-kicker"><span class="stripes mini" aria-hidden="true"></span><span class="label">06 · Palmarès</span></div>
+      <h2 class="h" id="h-certs">Certifications</h2>
+    </div>
   </div>
-</div>
+  <div class="grid">
+    <div class="patch span-12 reveal" style="overflow:hidden">
+      <div class="palm-head">
+        <span class="stripes" aria-hidden="true"></span>
+        <p class="label">{SHOWN} most recent · newest first</p>
+      </div>
+      <ol class="palm">
+        {recent.map((cert) => (
+          <li><span class="yr">{year(cert.date)}</span><span><span class="nm">{cert.name}</span><span class="label iss">{cert.organization} · {cert.date}</span></span><a href={cert.credentialUrl} target="_blank" rel="noopener" aria-label={`Verify ${cert.shortName} credential`}>Verify ↗</a></li>
+        ))}
+      </ol>
+      {older.length > 0 && (
+        <details class="palm-all">
+          <summary>Show all ({sorted.length})</summary>
+          <ol class="palm" start={SHOWN + 1}>
+            {older.map((cert) => (
+              <li><span class="yr">{year(cert.date)}</span><span><span class="nm">{cert.name}</span><span class="label iss">{cert.organization} · {cert.date}</span></span><a href={cert.credentialUrl} target="_blank" rel="noopener" aria-label={`Verify ${cert.shortName} credential`}>Verify ↗</a></li>
+            ))}
+          </ol>
+        </details>
+      )}
+    </div>
+  </div>
+</section>

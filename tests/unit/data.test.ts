@@ -1,9 +1,13 @@
 import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { personal } from "../../src/data/personal";
 import { experiences } from "../../src/data/experiences";
 import { skillGroups } from "../../src/data/skills";
 import { certifications } from "../../src/data/certifications";
-import { labs } from "../../src/data/labs";
+import { labs, featured, featuredLabs } from "../../src/data/labs";
+import { caseStudies } from "../../src/data/caseStudies";
+import { resume } from "../../src/data/resume";
 
 describe("personal data", () => {
   it("has correct name", () => {
@@ -14,12 +18,27 @@ describe("personal data", () => {
     expect(personal.title).toBe("Associate Product Manager");
   });
 
-  it("has bio with 2 paragraphs covering both companies", () => {
-    expect(personal.bio).toHaveLength(2);
-    expect(personal.bio[0]).toContain("Product Manager");
-    const fullBio = personal.bio.join(" ");
-    expect(fullBio).toContain("Ringkas");
-    expect(fullBio).toContain("Bizzi");
+  it("has a positioning line aimed at Technical PM roles", () => {
+    expect(personal.positioning).toContain("Technical Product Manager");
+    expect(personal.positioning).toContain("Indonesian mortgage (KPR) fintech");
+  });
+
+  // INPUTS #5–7, hardcoded here on purpose (INPUTS.md is not committed).
+  it("has location, languages and education exactly as approved", () => {
+    expect(personal.location).toBe(
+      "Based in Ho Chi Minh City · Hybrid preferred · Open to relocation with company support",
+    );
+    expect(personal.languages.join(" · ")).toBe("Vietnamese (Native) · English (Professional working)");
+    expect(personal.education).toBe("Ton Duc Thang University · Software Engineering · Degree not completed");
+  });
+
+  it("has an About opener and 3 how-I-work lines", () => {
+    expect(personal.about.opener.length).toBeGreaterThan(20);
+    expect(personal.about.howIWork).toHaveLength(3);
+    personal.about.howIWork.forEach((line) => {
+      expect(line.title.length).toBeGreaterThan(0);
+      expect(line.body.length).toBeGreaterThan(20);
+    });
   });
 
   it("has contact info", () => {
@@ -41,6 +60,10 @@ describe("personal data", () => {
     personal.socials.forEach((social) => {
       expect(social.url).toMatch(/^https:\/\//);
     });
+  });
+
+  it("points to the single resume PDF", () => {
+    expect(personal.resumeUrl).toBe("/resume.pdf");
   });
 });
 
@@ -74,6 +97,21 @@ describe("experiences data", () => {
     expect(experiences[2].jobTitle).toBe("Software Engineer");
   });
 
+  it("every role has a short company name", () => {
+    expect(experiences.map((exp) => exp.shortCompany)).toEqual(["Ringkas", "Ringkas", "Bizzi Vietnam"]);
+  });
+
+  it("domain is set for APM and Bizzi only", () => {
+    expect(experiences[0].domain).toBe("Indonesian mortgage (KPR) fintech");
+    expect(experiences[1].domain).toBeUndefined();
+    expect(experiences[2].domain).toBe("B2B SaaS / invoice automation");
+  });
+
+  it("APM role has scope and the same-team tag", () => {
+    expect(experiences[0].scope).toContain("Report to the Head of Product");
+    expect(experiences[0].tag).toBe("Same team, new role");
+  });
+
   it("each experience has description bullets", () => {
     experiences.forEach((exp) => {
       expect(exp.description.length).toBeGreaterThan(0);
@@ -91,31 +129,55 @@ describe("experiences data", () => {
 });
 
 describe("skills data", () => {
-  it("has 5 skill groups", () => {
-    expect(skillGroups).toHaveLength(5);
+  it("has 3 skill groups with Product first", () => {
+    expect(skillGroups.map((g) => g.category)).toEqual(["Product", "Technical depth", "Engineering background"]);
   });
 
-  it("Product Management is first group", () => {
-    expect(skillGroups[0].category).toBe("Product Management");
-  });
-
-  it("each group has at least 2 skills", () => {
-    skillGroups.forEach((group) => {
-      expect(group.skills.length).toBeGreaterThanOrEqual(2);
+  it("Product leads with 4 primary skills, each with a story line", () => {
+    const product = skillGroups[0];
+    expect(product.skills).toHaveLength(4);
+    product.skills.forEach((skill) => {
+      expect(skill.primary).toBe(true);
+      expect(skill.story?.length ?? 0).toBeGreaterThan(10);
     });
+    expect(product.skills.map((s) => s.title)).toContain("Support-led discovery");
+    expect(product.subgroups?.[0].skills.map((s) => s.title)).toEqual([
+      "PRD Writing",
+      "Stakeholder Management",
+      "Compliance & Risk Coordination",
+    ]);
   });
 
-  it("has primary skills marked", () => {
-    const allSkills = skillGroups.flatMap((g) => g.skills);
-    const primaries = allSkills.filter((s) => s.primary);
-    expect(primaries.length).toBeGreaterThan(0);
+  it("Technical depth has a Tools subhead", () => {
+    const tools = skillGroups[1].subgroups?.find((sub) => sub.heading === "Tools");
+    expect(tools?.skills.map((s) => s.title)).toEqual(["Figma", "Postman", "Notion", "Claude Code"]);
   });
 
-  it("skills with icons have valid paths", () => {
-    const allSkills = skillGroups.flatMap((g) => g.skills);
-    allSkills.filter((s) => s.icon).forEach((skill) => {
-      expect(skill.icon).toMatch(/^\/icons\/.+\.svg$/);
-    });
+  it("drops GitLab, GitHub, Golang and GraphQL", () => {
+    const titles = skillGroups.flatMap((g) => [...g.skills, ...(g.subgroups ?? []).flatMap((s) => s.skills)]).map(
+      (s) => s.title,
+    );
+    ["GitLab", "GitHub", "Golang", "GraphQL"].forEach((dropped) => expect(titles).not.toContain(dropped));
+  });
+});
+
+describe("case studies data", () => {
+  it("has 2 case studies: OCR then Pillar", () => {
+    expect(caseStudies).toHaveLength(2);
+    expect(caseStudies[0].kicker).toContain("OCR");
+    expect(caseStudies[1].kicker).toContain("Pillar");
+  });
+
+  it("case 02 (Pillar, version B) shows the decision with its options", () => {
+    const pillar = caseStudies[1];
+    expect(pillar.title).toBe("Why partners can't rewrite the AI agents they run");
+    const options = pillar.rows.find((r) => r.label === "Options")?.options ?? [];
+    expect(options).toHaveLength(2);
+    expect(options.find((o) => o.chosen)?.key).toBe("B");
+    const decision = pillar.rows.find((r) => r.label === "Decision")?.paragraphs.join(" ") ?? "";
+    expect(decision).toContain("I recommended option B");
+    expect(decision).toContain("Ringkas's review");
+    expect(decision).toContain("planned, not yet built");
   });
 });
 
@@ -127,10 +189,15 @@ describe("certifications data", () => {
   it("each cert has required fields", () => {
     certifications.forEach((cert) => {
       expect(cert.name.length).toBeGreaterThan(0);
+      expect(cert.shortName.length).toBeGreaterThan(0);
       expect(cert.organization.length).toBeGreaterThan(0);
       expect(cert.date).toMatch(/\w+ \d{4}/);
       expect(cert.credentialUrl).toMatch(/^https:\/\//);
     });
+  });
+
+  it("uses short names for aria-labels", () => {
+    expect(certifications.find((c) => c.name.includes("Claude 101"))?.shortName).toBe("Claude 101");
   });
 
   it("no Basic-level certs remain", () => {
@@ -161,5 +228,40 @@ describe("labs data", () => {
       expect(lab.tags.length).toBeGreaterThan(0);
       expect(lab.description.length).toBeGreaterThan(20);
     });
+  });
+
+  it("describes Easel as menstrual-cycle tracking", () => {
+    expect(labs.find((lab) => lab.slug === "easel")?.description).toContain("menstrual-cycle");
+  });
+
+  it("features 3 valid slugs in order", () => {
+    expect(featured).toEqual(["split-bill", "pm-assessment-gym", "evoyage"]);
+    expect(featuredLabs.map((lab) => lab.slug)).toEqual(featured);
+  });
+});
+
+describe("resume copy", () => {
+  const fixture = readFileSync(resolve(__dirname, "../fixtures/resume-body.txt"), "utf8");
+
+  it("has one copy block per role", () => {
+    expect(resume.roles).toHaveLength(experiences.length);
+  });
+
+  it("every resume line appears verbatim in the approved resume text", () => {
+    const lines = [
+      resume.titleLine,
+      resume.locationLine,
+      resume.summary,
+      ...resume.links.map((link) => link.label),
+      ...resume.roles.flatMap((role) => [
+        ...(role.scope ? [`Scope: ${role.scope}`] : []),
+        ...(role.context ? [role.context] : []),
+        ...role.bullets,
+      ]),
+      ...resume.skillLines.map((line) => `${line.label}: ${line.text}`),
+      resume.certifications.join(" · "),
+      resume.education,
+    ];
+    lines.forEach((line) => expect(fixture).toContain(line));
   });
 });
