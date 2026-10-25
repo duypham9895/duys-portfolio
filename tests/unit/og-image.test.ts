@@ -6,12 +6,13 @@ import { describe, expect, it } from "vitest";
 const png = readFileSync(resolve(process.cwd(), "public/og-image.png"));
 const robots = readFileSync(resolve(process.cwd(), "public/robots.txt"), "utf8");
 
-// SHA-256 of the approved OG card A (paper card). Changing it means a new mockup
-// review first, then updating this hash on purpose.
-const APPROVED_SHA256 = "a134c0feb532683c1d51f40f34c53c9c326a7a8e4761bf6251a64d3f1a6fe269";
+// SHA-256 of the approved OG card v3-B2 (bib card, tile left, footer divider,
+// centre-safe for square crops). Changing it means a new mockup review first, then
+// updating this hash on purpose.
+const APPROVED_SHA256 = "1133840674d53d3d803bdfe0cfb9d38f90f4aff5e6055202eb45c7ef76e9e7a1";
 
 describe("OG image", () => {
-  it("is byte-identical to the approved card A", () => {
+  it("is byte-identical to the approved card v3-B2", () => {
     expect(createHash("sha256").update(png).digest("hex")).toBe(APPROVED_SHA256);
   });
 

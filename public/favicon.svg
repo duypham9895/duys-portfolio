@@ -1,8 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Duy Pham plaque on cobalt tile">
-<style>.t{fill:#1B39C9}.p{fill:#FFFFFF}.c{fill:#7393FF}.r{fill:#111114}
-@media (prefers-color-scheme: dark){.p{fill:#CDD1D8}}</style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Duy Pham stage profile on cobalt tile">
+<style>.t{fill:#1B39C9}.m{fill:#FFFFFF}.s{fill:#7393FF}</style>
 <rect class="t" width="32" height="32" rx="7"/>
-<path class="p" d="M7 32V14a9 9 0 0 1 18 0v18z"/>
-<path class="c" d="M9.5 14a6.5 6.5 0 0 1 13 0z"/>
-<rect class="r" x="10" y="22" width="12" height="3"/>
+<path class="m" d="M4 27V22l5-3.5 4 2 6-9 4 3.5 5-7V27z"/>
+<circle class="s" cx="28" cy="8" r="2.4"/>
 </svg>
