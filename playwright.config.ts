@@ -8,7 +8,7 @@ export default defineConfig({
   webServer: {
     command: "npm run build && npx astro preview",
     port: 4321,
-    reuseExistingServer: true,
-    timeout: 30000,
+    reuseExistingServer: !process.env.CI,
+    timeout: 120000,
   },
 });

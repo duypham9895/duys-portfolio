@@ -42,3 +42,13 @@ public/resume-dark.pdf
 # yarn legacy
 .yarn/
 .vercel
+
+# local tooling output
+.enola/
+.playwright-mcp/
+
+# private content-rule terms (never commit)
+content-rules.local.json
+
+# resume guard debug output
+public/resume.overflow.pdf
