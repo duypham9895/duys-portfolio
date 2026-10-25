@@ -39,7 +39,7 @@ describe("favicon logo", () => {
     expect(fillOf("s")).toBe("#7393FF");
   });
 
-  it("avoids text, gradients, bicycles' retired marks and the old Terminal Compass colours", () => {
+  it("avoids text, gradients and the old Terminal Compass colours", () => {
     expect(favicon).not.toMatch(/<text|gradient/i);
     expect(favicon).not.toMatch(/#252220|#E07A3E/i);
   });
