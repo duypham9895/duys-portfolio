@@ -607,12 +607,12 @@ h1.h { margin: 0; font-weight: 800; font-stretch: 125%; text-transform: uppercas
 [data-theme="dark"] .navbar::before { height: 3px; }
 /* elevation: catch-light on raised patches */
 [data-theme="dark"] .patch, [data-theme="dark"] .season { box-shadow: inset 0 1px 0 var(--edge-light); }
-/* control boundaries get the 3:1 border; :where keeps specificity low so hover/open/pressed still win */
-:where([data-theme="dark"]) .theme-toggle,
-:where([data-theme="dark"]) .socials a,
-:where([data-theme="dark"]) .menu summary,
-:where([data-theme="dark"]) .filters button,
-:where([data-theme="dark"]) .more > summary { border-color: var(--border-strong); }
+/* control boundaries get the 3:1 border in both themes; :where keeps specificity low so hover/open/pressed still win */
+:where(html) .theme-toggle,
+:where(html) .socials a,
+:where(html) .menu summary,
+:where(html) .filters button,
+:where(html) .more > summary { border-color: var(--border-strong); }
 /* raised, not punched-in */
 :where([data-theme="dark"]) .chip { background: var(--surface-2); }
 /* status badges: 3:1 outline so paused/archived keep a visible edge (building/live set their own) */
