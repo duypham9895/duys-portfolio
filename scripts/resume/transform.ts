@@ -65,7 +65,6 @@ function stripMarkdownBold(text: string): string {
 }
 
 const HIGHLIGHTS: readonly ResumeHighlight[] = [
-  { metric: "38K+", label: "AI Assistant Conversations" },
   { metric: "SE→PM", label: "Career Growth" },
   { metric: "5+", label: "Years Experience" },
 ];

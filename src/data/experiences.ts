@@ -15,7 +15,7 @@ export const experiences: readonly Experience[] = [
     startDate: "Aug 2024",
     endDate: null,
     description: [
-      "Led Indonesia-first AI Financial Assistant launch via 3-phase rollout PRD (cost gates, admin-panel feature-flag transitions); reached 38K+ conversations, 1,900+ transactions",
+      "Led Indonesia-first AI Financial Assistant launch via 3-phase rollout PRD (cost gates, admin-panel feature-flag transitions)",
       "Capped anonymous AI Financial Assistant usage ($1/day, $200 global) — 5x higher for authenticated users; protected runway and drove registration funnel",
       "Paused OCR vendor-swap PRD to investigate first — lifted success rate from 40% to over 85% by tracing redundant FE+BE preprocessing",
       "Built Vision-Language-Model (VLM) OCR POC with AI team — quantified 89% cost reduction with 48% latency tradeoff to inform vendor decision",
