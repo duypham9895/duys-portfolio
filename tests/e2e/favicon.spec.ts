@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { expect, test } from "@playwright/test";
 
 test.describe("Favicon", () => {
@@ -14,10 +16,9 @@ test.describe("Favicon", () => {
     expect(response.ok()).toBe(true);
     expect(response.headers()["content-type"]).toContain("image/svg+xml");
 
-    const svg = await response.text();
-    expect(svg).toContain("#1B39C9");
-    expect(svg).toContain("#7393FF");
-    expect(svg).not.toContain("<text");
+    // The unit test pins public/favicon.svg to the approved design; here we prove
+    // the site serves that exact file.
+    expect(await response.text()).toBe(readFileSync(resolve(process.cwd(), "public/favicon.svg"), "utf8"));
   });
 
   test("links an apple-touch-icon PNG", async ({ page, request }) => {
@@ -29,5 +30,6 @@ test.describe("Favicon", () => {
     const response = await request.get(new URL(href!, page.url()).toString());
     expect(response.ok()).toBe(true);
     expect(response.headers()["content-type"]).toContain("image/png");
+    expect((await response.body()).equals(readFileSync(resolve(process.cwd(), "public/apple-touch-icon.png")))).toBe(true);
   });
 });
