@@ -141,7 +141,7 @@ test.describe("Portfolio page", () => {
       expect(ogTitle).toContain("Duy Pham");
 
       const canonical = await page.locator('link[rel="canonical"]').getAttribute("href");
-      expect(canonical).toContain("duypham.me");
+      expect(canonical).toBe("https://www.duypham.me/");
     });
 
     test("has JSON-LD structured data", async ({ page }) => {
