@@ -60,10 +60,13 @@ describe("favicon logo", () => {
   });
 
   it("uses the same stage profile as the navbar mark, in theme colours", () => {
+    // The whole <svg> must match exactly: extra shapes, hiding styles or a dropped
+    // aria-hidden would otherwise slip past a substring check.
+    const NAV_MARK = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="${PROFILE}" fill="var(--text)"></path><circle cx="28" cy="8" r="2.4" fill="var(--accent)"></circle></svg>`;
     for (const src of navMarks) {
-      expect(src).toContain(`<path d="${PROFILE}" fill="var(--text)">`);
-      expect(src).toContain('<circle cx="28" cy="8" r="2.4" fill="var(--accent)">');
-      expect(src).not.toContain("M7 30V11"); // retired plaque
+      const marks = src.match(/<svg[\s\S]*?<\/svg>/g) ?? [];
+      expect(marks).toContain(NAV_MARK);
+      expect(src.match(/<a class="wordmark"[\s\S]*?<\/svg>/)?.[0]).toMatch(new RegExp(`${NAV_MARK.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`));
     }
   });
 });
