@@ -4,6 +4,11 @@
   "outputDirectory": "dist",
   "installCommand": "npm install",
   "ignoreCommand": "node scripts/vercel/ignore-git-build.mjs",
+  "redirects": [
+    { "source": "/in{/}?", "destination": "/", "permanent": false },
+    { "source": "/cv{/}?", "destination": "/", "permanent": false },
+    { "source": "/gh{/}?", "destination": "/", "permanent": false }
+  ],
   "headers": [
     {
       "source": "/(.*)",
