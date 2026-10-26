@@ -396,8 +396,9 @@ h2.h {
 .status.live::before { background: #111114; border-radius: 50%; }
 .status.building { border-style: dashed; border-color: var(--muted); }
 .status.building::before { border: 1.5px solid currentColor; border-radius: 50%; background: linear-gradient(to right, currentColor 50%, transparent 50%); }
-.plinks { display: flex; flex-direction: column; gap: 6px; white-space: nowrap; }
-.plinks a { font: 500 12px/1.4 "IBM Plex Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+.plinks { display: flex; flex-direction: column; gap: 4px; white-space: nowrap; }
+/* min-height 24px: WCAG 2.5.8 target size for the stacked Live/GitHub links */
+.plinks a { display: inline-flex; align-items: center; min-height: 24px; font: 500 12px/1.4 "IBM Plex Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
 .upd-k { display: none; }
 .alllabs { display: flex; justify-content: flex-end; margin-top: 16px; }
 

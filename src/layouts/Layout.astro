@@ -1,4 +1,5 @@
 ---
+import "../styles/fonts.css";
 import "../styles/global.css";
 import "../styles/kit-room.css";
 import { personal } from "../data/personal";
@@ -51,12 +52,9 @@ const ogImageUrl = new URL("/og-image.png", Astro.site).href;
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@500&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Fonts are self-hosted (src/styles/fonts.css); preload the latin subsets the hero paints with. -->
+    <link rel="preload" href="/fonts/archivo-latin-v25.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ibm-plex-mono-latin-v20.woff2" as="font" type="font/woff2" crossorigin />
     <title>{title}</title>
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -69,6 +67,8 @@ const ogImageUrl = new URL("/og-image.png", Astro.site).href;
     })} />
   </head>
   <body class={bodyClass}>
+    <!-- Cloudflare Email Obfuscation skips this region; without it, mailto links render as a placeholder until its script runs. -->
+    <!--email_off-->
     <a class="skip" href="#main">Skip to content</a>
 
     <slot name="header" />
@@ -78,6 +78,7 @@ const ogImageUrl = new URL("/og-image.png", Astro.site).href;
     </main>
 
     <slot name="footer" />
+    <!--/email_off-->
 
     <script>
       // Reveal: patches below the first screen rise as they approach; never hidden by default.
