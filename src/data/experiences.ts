@@ -31,7 +31,7 @@ export const experiences: readonly Experience[] = [
       "Drove **Ringkas AI Financial Assistant**, an AI assistant for Indonesia's mortgage (KPR) market, from PRD through delivery: a 3-phase rollout with cost gates and admin-panel feature-flag transitions, to keep spend bounded and each phase reversible. Indonesia-based PMs owned testing and evaluation",
       "Capped anonymous AI assistant usage with daily and global limits, and set higher limits for signed-in users, trading open anonymous access for bounded cost and a reason to register",
       "Paused an OCR vendor-swap PRD to investigate first: success rate **40% → 85%+**, existing vendor kept ([case 01](#h-case1))",
-      "Built a Vision-Language-Model (VLM) OCR proof of concept with the AI team: benchmarked **89% lower cost** against **48% higher latency**. Deprioritised for production after a company strategy shift",
+      "Built a vision-language model (VLM) OCR proof of concept with the AI team: benchmarked **89% lower cost** against **48% higher latency**. Deprioritised for production after a company strategy shift",
       "Coordinated the security questionnaire response for a major Indonesian e-wallet partner, bringing Engineering, AI and Compliance into one response using system knowledge from my engineering years",
       "As point of contact for platform support tickets, I triage and root-cause issues with hands-on SQL, route code changes to Engineering, and turn recurring Ops/CS pain into PRDs for shipped change requests: Advanced Filter, cross-org switch, real-time event notifications",
     ],
@@ -60,7 +60,7 @@ export const experiences: readonly Experience[] = [
     domain: "B2B SaaS / invoice automation",
     description: [
       "Translated enterprise retail clients' requirements into Oracle and SAP integration designs, and maintained the API contracts in production",
-      "Built AI models for VAT invoice extraction (YOLO, Faster RCNN, CRNN, VietOCR): owned the pipeline from data collection through production and prediction-time optimization",
+      "Built AI models for VAT invoice extraction (YOLO, Faster R-CNN, CRNN, VietOCR): owned the pipeline from data collection through production and prediction-time optimization",
       "Shipped an end-to-end Purchase Order processing service (DB, APIs, Serverless, deployment) at **75% unit-test coverage**, handling **1,000-page files** across **30 partner templates**",
     ],
   },

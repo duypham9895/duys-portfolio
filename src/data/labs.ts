@@ -24,14 +24,14 @@ export const labs: readonly LabProject[] = [
     tags: ["EV", "Maps", "Next.js"],
     liveUrl: "https://evoyage.duypham.me/",
     githubUrl: "https://github.com/duypham9895/evoyage",
-    updatedAt: "2026-06-06",
+    updatedAt: "2026-10-01",
     accent: "#2f9e8f",
   },
   {
-    name: "PM Assessment Gym",
+    name: "PM Bench",
     slug: "pm-assessment-gym",
     description:
-      "Practice analytical product-management cases with mock prompts, answer structure, and focused scoring rubrics.",
+      "Practice for PM analytical assessments: a multiple-choice question bank with timed full mocks, topic drills, explanations, and weakest-topic tracking.",
     status: "Live",
     type: "Product practice",
     tags: ["PM", "Analytics", "React"],
@@ -62,7 +62,7 @@ export const labs: readonly LabProject[] = [
     type: "Finance utility",
     tags: ["Finance", "VietQR", "TypeScript"],
     githubUrl: "https://github.com/duypham9895/split-bill",
-    updatedAt: "2026-06-01",
+    updatedAt: "2026-06-06",
     accent: "#b8923a",
   },
   {
