@@ -83,7 +83,7 @@ export const caseStudies: readonly CaseStudy[] = [
         paragraphs: ["OCR success rose from **40% to over 85%**. We kept the existing vendor, and the swap was not needed."],
         side: {
           label: "Side track · VLM proof of concept",
-          body: "With the AI team, I built a Vision-Language-Model (VLM) OCR proof of concept. The benchmark showed **89% lower cost** against **48% higher latency**. It was R&D only and never went to production: a company strategy shift left too few resources, so moving it forward lost priority.",
+          body: "With the AI team, I built a vision-language model (VLM) OCR proof of concept. The benchmark showed **89% lower cost** against **48% higher latency**. It was R&D only and never went to production: a company strategy shift left too few resources, so moving it forward lost priority.",
         },
       },
     ],
