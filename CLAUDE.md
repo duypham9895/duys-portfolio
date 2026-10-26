@@ -16,3 +16,9 @@ Key routing rules:
 - Design system, brand → invoke design-consultation
 - Visual audit, design polish → invoke design-review
 - Architecture review → invoke plan-eng-review
+
+<!-- claude-reflect: learned rules (saved from the band; edit freely) -->
+## Learned rules
+- After opening a PR with no review blockers, auto-merge it without asking for confirmation.
+- Always communicate with the user in Vietnamese.
+<!-- end claude-reflect -->
