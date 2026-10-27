@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [develop]
 
+# One run per ref: a newer push to develop cancels the older one, so an older
+# build can never finish last and overwrite production. PRs get their own group.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
