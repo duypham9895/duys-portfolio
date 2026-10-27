@@ -45,12 +45,12 @@ export const caseStudies: readonly CaseStudy[] = [
     kicker: "Case 01 · Ringkas · OCR",
     title: "Fix before you switch: an OCR investigation",
     tagline: "A vendor-swap PRD was ready. I asked for two weeks to find the cause first.",
-    stat: { value: "40% → 85%+", label: "OCR success rate" },
+    stat: { value: "~40% → ~89%", label: "OCR success rate" },
     rows: [
       {
         label: "Context",
         paragraphs: [
-          "OCR on the Ringkas platform was succeeding only 40% of the time, and a PRD to replace the OCR vendor was already on the table.",
+          "OCR on the Ringkas platform was succeeding only about 40% of the time, and a PRD to replace the OCR vendor was already on the table.",
         ],
       },
       {
@@ -80,7 +80,7 @@ export const caseStudies: readonly CaseStudy[] = [
       {
         label: "Outcome",
         key: true,
-        paragraphs: ["OCR success rose from **40% to over 85%**. We kept the existing vendor, and the swap was not needed."],
+        paragraphs: ["OCR success rose from **about 40% to about 89%**. We kept the existing vendor, and the swap was not needed."],
         side: {
           label: "Side track · VLM proof of concept",
           body: "With the AI team, I built a vision-language model (VLM) OCR proof of concept. The benchmark showed **89% lower cost** against **48% higher latency**. It was R&D only and never went to production: a company strategy shift left too few resources, so moving it forward lost priority.",
@@ -128,7 +128,6 @@ export const caseStudies: readonly CaseStudy[] = [
           "Ringkas defines the base prompt, model and skills, and partners append their instructions on top.",
           "The trade-off: partners get less freedom to change the core, and in return every agent runs on a base Ringkas controls.",
           "I also proposed the upgrade rule: when a partner moves to a newer template, the chat link their customers already use keeps working, their settings carry over, and the agent goes back through Ringkas's review before it answers again.",
-          "Separately, I wrote the decision memo for a privacy layer that masks customers' personal data before it reaches any third-party model. Leadership approved it; it is planned, not yet built.",
         ],
       },
       {

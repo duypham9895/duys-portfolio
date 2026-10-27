@@ -178,7 +178,7 @@ describe("case studies data", () => {
     expect(decision).toContain("I recommended option 2");
     expect(decision).toContain("in return");
     expect(decision).toContain("Ringkas's review");
-    expect(decision).toContain("planned, not yet built");
+    expect(decision).not.toContain("privacy layer");
     const outcome = pillar.rows.find((r) => r.label === "Outcome")?.paragraphs.join(" ") ?? "";
     expect(outcome).toContain("uses it in enterprise tenders");
     const all = pillar.rows.flatMap((r) => [...r.paragraphs, ...(r.options ?? []).map((o) => o.text)]).join(" ");
