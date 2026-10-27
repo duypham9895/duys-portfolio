@@ -33,7 +33,7 @@ export const skillGroups: readonly SkillGroup[] = [
       {
         title: "Staged rollouts & reversible bets",
         primary: true,
-        story: "3-phase rollout behind feature flags; vendor work held until the OCR cause was found.",
+        story: "3-phase rollout behind feature flags; second-vendor work dropped once the OCR cause was fixed.",
       },
       {
         title: "Support-led discovery",

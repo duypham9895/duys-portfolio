@@ -44,7 +44,7 @@ export const caseStudies: readonly CaseStudy[] = [
     id: "case1",
     kicker: "Case 01 · Ringkas · OCR",
     title: "Fix before you switch: an OCR investigation",
-    tagline: "A second OCR vendor was being specced. I traced the failures first.",
+    tagline: "A second OCR vendor was being integrated. I traced the failures in parallel.",
     stat: { value: "~40% → ~89%", label: "OCR success rate" },
     rows: [
       {
@@ -64,7 +64,7 @@ export const caseStudies: readonly CaseStudy[] = [
           { key: "A", text: "Proceed with the second-vendor PRD as written." },
           {
             key: "B",
-            text: "Find and fix the cause in the current setup first, with the new vendor held as the fallback.",
+            text: "Find and fix the cause in the current setup in parallel, so the new vendor is needed only if the fix fails.",
             chosen: true,
           },
         ],
@@ -73,15 +73,15 @@ export const caseStudies: readonly CaseStudy[] = [
         label: "Decision",
         key: true,
         paragraphs: [
-          "I argued that fixing the defect was cheaper than integrating a new vendor, and that the vendor work should wait until we knew the cause. The risk I took on: if the fix failed, the vendor work would start later.",
-          "The failure logs pointed to image size: about a third of attempts were rejected as too small. Tracing the pipeline, I found the KTP image was resized at two layers, in the frontend and again in the backend. The backend resize was code I had written as an engineer, which is why I knew where to look.",
+          "I argued that fixing the defect was cheaper than integrating a new vendor, and traced the failures while the vendor integration went ahead. The risk I took on: time spent on a fix that might not hold.",
+          "The failure logs pointed to image size: about 30% of attempts were rejected as too small. Tracing the pipeline, I found the frontend was shrinking the KTP image below the size the OCR vendor accepts. When success slipped in mid-2025, I traced the backend layer too: a minimum-size resize I had written as an engineer, which a later refactor had changed. That history is why I knew where to look.",
         ],
       },
       {
         label: "Outcome",
         key: true,
         paragraphs: [
-          "After the frontend fix, OCR success rose from **about 40% to about 87%**. When it slipped in mid-2025, the backend fix brought it to **about 89%**, where it has held for a year. We kept the existing vendor, and the second-vendor work was dropped.",
+          "After the frontend fix, OCR success rose from **about 40% to about 87%**. When it slipped in mid-2025, the backend fix brought it back to **about 89%**, its average over the year since. We kept the existing vendor, and the second-vendor work was dropped.",
         ],
         side: {
           label: "Side track · VLM proof of concept",

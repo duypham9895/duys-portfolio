@@ -49,7 +49,7 @@ export const personal: Personal = {
       },
       {
         title: "Design for cost and risk.",
-        body: "The AI Financial Assistant went out in three phases behind cost gates and feature flags, with daily and global caps on anonymous usage to cap what it could cost.",
+        body: "The AI Financial Assistant went out in three phases behind cost gates and feature flags, with daily and global caps on anonymous usage to limit what it could cost.",
       },
       {
         title: "Bridge engineering and business.",
