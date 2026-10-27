@@ -42,7 +42,7 @@ export const resume: ResumeCopy = {
     { label: "phamanhduy.sg@gmail.com", href: "mailto:phamanhduy.sg@gmail.com" },
     { label: "+84 963 769 049", href: "tel:+84963769049" },
     { label: "linkedin.com/in/phamanhduy", href: "https://www.linkedin.com/in/phamanhduy" },
-    { label: "duypham.me", href: "https://duypham.me" },
+    { label: "duypham.me", href: "https://www.duypham.me/cv" },
     { label: "github.com/duypham9895", href: "https://github.com/duypham9895" },
   ],
   summary:
