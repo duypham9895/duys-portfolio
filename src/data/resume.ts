@@ -52,7 +52,7 @@ export const resume: ResumeCopy = {
       scope:
         "drive features across the Ringkas platform end to end, from PRD through engineering delivery and technical QA. Work directly with Design, QA, Engineering and Data; report to the Head of Product.",
       bullets: [
-        "Drove Pillar, a B2B platform for building and customizing AI agents, from PRD to production; it powers product demos and enterprise tenders, and its chat-widget SDK is in rollout to a first enterprise client.",
+        "Owned Pillar Portal requirements, PRD to production, for a B2B AI-agent platform used in demos and enterprise tenders; its chat-widget SDK is rolling out to a first enterprise client.",
         "Traced OCR failures before adding a second vendor: the image was resized in both frontend and backend; fixing both lifted OCR success from about 40% to 89% and kept the existing vendor.",
         "Built a vision-language model (VLM) OCR proof of concept with the AI team: benchmarked 87% lower cost against 74% higher latency; not taken to production after a company strategy shift.",
         "Drove the Ringkas AI Financial Assistant from PRD through delivery: a three-phase rollout behind cost gates and feature flags. Testing and evaluation owned by Indonesia-based PMs.",

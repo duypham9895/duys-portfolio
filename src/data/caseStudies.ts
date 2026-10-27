@@ -101,7 +101,7 @@ export const caseStudies: readonly CaseStudy[] = [
       {
         label: "Context",
         paragraphs: [
-          "Pillar is built so B2B partners can run their own AI agents. They configure the agent in Pillar Portal, and Pillar ChatApp, an embeddable widget SDK, serves it to their customers.",
+          "Pillar is built so B2B partners can run their own AI agents. They configure the agent in Pillar Portal, and Pillar ChatApp serves it to their customers.",
         ],
       },
       {
