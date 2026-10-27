@@ -37,7 +37,7 @@ export const labs: readonly LabProject[] = [
     tags: ["PM", "Analytics", "React"],
     liveUrl: "https://pmbench.duypham.me",
     githubUrl: "https://github.com/duypham9895/pm-assessment-gym",
-    updatedAt: "2026-06-06",
+    updatedAt: "2026-10-27",
     accent: "#b8541f",
   },
   {
