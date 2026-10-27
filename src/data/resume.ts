@@ -58,7 +58,7 @@ export const resume: ResumeCopy = {
         "Delivery PM for the Ringkas AI Financial Assistant, released on time; wrote its three-phase rollout behind cost gates and feature flags. Testing and evaluation owned by Indonesia-based PMs.",
         "Capped anonymous assistant usage (daily and global limits), trading open access for capped cost.",
         "Coordinated a major Indonesian e-wallet partner's security questionnaire with Engineering, AI and Compliance.",
-        "Responsible for platform support tickets: root-cause with SQL, route code changes to Engineering, turn recurring Ops/CS pain into shipped change requests (Advanced Filter, cross-org switch, notifications).",
+        "Responsible for platform support tickets: root-cause with SQL, route code changes to Engineering, turn recurring Ops/CS pain into shipped change requests (Advanced Filter, cross-org switch, failure alerts).",
       ],
     },
     {

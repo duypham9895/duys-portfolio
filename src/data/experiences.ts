@@ -33,7 +33,7 @@ export const experiences: readonly Experience[] = [
       "Traced OCR failures before adding a second vendor: success rate **~40% → ~89%**, existing vendor kept ([case 01](#h-case1))",
       "Built a vision-language model (VLM) OCR proof of concept with the AI team: benchmarked **87% lower cost** against **74% higher latency**. Deprioritised for production after a company strategy shift",
       "Coordinated the security questionnaire response for a major Indonesian e-wallet partner, bringing Engineering, AI and Compliance into one response using system knowledge from my engineering years",
-      "As point of contact for platform support tickets, I triage and root-cause issues with hands-on SQL, route code changes to Engineering, and turn recurring Ops/CS pain into PRDs for shipped change requests: Advanced Filter, cross-org switch, real-time event notifications",
+      "As point of contact for platform support tickets, I triage and root-cause issues with hands-on SQL, route code changes to Engineering, and turn recurring Ops/CS pain into PRDs for shipped change requests: Advanced Filter, cross-org switch, real-time Discord alerts when partner checks fail",
     ],
   },
   {

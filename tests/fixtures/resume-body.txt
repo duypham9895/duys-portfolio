@@ -17,7 +17,7 @@ Built a vision-language model (VLM) OCR proof of concept with the AI team: bench
 Delivery PM for the Ringkas AI Financial Assistant, released on time; wrote its three-phase rollout behind cost gates and feature flags. Testing and evaluation owned by Indonesia-based PMs.
 Capped anonymous assistant usage (daily and global limits), trading open access for capped cost.
 Coordinated a major Indonesian e-wallet partner's security questionnaire with Engineering, AI and Compliance.
-Responsible for platform support tickets: root-cause with SQL, route code changes to Engineering, turn recurring Ops/CS pain into shipped change requests (Advanced Filter, cross-org switch, notifications).
+Responsible for platform support tickets: root-cause with SQL, route code changes to Engineering, turn recurring Ops/CS pain into shipped change requests (Advanced Filter, cross-org switch, failure alerts).
 Software Engineer | Ringkas (PT Ringkas Asia Technology) | Dec 2022 - Jul 2024
 Built features across the stack in the in-house rebuild of the loan platform (now Ringkas CRM).
 Challenged PRDs and proposed alternatives with PM and Design before build.
