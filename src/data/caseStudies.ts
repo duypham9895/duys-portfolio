@@ -50,7 +50,7 @@ export const caseStudies: readonly CaseStudy[] = [
       {
         label: "Context",
         paragraphs: [
-          "OCR on the Ringkas platform was succeeding only about 40% of the time, and a PRD to add a second OCR vendor was already in progress.",
+          "OCR on the Ringkas platform was succeeding only about 40% of the time, and I was writing the PRD to add a second OCR vendor on top of the existing one.",
         ],
       },
       {
@@ -61,7 +61,7 @@ export const caseStudies: readonly CaseStudy[] = [
         label: "Options",
         paragraphs: [],
         options: [
-          { key: "A", text: "Proceed with the second-vendor PRD as written." },
+          { key: "A", text: "Rely on the second vendor to lift the success rate." },
           {
             key: "B",
             text: "Find and fix the cause in the current setup in parallel, so the new vendor is needed only if the fix fails.",
@@ -73,7 +73,7 @@ export const caseStudies: readonly CaseStudy[] = [
         label: "Decision",
         key: true,
         paragraphs: [
-          "I argued that fixing the defect was cheaper than integrating a new vendor, and traced the failures while the vendor integration went ahead. The risk I took on: time spent on a fix that might not hold.",
+          "I kept the vendor PRD moving and traced the failures in parallel, betting that fixing the defect would be cheaper than a new integration. The risk I took on: time spent on a fix that might not hold.",
           "The failure logs pointed to two causes: about 30% of attempts were rejected as too small, and another 15–30% failed on an authentication error with the OCR vendor, which Engineering and I fixed. Tracing the pipeline, I found one cause in the frontend: it was shrinking the KTP image below the size the OCR vendor accepts. When success slipped in mid-2025, I traced the backend layer too: a minimum-size resize I had written as an engineer, which a later refactor had changed. That history is why I knew where to look.",
         ],
       },
