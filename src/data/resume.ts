@@ -46,14 +46,14 @@ export const resume: ResumeCopy = {
     { label: "github.com/duypham9895", href: "https://github.com/duypham9895" },
   ],
   summary:
-    "Product manager with 5+ years in software, 3.5 as a software engineer. Drives platform features from PRD to delivery at Ringkas, an Indonesian mortgage (KPR) fintech, including Pillar, a B2B AI-agent platform in production. Lifted OCR success from about 40% to 89% with a time-boxed fix, not a vendor swap.",
+    "Product manager with 5+ years in software, 3.5 as a software engineer. Drives platform features from PRD to delivery at Ringkas, an Indonesian mortgage (KPR) fintech, including Pillar, a B2B AI-agent platform in production. Lifted OCR success from about 40% to 89% by fixing the cause, not adding a vendor.",
   roles: [
     {
       scope:
         "drive features across the Ringkas platform end to end, from PRD through engineering delivery and technical QA. Work directly with Design, QA, Engineering and Data; report to the Head of Product.",
       bullets: [
         "Drove Pillar, a B2B platform for building and customizing AI agents, from PRD to production; it powers product demos and enterprise tenders, and its chat-widget SDK is in rollout to a first enterprise client.",
-        "Proposed a 2-week time-boxed fix instead of a planned OCR vendor swap; found preprocessing ran twice (frontend and backend), lifted OCR success from about 40% to 89% and kept the existing vendor.",
+        "Traced OCR failures before adding a second vendor: the image was resized in both frontend and backend; fixing both lifted OCR success from about 40% to 89% and kept the existing vendor.",
         "Built a vision-language model (VLM) OCR proof of concept with the AI team: benchmarked 89% lower cost against 48% higher latency; not taken to production after a company strategy shift.",
         "Drove the Ringkas AI Financial Assistant from PRD through delivery: a three-phase rollout behind cost gates and feature flags. Testing and evaluation owned by Indonesia-based PMs.",
         "Capped anonymous assistant usage (daily and global limits), trading open access for bounded cost.",
@@ -80,7 +80,7 @@ export const resume: ResumeCopy = {
   skillLines: [
     {
       label: "Product",
-      text: "Delivery & execution · Prioritization · Staged rollouts & time-boxed bets · Support-led discovery",
+      text: "Delivery & execution · Prioritization · Staged rollouts & reversible bets · Support-led discovery",
     },
     { label: "Technical", text: "SQL · API design review · LLM and AI products · OCR · System architecture" },
     {

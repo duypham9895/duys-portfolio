@@ -44,27 +44,27 @@ export const caseStudies: readonly CaseStudy[] = [
     id: "case1",
     kicker: "Case 01 · Ringkas · OCR",
     title: "Fix before you switch: an OCR investigation",
-    tagline: "A vendor-swap PRD was ready. I asked for two weeks to find the cause first.",
+    tagline: "A second OCR vendor was being specced. I traced the failures first.",
     stat: { value: "~40% → ~89%", label: "OCR success rate" },
     rows: [
       {
         label: "Context",
         paragraphs: [
-          "OCR on the Ringkas platform was succeeding only about 40% of the time, and a PRD to replace the OCR vendor was already on the table.",
+          "OCR on the Ringkas platform was succeeding only about 40% of the time, and a PRD to add a second OCR vendor was already in progress.",
         ],
       },
       {
         label: "Problem",
-        paragraphs: ["A new vendor is costly to implement, and the root cause of the failures had not been established."],
+        paragraphs: ["A new vendor is costly to integrate, and the root cause of the failures had not been established."],
       },
       {
         label: "Options",
         paragraphs: [],
         options: [
-          { key: "A", text: "Proceed with the vendor-swap PRD as written." },
+          { key: "A", text: "Proceed with the second-vendor PRD as written." },
           {
             key: "B",
-            text: "Time-box a fix of the current setup to 2 weeks, with the vendor switch held as the fallback.",
+            text: "Find and fix the cause in the current setup first, with the new vendor held as the fallback.",
             chosen: true,
           },
         ],
@@ -73,14 +73,16 @@ export const caseStudies: readonly CaseStudy[] = [
         label: "Decision",
         key: true,
         paragraphs: [
-          "I argued that fixing the defect was cheaper than implementing a new vendor, and asked for a 2-week time-box with a clear stop rule: if it didn't work, the switch went ahead. The risk I took on: if the fix failed, the swap would start two weeks later.",
-          "Tracing the pipeline end to end, I found the root cause: the same preprocessing was being applied twice, once in the frontend and again in the backend.",
+          "I argued that fixing the defect was cheaper than integrating a new vendor, and that the vendor work should wait until we knew the cause. The risk I took on: if the fix failed, the vendor work would start later.",
+          "The failure logs pointed to image size: about a third of attempts were rejected as too small. Tracing the pipeline, I found the KTP image was resized at two layers, in the frontend and again in the backend. The backend resize was code I had written as an engineer, which is why I knew where to look.",
         ],
       },
       {
         label: "Outcome",
         key: true,
-        paragraphs: ["OCR success rose from **about 40% to about 89%**. We kept the existing vendor, and the swap was not needed."],
+        paragraphs: [
+          "After the frontend fix, OCR success rose from **about 40% to about 87%**. When it slipped in mid-2025, the backend fix brought it to **about 89%**, where it has held for a year. We kept the existing vendor, and the second-vendor work was dropped.",
+        ],
         side: {
           label: "Side track · VLM proof of concept",
           body: "With the AI team, I built a vision-language model (VLM) OCR proof of concept. The benchmark showed **89% lower cost** against **48% higher latency**. It was R&D only and never went to production: a company strategy shift left too few resources, so moving it forward lost priority.",

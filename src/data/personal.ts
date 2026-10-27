@@ -45,7 +45,7 @@ export const personal: Personal = {
     howIWork: [
       {
         title: "Investigate before you spec.",
-        body: "Find the cause before writing the fix into a spec: the OCR result in case 01 came from a two-week investigation, not a vendor swap.",
+        body: "Find the cause before writing the fix into a spec: the OCR result in case 01 came from tracing the failures, not adding a vendor.",
       },
       {
         title: "Design for cost and risk.",
