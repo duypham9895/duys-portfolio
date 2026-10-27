@@ -43,7 +43,7 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     id: "case1",
     kicker: "Case 01 · Ringkas · OCR",
-    title: "Fix before you switch: an OCR investigation",
+    title: "Fix the cause, not the vendor: an OCR investigation",
     tagline: "A second OCR vendor was being integrated. I traced the failures in parallel.",
     stat: { value: "~40% → ~89%", label: "OCR success rate" },
     rows: [
@@ -74,14 +74,14 @@ export const caseStudies: readonly CaseStudy[] = [
         key: true,
         paragraphs: [
           "I kept the vendor PRD moving and traced the failures in parallel, betting that fixing the defect would be cheaper than a new integration. The risk I took on: time spent on a fix that might not hold.",
-          "The failure logs pointed to two causes: about 30% of attempts were rejected as too small, and another 15–30% failed on an authentication error with the OCR vendor, which Engineering and I fixed. Tracing the pipeline, I found one cause in the frontend: it was shrinking the KTP image below the size the OCR vendor accepts. When success slipped in mid-2025, I traced the backend layer too: a minimum-size resize I had written as an engineer, which a later refactor had changed. That history is why I knew where to look.",
+          "The failure logs pointed to two causes: about 30% of attempts were rejected as too small, and another 15–30% failed on an authentication error with the OCR vendor, which Engineering and I fixed. Tracing the pipeline, I found one source of the too-small images in the frontend: it was shrinking the KTP image below the size the OCR vendor accepts. When success slipped in mid-2025, I traced the backend layer too: a minimum-size resize I had written as an engineer, which a later refactor had changed. That history is why I knew where to look.",
         ],
       },
       {
         label: "Outcome",
         key: true,
         paragraphs: [
-          "After the frontend and authentication fixes, OCR success rose from **about 40% to about 87%**. When it slipped in mid-2025, the backend fix brought it back to **about 89%**, its average over the year since. We kept the existing vendor, and the second-vendor work was dropped.",
+          "After the frontend and authentication fixes, OCR success rose from **about 40% to about 87%**. When it slipped in mid-2025, I traced the backend too; after that fix, success recovered to **about 89%**, its average over the year since. We kept the existing vendor, and the second-vendor work was dropped.",
         ],
         side: {
           label: "Side track · VLM proof of concept",
@@ -129,7 +129,7 @@ export const caseStudies: readonly CaseStudy[] = [
           "I recommended option 2, and it is the design the platform is built on.",
           "Ringkas defines the base prompt, model and skills, and each partner's instructions are appended on top.",
           "The trade-off: partners get less freedom to change the core, and in return every agent runs on a base Ringkas controls.",
-          "I also proposed the upgrade rule: when a partner moves to a newer template, the chat link their customers already use keeps working, their content and cost settings carry over, their appended instructions are re-reviewed, and the agent goes back through Ringkas's review before it answers again.",
+          "I also proposed the upgrade rule: when a partner moves to a newer template, the chat link their customers already use keeps working, their content and cost settings carry over, their earlier appended instructions are shown for review and must be re-applied, and the agent returns to Draft for Ringkas's review before it goes live again.",
         ],
       },
       {

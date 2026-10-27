@@ -44,8 +44,8 @@ export const personal: Personal = {
       "Engineer first, product manager now: 5+ years at Bizzi and Ringkas, 3.5 of them in software engineering, and product at Ringkas since Aug 2024.",
     howIWork: [
       {
-        title: "Investigate before you spec.",
-        body: "Find the cause before writing the fix into a spec: the OCR result in case 01 came from tracing the failures, not adding a vendor.",
+        title: "Find the cause, not just a fix.",
+        body: "Trace the cause before committing to a costly fix: in case 01 I traced the OCR failures while the second-vendor PRD moved, and fixing the cause made the new vendor unnecessary.",
       },
       {
         title: "Design for cost and risk.",

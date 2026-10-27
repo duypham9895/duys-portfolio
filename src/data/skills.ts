@@ -28,7 +28,7 @@ export const skillGroups: readonly SkillGroup[] = [
       {
         title: "Prioritization (cost/benefit trade-offs)",
         primary: true,
-        story: "OCR fix over a second vendor; VLM deprioritised; anonymous usage caps.",
+        story: "OCR fix made a second vendor unnecessary; VLM deprioritised; anonymous usage caps.",
       },
       {
         title: "Staged rollouts & reversible bets",
