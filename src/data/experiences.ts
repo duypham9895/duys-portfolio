@@ -60,8 +60,8 @@ export const experiences: readonly Experience[] = [
     domain: "B2B SaaS / invoice automation",
     description: [
       "Translated enterprise retail clients' requirements into Oracle and SAP integration designs, and maintained the API contracts in production",
-      "Built AI models for VAT invoice extraction (YOLO, Faster R-CNN, CRNN, VietOCR): owned the pipeline from data collection through production and prediction-time optimization",
-      "Shipped an end-to-end Purchase Order processing service (DB, APIs, Serverless, deployment) at **75% unit-test coverage**, handling **1,000-page files** across **30 partner templates**",
+      "Built AI models for VAT invoice extraction (YOLO, Faster R-CNN, CRNN, VietOCR): worked across the pipeline from data collection through production and inference optimization",
+      "Shipped an end-to-end Purchase Order processing service (DB, APIs, Serverless, deployment) at **about 75% unit-test coverage**, handling files of **up to 1,000 pages** across **about 30 partner templates**",
     ],
   },
 ] as const;

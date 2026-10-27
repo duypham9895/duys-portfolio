@@ -72,7 +72,7 @@ export const resume: ResumeCopy = {
       context: "B2B SaaS, invoice automation",
       bullets: [
         "Built VAT invoice extraction models (YOLO, Faster R-CNN, CRNN, VietOCR) through to production.",
-        "Shipped a Purchase Order processing service (database, APIs, serverless) with 75% unit test coverage, handling 1,000-page files across 30 partner templates.",
+        "Shipped a Purchase Order processing service (database, APIs, serverless) with about 75% unit test coverage, handling files of up to 1,000 pages across about 30 partner templates.",
         "Translated enterprise retail clients' requirements into Oracle and SAP integration designs and maintained their API contracts.",
       ],
     },
