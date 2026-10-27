@@ -85,7 +85,7 @@ export const caseStudies: readonly CaseStudy[] = [
         ],
         side: {
           label: "Side track · VLM proof of concept",
-          body: "With the AI team, I built a vision-language model (VLM) OCR proof of concept. The benchmark showed **89% lower cost** against **48% higher latency**. It was R&D only and never went to production: a company strategy shift left too few resources, so moving it forward lost priority.",
+          body: "With the AI team, I built a vision-language model (VLM) OCR proof of concept. The benchmark showed **87% lower cost** against **74% higher latency**. It was R&D only and never went to production: a company strategy shift left too few resources, so moving it forward lost priority.",
         },
       },
     ],
