@@ -74,7 +74,7 @@ export const caseStudies: readonly CaseStudy[] = [
         key: true,
         paragraphs: [
           "I argued that fixing the defect was cheaper than integrating a new vendor, and traced the failures while the vendor integration went ahead. The risk I took on: time spent on a fix that might not hold.",
-          "The failure logs pointed to two causes: about 30% of attempts were rejected as too small, and another 15–30% failed on an authentication error with the OCR vendor, which Engineering and I fixed. Tracing the pipeline, I found the frontend was shrinking the KTP image below the size the OCR vendor accepts. When success slipped in mid-2025, I traced the backend layer too: a minimum-size resize I had written as an engineer, which a later refactor had changed. That history is why I knew where to look.",
+          "The failure logs pointed to two causes: about 30% of attempts were rejected as too small, and another 15–30% failed on an authentication error with the OCR vendor, which Engineering and I fixed. Tracing the pipeline, I found one cause in the frontend: it was shrinking the KTP image below the size the OCR vendor accepts. When success slipped in mid-2025, I traced the backend layer too: a minimum-size resize I had written as an engineer, which a later refactor had changed. That history is why I knew where to look.",
         ],
       },
       {
@@ -136,7 +136,7 @@ export const caseStudies: readonly CaseStudy[] = [
         label: "Outcome",
         key: true,
         paragraphs: [
-          "Deployed to production. Ringkas demos it and uses it in enterprise tenders, and the widget SDK is rolling out to its first enterprise client.",
+          "Deployed to production. Ringkas demos it and uses it in enterprise tenders; separately, the widget SDK is rolling out to a first enterprise client.",
         ],
       },
     ],

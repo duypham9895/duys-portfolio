@@ -7,12 +7,12 @@ linkedin.com/in/phamanhduy ·
 duypham.me ·
 github.com/duypham9895
 Summary
-Product manager with 5+ years in software, 3.5 as a software engineer. Drives platform features from PRD to delivery at Ringkas, an Indonesian mortgage (KPR) fintech, including Pillar, a B2B AI-agent platform in production. Lifted OCR success from about 40% to 89% by fixing the causes, not adding a vendor.
+Product manager with 5+ years in software, 3.5 as a software engineer. Drives platform features from PRD to delivery at Ringkas, an Indonesian mortgage (KPR) fintech, including Pillar, a B2B AI-agent platform in production. Lifted OCR success from about 40% to 89% with Engineering, without adding a vendor.
 Experience
 Associate Product Manager | Ringkas (PT Ringkas Asia Technology) | Aug 2024 - Present
 Scope: drive features across the Ringkas platform end to end, from PRD through engineering delivery and technical QA. Work directly with Design, QA, Engineering and Data; report to the Head of Product.
-Owned Pillar Portal requirements, PRD to production, for a B2B AI-agent platform used in demos and enterprise tenders. Its chat-widget SDK is rolling out to a first enterprise client.
-Traced OCR failures before adding a second vendor: with Engineering, fixed an auth error and image resizing in frontend and backend, lifting OCR success from about 40% to 89%; existing vendor kept.
+Owned Pillar Portal requirements, PRD to production, for a B2B AI-agent platform used in demos and enterprise tenders. Pillar's chat-widget SDK is rolling out to a first enterprise client.
+Traced OCR failures in parallel with second-vendor work; with Engineering, fixed an auth error and frontend/backend image resizing, lifting success from about 40% to 89%; vendor kept.
 Built a vision-language model (VLM) OCR proof of concept with the AI team: benchmarked 87% lower cost against 74% higher latency; not taken to production after a company strategy shift.
 Delivery PM for the Ringkas AI Financial Assistant, released on time; wrote its three-phase rollout behind cost gates and feature flags. Testing and evaluation owned by Indonesia-based PMs.
 Capped anonymous assistant usage (daily and global limits), trading open access for capped cost.
