@@ -45,10 +45,9 @@ export const labs: readonly LabProject[] = [
     slug: "easel",
     description:
       "A couples wellbeing app concept that turns menstrual-cycle tracking into phase-aware guidance and timely support signals.",
-    status: "Live",
+    status: "Building",
     type: "AI companion",
     tags: ["AI", "Wellbeing", "TypeScript"],
-    liveUrl: "https://duypham9895.github.io/easel/",
     githubUrl: "https://github.com/duypham9895/easel",
     updatedAt: "2026-03-23",
     accent: "#c9567c",
