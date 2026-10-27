@@ -46,7 +46,7 @@ export const experiences: readonly Experience[] = [
     description: [
       "Operated as Technical Solution Partner alongside engineering: challenged PRDs and proposed alternatives with PM and Design, not just receiving specs to build",
       "Built features across the stack during the in-house rebuild of Ringkas's core loan origination platform (now Ringkas CRM), replacing prior outsourced delivery",
-      "Filled an interim Data Reporting role during the outsource handoff, keeping reports unblocked until a permanent hire onboarded",
+      "Covered the Data Analyst gap during the outsource handoff: kept Ops/CS reports accurate by correcting their datapoints until a permanent hire joined",
       "Coordinated progress tracking between in-house and outsourced engineering teams during the platform transition, surfacing blockers and timeline risk to leadership",
     ],
   },

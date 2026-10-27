@@ -65,7 +65,7 @@ export const resume: ResumeCopy = {
       bullets: [
         "Built features across the stack in the in-house rebuild of the loan platform (now Ringkas CRM).",
         "Challenged PRDs and proposed alternatives with PM and Design before build.",
-        "Tracked in-house and outsourced teams during the handover, raising blockers and timeline risk to leadership; covered data reporting until a permanent hire joined.",
+        "Tracked in-house and outsourced teams during the handover, raising blockers and timeline risk to leadership; kept Ops/CS report data accurate until a data analyst joined.",
       ],
     },
     {
