@@ -101,7 +101,7 @@ export const caseStudies: readonly CaseStudy[] = [
       {
         label: "Context",
         paragraphs: [
-          "Pillar is built so B2B partners can run their own AI agents. They configure the agent in Pillar Portal, and Pillar ChatApp serves it to their customers.",
+          "Pillar is built so B2B partners can run their own AI agents. Each agent is configured in Pillar Portal (by Ringkas today, with partner self-serve in a later phase), and Pillar ChatApp serves it to their customers.",
         ],
       },
       {
@@ -126,10 +126,10 @@ export const caseStudies: readonly CaseStudy[] = [
         label: "Decision",
         key: true,
         paragraphs: [
-          "I recommended option 2, and it is what we built.",
-          "Ringkas defines the base prompt, model and skills, and partners append their instructions on top.",
+          "I recommended option 2, and it is the design the platform is built on.",
+          "Ringkas defines the base prompt, model and skills, and each partner's instructions are appended on top.",
           "The trade-off: partners get less freedom to change the core, and in return every agent runs on a base Ringkas controls.",
-          "I also proposed the upgrade rule: when a partner moves to a newer template, the chat link their customers already use keeps working, their settings carry over, and the agent goes back through Ringkas's review before it answers again.",
+          "I also proposed the upgrade rule: when a partner moves to a newer template, the chat link their customers already use keeps working, their content and cost settings carry over, their appended instructions are re-reviewed, and the agent goes back through Ringkas's review before it answers again.",
         ],
       },
       {
