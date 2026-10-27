@@ -7,7 +7,7 @@ linkedin.com/in/phamanhduy ·
 duypham.me ·
 github.com/duypham9895
 Summary
-Product manager with 5+ years in software, 3.5 as a software engineer. Drives platform features from PRD to delivery at Ringkas, an Indonesian mortgage (KPR) fintech, including Pillar, a B2B AI-agent platform in production. Lifted OCR success from about 40% to 89% with Engineering, without adding a vendor.
+Product manager with 5+ years in software, 3.5 as a software engineer. Drives platform features from PRD to delivery at Ringkas, an Indonesian mortgage (KPR) fintech, including Pillar Portal for a B2B AI-agent platform. Lifted OCR success from about 40% to 89% with Engineering, without adding a vendor.
 Experience
 Associate Product Manager | Ringkas (PT Ringkas Asia Technology) | Aug 2024 - Present
 Scope: drive features across the Ringkas platform end to end, from PRD through engineering delivery and technical QA. Work directly with Design, QA, Engineering and Data; report to the Head of Product.

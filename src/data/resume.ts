@@ -46,7 +46,7 @@ export const resume: ResumeCopy = {
     { label: "github.com/duypham9895", href: "https://github.com/duypham9895" },
   ],
   summary:
-    "Product manager with 5+ years in software, 3.5 as a software engineer. Drives platform features from PRD to delivery at Ringkas, an Indonesian mortgage (KPR) fintech, including Pillar, a B2B AI-agent platform in production. Lifted OCR success from about 40% to 89% with Engineering, without adding a vendor.",
+    "Product manager with 5+ years in software, 3.5 as a software engineer. Drives platform features from PRD to delivery at Ringkas, an Indonesian mortgage (KPR) fintech, including Pillar Portal for a B2B AI-agent platform. Lifted OCR success from about 40% to 89% with Engineering, without adding a vendor.",
   roles: [
     {
       scope:

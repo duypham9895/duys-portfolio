@@ -81,7 +81,7 @@ export const caseStudies: readonly CaseStudy[] = [
         label: "Outcome",
         key: true,
         paragraphs: [
-          "After the frontend and authentication fixes, OCR success rose from **about 40% to about 87%**. When it slipped in mid-2025, I traced the backend too; after that fix, success recovered to **about 89%**, its average over the year since. We kept the existing vendor, and the second-vendor work was dropped.",
+          "After the frontend and authentication fixes, OCR success rose from **about 40% to about 87%**. After the backend fix, it recovered to **about 89%**, its average over the year since. We kept the existing vendor, and the second-vendor work was dropped.",
         ],
         side: {
           label: "Side track · VLM proof of concept",
@@ -129,7 +129,7 @@ export const caseStudies: readonly CaseStudy[] = [
           "I recommended option 2, and it is the design the platform is built on.",
           "Ringkas defines the base prompt, model and skills, and each partner's instructions are appended on top.",
           "The trade-off: partners get less freedom to change the core, and in return every agent runs on a base Ringkas controls.",
-          "I also proposed the upgrade rule: when a partner moves to a newer template, the chat link their customers already use keeps working, their content and cost settings carry over, their earlier appended instructions are shown for review and must be re-applied, and the agent returns to Draft for Ringkas's review before it goes live again.",
+          "I also proposed the upgrade rule: when a partner moves to a newer template, their customers keep the same chat link, their content and cost settings carry over, their earlier appended instructions are shown for review and must be re-applied, and the agent returns to Draft for Ringkas's review before it goes live again.",
         ],
       },
       {
