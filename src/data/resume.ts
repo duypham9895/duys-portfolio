@@ -46,33 +46,33 @@ export const resume: ResumeCopy = {
     { label: "github.com/duypham9895", href: "https://github.com/duypham9895" },
   ],
   summary:
-    "Product manager with 5+ years in software, 3.5 as a software engineer. Drives platform features from PRD to delivery at Ringkas, an Indonesian mortgage (KPR) fintech, including Pillar, a B2B AI-agent platform in production. Lifted OCR success from 40% to 85%+ with a time-boxed fix, not a vendor swap.",
+    "Product manager with 5+ years in software, 3.5 as a software engineer. Drives platform features from PRD to delivery at Ringkas, an Indonesian mortgage (KPR) fintech, including Pillar Portal for a B2B AI-agent platform. Lifted OCR success from about 40% to 89% with Engineering, without adding a vendor.",
   roles: [
     {
       scope:
         "drive features across the Ringkas platform end to end, from PRD through engineering delivery and technical QA. Work directly with Design, QA, Engineering and Data; report to the Head of Product.",
       bullets: [
-        "Drove Pillar, a B2B platform for building and customizing AI agents, from PRD to production; it powers product demos and enterprise tenders, and its chat-widget SDK is in rollout to a first enterprise client.",
-        "Proposed a 2-week time-boxed fix instead of a planned OCR vendor swap; found preprocessing ran twice (frontend and backend), lifted OCR success from 40% to 85%+ and kept the existing vendor.",
-        "Built a vision-language model (VLM) OCR proof of concept with the AI team: benchmarked 89% lower cost against 48% higher latency; not taken to production after a company strategy shift.",
-        "Drove the Ringkas AI Financial Assistant from PRD through delivery: a three-phase rollout behind cost gates and feature flags. Testing and evaluation owned by Indonesia-based PMs.",
-        "Capped anonymous assistant usage (daily and global limits), trading open access for bounded cost.",
+        "Owned Pillar Portal requirements, PRD to production, for a B2B AI-agent platform used in demos and enterprise tenders. Pillar's chat-widget SDK is rolling out to a first enterprise client.",
+        "Traced OCR failures in parallel with second-vendor work; with Engineering, fixed an auth error and frontend/backend image resizing, lifting success from about 40% to 89%; vendor kept.",
+        "Built a vision-language model (VLM) OCR proof of concept with the AI team: benchmarked 87% lower cost against 74% higher latency; not taken to production after a company strategy shift.",
+        "Delivery PM for the Ringkas AI Financial Assistant, released on time; wrote its three-phase rollout behind cost gates and feature flags. Testing and evaluation owned by Indonesia-based PMs.",
+        "Capped anonymous assistant usage (daily and global limits), trading open access for capped cost.",
         "Coordinated a major Indonesian e-wallet partner's security questionnaire with Engineering, AI and Compliance.",
-        "Responsible for platform support tickets: root-cause with SQL, route code changes to Engineering, turn recurring Ops/CS pain into shipped change requests (Advanced Filter, cross-org switch, notifications).",
+        "Responsible for platform support tickets: root-cause with SQL, route code changes to Engineering, turn recurring Ops/CS pain into shipped change requests (Advanced Filter, cross-org switch, failure alerts).",
       ],
     },
     {
       bullets: [
         "Built features across the stack in the in-house rebuild of the loan platform (now Ringkas CRM).",
         "Challenged PRDs and proposed alternatives with PM and Design before build.",
-        "Tracked in-house and outsourced teams during the handover, raising blockers and timeline risk to leadership; covered data reporting until a permanent hire joined.",
+        "Tracked in-house and outsourced teams during the handover, raising blockers and timeline risk to leadership; kept Ops/CS report data accurate until a data analyst joined.",
       ],
     },
     {
       context: "B2B SaaS, invoice automation",
       bullets: [
         "Built VAT invoice extraction models (YOLO, Faster R-CNN, CRNN, VietOCR) through to production.",
-        "Shipped a Purchase Order processing service (database, APIs, serverless) with 75% unit test coverage, handling 1,000-page files across 30 partner templates.",
+        "Shipped a Purchase Order processing service (database, APIs, serverless) with about 75% unit test coverage, handling files of up to 1,000 pages across about 30 partner templates.",
         "Translated enterprise retail clients' requirements into Oracle and SAP integration designs and maintained their API contracts.",
       ],
     },
@@ -80,7 +80,7 @@ export const resume: ResumeCopy = {
   skillLines: [
     {
       label: "Product",
-      text: "Delivery & execution · Prioritization · Staged rollouts & time-boxed bets · Support-led discovery",
+      text: "Delivery & execution · Prioritization · Staged rollouts & reversible bets · Support-led discovery",
     },
     { label: "Technical", text: "SQL · API design review · LLM and AI products · OCR · System architecture" },
     {

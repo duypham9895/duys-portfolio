@@ -43,28 +43,28 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     id: "case1",
     kicker: "Case 01 · Ringkas · OCR",
-    title: "Fix before you switch: an OCR investigation",
-    tagline: "A vendor-swap PRD was ready. I asked for two weeks to find the cause first.",
-    stat: { value: "40% → 85%+", label: "OCR success rate" },
+    title: "Fix the cause, not the vendor: an OCR investigation",
+    tagline: "A second OCR vendor was being integrated. I traced the failures in parallel.",
+    stat: { value: "~40% → ~89%", label: "OCR success rate" },
     rows: [
       {
         label: "Context",
         paragraphs: [
-          "OCR on the Ringkas platform was succeeding only 40% of the time, and a PRD to replace the OCR vendor was already on the table.",
+          "OCR on the Ringkas platform was succeeding only about 40% of the time, and I was writing the PRD to add a second OCR vendor on top of the existing one.",
         ],
       },
       {
         label: "Problem",
-        paragraphs: ["A new vendor is costly to implement, and the root cause of the failures had not been established."],
+        paragraphs: ["A new vendor is costly to integrate, and the root cause of the failures had not been established."],
       },
       {
         label: "Options",
         paragraphs: [],
         options: [
-          { key: "A", text: "Proceed with the vendor-swap PRD as written." },
+          { key: "A", text: "Rely on the second vendor to lift the success rate." },
           {
             key: "B",
-            text: "Time-box a fix of the current setup to 2 weeks, with the vendor switch held as the fallback.",
+            text: "Find and fix the cause in the current setup in parallel, so the new vendor is needed only if the fix fails.",
             chosen: true,
           },
         ],
@@ -73,17 +73,19 @@ export const caseStudies: readonly CaseStudy[] = [
         label: "Decision",
         key: true,
         paragraphs: [
-          "I argued that fixing the defect was cheaper than implementing a new vendor, and asked for a 2-week time-box with a clear stop rule: if it didn't work, the switch went ahead. The risk I took on: if the fix failed, the swap would start two weeks later.",
-          "Tracing the pipeline end to end, I found the root cause: the same preprocessing was being applied twice, once in the frontend and again in the backend.",
+          "I kept the vendor PRD moving and traced the failures in parallel, betting that fixing the defect would be cheaper than a new integration. The risk I took on: time spent on a fix that might not hold.",
+          "The failure logs pointed to two causes: about 30% of attempts were rejected as too small, and another 15–30% failed on an authentication error with the OCR vendor, which Engineering and I fixed. Tracing the pipeline, I found one source of the too-small images in the frontend: it was shrinking the KTP image below the size the OCR vendor accepts. When success slipped in mid-2025, I traced the backend layer too: a minimum-size resize I had written as an engineer, which a later refactor had changed. That history is why I knew where to look.",
         ],
       },
       {
         label: "Outcome",
         key: true,
-        paragraphs: ["OCR success rose from **40% to over 85%**. We kept the existing vendor, and the swap was not needed."],
+        paragraphs: [
+          "After the frontend and authentication fixes, OCR success rose from **about 40% to about 87%**. After the backend fix, it recovered to **about 89%**, its average over the year since. We kept the existing vendor, and the second-vendor work was dropped.",
+        ],
         side: {
           label: "Side track · VLM proof of concept",
-          body: "With the AI team, I built a vision-language model (VLM) OCR proof of concept. The benchmark showed **89% lower cost** against **48% higher latency**. It was R&D only and never went to production: a company strategy shift left too few resources, so moving it forward lost priority.",
+          body: "With the AI team, I built a vision-language model (VLM) OCR proof of concept. The benchmark showed **87% lower cost** against **74% higher latency**. It was R&D only and never went to production: a company strategy shift left too few resources, so moving it forward lost priority.",
         },
       },
     ],
@@ -99,7 +101,7 @@ export const caseStudies: readonly CaseStudy[] = [
       {
         label: "Context",
         paragraphs: [
-          "Pillar is built so B2B partners can run their own AI agents. They configure the agent in Pillar Portal, and Pillar ChatApp, an embeddable widget SDK, serves it to their customers.",
+          "Pillar is built so B2B partners can run their own AI agents. Each agent is configured in Pillar Portal (by Ringkas today, with partner self-serve in a later phase), and Pillar ChatApp serves it to their customers.",
         ],
       },
       {
@@ -124,18 +126,17 @@ export const caseStudies: readonly CaseStudy[] = [
         label: "Decision",
         key: true,
         paragraphs: [
-          "I recommended option 2, and it is what we built.",
-          "Ringkas defines the base prompt, model and skills, and partners append their instructions on top.",
+          "I recommended option 2, and it is the design the platform is built on.",
+          "Ringkas defines the base prompt, model and skills, and each partner's instructions are appended on top.",
           "The trade-off: partners get less freedom to change the core, and in return every agent runs on a base Ringkas controls.",
-          "I also proposed the upgrade rule: when a partner moves to a newer template, the chat link their customers already use keeps working, their settings carry over, and the agent goes back through Ringkas's review before it answers again.",
-          "Separately, I wrote the decision memo for a privacy layer that masks customers' personal data before it reaches any third-party model. Leadership approved it; it is planned, not yet built.",
+          "I also proposed the upgrade rule: when a partner moves to a newer template, their customers keep the same chat link, their content and cost settings carry over, their earlier appended instructions are shown for review and must be re-applied, and the agent returns to Draft for Ringkas's review before it goes live again.",
         ],
       },
       {
         label: "Outcome",
         key: true,
         paragraphs: [
-          "Deployed to production. Ringkas demos it and uses it in enterprise tenders, and the widget SDK is rolling out to its first enterprise client.",
+          "Deployed to production. Ringkas demos it and uses it in enterprise tenders; separately, the widget SDK is rolling out to a first enterprise client.",
         ],
       },
     ],

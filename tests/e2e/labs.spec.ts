@@ -13,7 +13,7 @@ test.describe("Labs page", () => {
   });
 
   test("labels project links per v2", async ({ page }) => {
-    await expect(page.locator('a[aria-label$=" live site"]')).toHaveCount(4);
+    await expect(page.locator('a[aria-label$=" live site"]')).toHaveCount(3);
     await expect(page.locator('a[aria-label$=" on GitHub"]')).toHaveCount(6);
   });
 
@@ -22,7 +22,7 @@ test.describe("Labs page", () => {
     await expect(filters).toBeVisible();
 
     await filters.getByRole("button", { name: /^Live/ }).click();
-    await expect(page.locator(".startlist tr.row:visible")).toHaveCount(4);
+    await expect(page.locator(".startlist tr.row:visible")).toHaveCount(3);
     await expect(page.locator("tr.empty")).toBeHidden();
 
     await filters.getByRole("button", { name: /^All/ }).click();
