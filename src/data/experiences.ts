@@ -28,7 +28,7 @@ export const experiences: readonly Experience[] = [
     tag: "Same team, new role",
     description: [
       "Owned the requirements for **Pillar Portal**, the configuration layer of Ringkas's B2B platform for building and customizing AI agents, from PRD through engineering delivery to production. Pillar powers product demos and enterprise tenders, and its embeddable chat-widget SDK is in rollout to a first enterprise client",
-      "Drove **Ringkas AI Financial Assistant**, an AI assistant for Indonesia's mortgage (KPR) market, from PRD through delivery: a 3-phase rollout with cost gates and admin-panel feature-flag transitions, to keep spend bounded and each phase reversible. Indonesia-based PMs owned testing and evaluation",
+      "Delivery PM for **Ringkas AI Financial Assistant**, an AI assistant for Indonesia's mortgage (KPR) market: ran the timeline and cross-team coordination to an on-time release, and wrote the release requirements: a 3-phase rollout with cost gates and admin-panel feature-flag transitions, to keep spend bounded and each phase reversible. Indonesia-based PMs owned testing and evaluation",
       "Capped anonymous AI assistant usage with daily and global limits, and set higher limits for signed-in users, trading open anonymous access for bounded cost and a reason to register",
       "Traced OCR failures before adding a second vendor: success rate **~40% → ~89%**, existing vendor kept ([case 01](#h-case1))",
       "Built a vision-language model (VLM) OCR proof of concept with the AI team: benchmarked **87% lower cost** against **74% higher latency**. Deprioritised for production after a company strategy shift",
