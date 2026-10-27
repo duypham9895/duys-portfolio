@@ -56,7 +56,7 @@ export const resume: ResumeCopy = {
         "Traced OCR failures before adding a second vendor: the image was resized in both frontend and backend; fixing both lifted OCR success from about 40% to 89% and kept the existing vendor.",
         "Built a vision-language model (VLM) OCR proof of concept with the AI team: benchmarked 87% lower cost against 74% higher latency; not taken to production after a company strategy shift.",
         "Delivery PM for the Ringkas AI Financial Assistant, released on time; wrote its three-phase rollout behind cost gates and feature flags. Testing and evaluation owned by Indonesia-based PMs.",
-        "Capped anonymous assistant usage (daily and global limits), trading open access for bounded cost.",
+        "Capped anonymous assistant usage (daily and global limits), trading open access for capped cost.",
         "Coordinated a major Indonesian e-wallet partner's security questionnaire with Engineering, AI and Compliance.",
         "Responsible for platform support tickets: root-cause with SQL, route code changes to Engineering, turn recurring Ops/CS pain into shipped change requests (Advanced Filter, cross-org switch, notifications).",
       ],
