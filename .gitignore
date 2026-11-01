@@ -52,3 +52,7 @@ content-rules.local.json
 
 # resume guard debug output
 public/resume.overflow.pdf
+
+# personal notes (public repo)
+docs/reports/linkedin-experience-*.md
+docs/reports/job-channels-*.md

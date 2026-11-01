@@ -21,4 +21,6 @@ Key routing rules:
 ## Learned rules
 - After opening a PR with no review blockers, auto-merge it without asking for confirmation.
 - Always communicate with the user in Vietnamese.
+- Always verify that information on the website matches the information in the PDF file (e.g., CV) and flag or fix any inconsistencies.
+- Describe Duy's role on the original RISA AI chatbot as delivery PM (coordination, timeline, release readiness, light requirements), not as PRD author; avoid 'Drove from PRD'.
 <!-- end claude-reflect -->
