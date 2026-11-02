@@ -31,7 +31,7 @@ const STYLE = `
     color: var(--ink);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 10.5pt;
-    line-height: 1.3;
+    line-height: 1.22;
     font-variant-ligatures: none;
     font-feature-settings: "liga" 0, "calt" 0;
     -webkit-font-smoothing: antialiased;
@@ -126,11 +126,6 @@ ${data.roles.map(renderRole).join("\n\n")}
   <h2>Skills</h2>
   <div class="skills">
 ${skills}
-  </div>
-
-  <h2>Certifications</h2>
-  <div class="skills">
-    <p>${escapeHtml(data.certifications.join(" · "))}</p>
   </div>
 
   <h2>Education</h2>

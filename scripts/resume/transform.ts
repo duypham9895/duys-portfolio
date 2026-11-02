@@ -20,7 +20,6 @@ export interface ResumeData {
   readonly summary: string;
   readonly roles: readonly ResumeRoleView[];
   readonly skillLines: readonly ResumeSkillLine[];
-  readonly certifications: readonly string[];
   readonly education: string;
 }
 
@@ -49,7 +48,6 @@ export function transform(): ResumeData {
     summary: resume.summary,
     roles,
     skillLines: resume.skillLines,
-    certifications: resume.certifications,
     education: resume.education,
   };
 }

@@ -264,7 +264,6 @@ describe("resume copy", () => {
         ...role.bullets,
       ]),
       ...resume.skillLines.map((line) => `${line.label}: ${line.text}`),
-      resume.certifications.join(" · "),
       resume.education,
     ];
     lines.forEach((line) => expect(fixture).toContain(line));
