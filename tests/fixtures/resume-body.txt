@@ -13,26 +13,23 @@ Associate Product Manager | Ringkas (PT Ringkas Asia Technology) | Aug 2024 - Pr
 Scope: drive features across the Ringkas platform end to end, from PRD through engineering delivery and technical QA. Work directly with Design, QA, Engineering and Data; report to the Head of Product.
 Owned Pillar Portal requirements, PRD to production, for a B2B AI-agent platform used in demos and enterprise tenders. Pillar's chat-widget SDK is rolling out to a first enterprise client.
 Traced OCR failures in parallel with second-vendor work; with Engineering, fixed an auth error and frontend/backend image resizing, lifting success from about 40% to 89%; vendor kept.
-Built a vision-language model (VLM) OCR proof of concept with the AI team: benchmarked 87% lower cost against 74% higher latency; not taken to production after a company strategy shift.
 Delivery PM for the Ringkas AI Financial Assistant, released on time; wrote its three-phase rollout behind cost gates and feature flags. Testing and evaluation owned by Indonesia-based PMs.
-Capped anonymous assistant usage (daily and global limits), trading open access for capped cost.
 Coordinated a major Indonesian e-wallet partner's security questionnaire with Engineering, AI and Compliance.
+Product Manager for platform changes: masked borrower contact details from lenders until an application is submitted to them, made the SPR issue date mandatory across CRM, consumer-app and API uploads, and let company admins change a user's login ID.
+Owned the API documentation (payload reference and changelog) for a Saudi bank partner integrating with the CRM through a housing-fund-compatible API (10 operations). Tested it against the live APIs, corrected about 30 doc-vs-live gaps, and filed a pagination defect that engineering fixed; ran the response to the bank's UAT feedback. The integration is in UAT.
+Wrote the PRD for document resubmission for Saudi lenders, wrote 13 demo test cases for a Saudi developer partner's CRM proof of value, and reviewed QA's 55-case UAT workbook, flagging problems in 37.
 Responsible for platform support tickets: root-cause with SQL, route code changes to Engineering, turn recurring Ops/CS pain into shipped change requests (Advanced Filter, cross-org switch, failure alerts).
 Software Engineer | Ringkas (PT Ringkas Asia Technology) | Dec 2022 - Jul 2024
-Built features across the stack in the in-house rebuild of the loan platform (now Ringkas CRM).
-Challenged PRDs and proposed alternatives with PM and Design before build.
-Tracked in-house and outsourced teams during the handover, raising blockers and timeline risk to leadership; kept Ops/CS report data accurate until a data analyst joined.
+Built core modules of the in-house loan platform (now Ringkas CRM, where developers, banks and agents run mortgage applications) in 300+ commits across a Node.js/GraphQL backend and React frontend: eKYC vendor integration, application status transitions, KPR asset forms, organization and workgroup management, and account security (OTP-verified login-ID change, forced password reset).
+Shipped bank contract signing (akad) to production with the team in April 2023, then built its backend on the rebuilt platform in 2024. Ran production data-fix scripts and investigated support bugs on the CRM.
 Software Engineer | Bizzi Vietnam | Oct 2020 - Aug 2022
 B2B SaaS, invoice automation
 Built VAT invoice extraction models (YOLO, Faster R-CNN, CRNN, VietOCR) through to production.
 Shipped a Purchase Order processing service (database, APIs, serverless) with about 75% unit test coverage, handling files of up to 1,000 pages across about 30 partner templates.
-Translated enterprise retail clients' requirements into Oracle and SAP integration designs and maintained their API contracts.
 Skills
 Product: Delivery & execution · Prioritization · Staged rollouts & reversible bets · Support-led discovery
 Technical: SQL · API design review · LLM and AI products · OCR · System architecture
 Engineering background: Python · TypeScript · Node.js · React · AWS · Serverless · PostgreSQL
 Languages: Vietnamese (Native) · English (Professional working)
-Certifications
-Product Management: Foundations & Stakeholder Collaboration (Coursera, Apr 2026) · Claude 101 (Anthropic, Mar 2026) · Product Management: An Introduction (Coursera, Mar 2025)
 Education
 Ton Duc Thang University · Software Engineering · Degree not completed
