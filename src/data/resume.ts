@@ -53,7 +53,7 @@ export const resume: ResumeCopy = {
       bullets: [
         "Owned Pillar Portal requirements, PRD to production, for a B2B AI-agent platform used in demos and enterprise tenders. Pillar's chat-widget SDK is rolling out to a first enterprise client.",
         "Traced OCR failures in parallel with second-vendor work; with Engineering, fixed an auth error and frontend/backend image resizing, lifting success from about 40% to 89%; vendor kept.",
-        "Delivery PM for the Ringkas AI Financial Assistant, released on time; wrote its three-phase rollout behind cost gates and feature flags. Testing and evaluation owned by Indonesia-based PMs.",
+        "Delivery PM for the Ringkas AI Financial Assistant from mid-project, released on time; wrote its 3-phase rollout with cost gates and feature flags. Indonesia-based PMs owned testing and evaluation.",
         "Coordinated a major Indonesian e-wallet partner's security questionnaire with Engineering, AI and Compliance.",
         "Product Manager for platform changes: masked borrower contact details from lenders until an application is submitted to them, made the SPR issue date mandatory across CRM, consumer-app and API uploads, and let company admins change a user's login ID.",
         "Owned the API documentation (payload reference and changelog) for a Saudi bank partner integrating with the CRM through a housing-fund-compatible API (10 operations). Tested it against the live APIs, corrected about 30 doc-vs-live gaps, and filed a pagination defect that engineering fixed; ran the response to the bank's UAT feedback. The integration is in UAT.",
