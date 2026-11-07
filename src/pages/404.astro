@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Topbar from "../components/Topbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout
+  title="404 — Duy Pham"
+  description="Page not found on duypham.me."
+  bodyClass="page-labs"
+>
+  <Topbar slot="header" />
+
+  <div class="sec-kicker"><span class="stripes mini" aria-hidden="true"></span><span class="label">404 · Off route</span></div>
+  <h1 class="h">Page not found</h1>
+  <p class="labs-intro">This page does not exist or has moved.</p>
+
+  <section class="section" style="padding-top:32px" aria-label="Navigation">
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/">← Back to home</a>
+      <a class="btn btn-ghost" href="/labs">Labs →</a>
+    </div>
+  </section>
+
+  <Footer slot="footer" slim />
+</Layout>

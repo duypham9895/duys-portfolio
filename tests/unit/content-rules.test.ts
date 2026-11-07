@@ -65,10 +65,7 @@ async function dataStrings(): Promise<readonly StringHit[]> {
     const mod = (await import(pathToFileURL(join(DATA_DIR, file)).href)) as Record<string, unknown>;
     Object.entries(mod).forEach(([name, value]) => collectStrings(value, `${file}:${name}`, out));
   }
-  // icons.ts holds raw SVG markup; its path data is not copy.
-  return out
-    .filter((hit) => !(hit.path.startsWith("icons.ts:") && hit.value.trimStart().startsWith("<svg")))
-    .map((hit) => ({ ...hit, value: hit.value.replace(/\*\*/g, "") }));
+  return out.map((hit) => ({ ...hit, value: hit.value.replace(/\*\*/g, "") }));
 }
 
 function report(hits: readonly StringHit[], patterns = BANNED): readonly string[] {

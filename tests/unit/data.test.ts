@@ -42,7 +42,7 @@ describe("personal data", () => {
   });
 
   it("has contact info", () => {
-    expect(personal.contact.email).toContain("@gmail.com");
+    expect(personal.contact.email).toBe("hello@duypham.me");
     expect(personal.contact.phone).toMatch(/^\+84/);
     expect(personal.contact.location).toContain("Ho Chi Minh");
   });

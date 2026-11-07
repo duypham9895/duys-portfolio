@@ -1,43 +1,38 @@
-# Astro Starter Kit: Minimal
+# duypham.me — Personal Portfolio & Edge Referral Tracker
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Personal site and single-page resume for **Duy Pham** (`duypham.me`), built with **Astro 5** in the **Kit Room v2** editorial style.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Architecture
 
-## 🚀 Project Structure
+- **Single source of truth (`src/data/*`)** — All page copy, work timeline, metrics, skills, education, side projects (`labs.ts`), and resume layout (`resume.ts`) live in typed TypeScript data modules.
+- **Editorial pages (`src/pages/*`)** —
+  - `/` (`index.astro`): Full portfolio with hero, selected impact, experience timeline, capabilities, labs preview, education & languages, and contact section.
+  - `/labs` (`labs.astro`): Interactive start-list of side builds with status filtering (`Live`, `Building`, `Paused`, `Archived`).
+  - `/404` (`404.astro`): Kit Room v2 off-route fallback page.
+- **Deterministic 1-page ATS Resume PDF (`scripts/resume/generate.ts`)** — Renders `resume.ts` via headless Chromium (Playwright) into `public/resume.pdf`, verifying a strict 1-page tagged PDF fit with embedded fonts before every production build.
+- **Cloudflare Edge Referral & Traffic Tracker (`workers/referral-tracker/`)** — Lightweight Cloudflare Worker + D1 (`portfolio-referrals`) + Discord Webhook (`#portfolio-radar`) running at the edge in front of `duypham.me`:
+  - Logs page views, short-link redirects (`/cv`, `/in`, `/gh`), and PDF downloads (`/resume*.pdf`) with zero added latency via `ctx.waitUntil()`.
+  - Sends rich 9-field Discord notifications (Visitor ID, Path, Query Params, Location + Google Maps link, Device/Browser, Browser Language, Network ASN/ISP/Colo, Referer, Visitor Timezone).
+  - Supports self-visit muting on any device via `?radar=off` (sets `__cf_radar_ignore=1` cookie on `.duypham.me` for 1 year) and `?radar=on`.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Quality Gates
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- **Unit & Content Rules (`tests/unit/*`)** — Vitest suite enforcing data invariants, banned-phrase guardrails (`src/lib/contentRules.ts`), private client-term filtering, 1-page PDF guard, and Cloudflare Worker edge logic.
+- **Dist Content Scanner (`scripts/qa/scan-dist.mjs`)** — Post-build scan of all generated HTML in `dist/` to ensure zero banned or private terms slip into production markup.
+- **WCAG AA Contrast Audit (`scripts/qa/contrast.mjs`)** — Headless Chromium audit across `/`, `/labs`, and `/404` in both light and dark themes at desktop (`1440px`) and mobile (`390px`) widths (`>= 4.5:1` for body text, `>= 3.0:1` for large text and UI controls).
+- **Playwright E2E (`tests/e2e/*`)** — End-to-end verification of `/`, `/labs`, `/404`, theme toggling, JSON-LD person schema, OpenGraph cards, and PDF asset availability.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Commands
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Command | Action |
+| :--- | :--- |
+| `npm run dev` | Start local Astro dev server at `localhost:4321` |
+| `npm test` | Run Vitest unit test suite |
+| `npm run build` | Generate 1-page `public/resume.pdf` and build static site to `dist/` |
+| `npm run test:e2e` | Run Playwright end-to-end tests against production preview |
+| `npm run qa:scan` | Scan built HTML in `dist/` against content rules |
+| `npm run qa:contrast` | Run WCAG AA contrast check across light and dark themes |
+| `npm run worker:deploy` | Deploy Cloudflare Worker (`duypham-referral-tracker`) |
+| `npm run worker:d1:init` | Apply `workers/referral-tracker/schema.sql` to remote Cloudflare D1 |
+| `npm run worker:secret:discord` | Configure `DISCORD_WEBHOOK_URL` secret on Cloudflare Worker |
+| `npm run worker:stats` | Query latest 20 hits from remote Cloudflare D1 (`portfolio-referrals`) |

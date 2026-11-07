@@ -23,4 +23,8 @@ Key routing rules:
 - Always communicate with the user in Vietnamese.
 - Always verify that information on the website matches the information in the PDF file (e.g., CV) and flag or fix any inconsistencies.
 - Describe Duy's role on the original RISA AI chatbot as delivery PM (coordination, timeline, release readiness, light requirements), not as PRD author; avoid 'Drove from PRD'.
+- Filter job scans to associate and PM-level roles; exclude senior, lead, staff, principal, and head titles.
+- Run this project in Docker, not by launching it directly with npm.
+- Do not say Duy doesn't make mockups; he builds prototypes so Engineering can visualize workflows, and Design later refines them into final visuals.
+- Always proactively self-test changes like a Principal QA Engineer before reporting completion: never ask the user to manually test what can be verified automatically (unit tests, build, dist content scan, WCAG AA contrast audit, Playwright E2E for every route including new pages, cross-checking website vs. PDF copy, and live production/edge verification for deployed Workers/APIs).
 <!-- end claude-reflect -->

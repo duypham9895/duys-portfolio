@@ -128,7 +128,7 @@ test.describe("Portfolio page", () => {
 
     test("has footer with email", async ({ page }) => {
       await expect(page.locator("footer")).toBeVisible();
-      await expect(page.locator("footer")).toContainText("phamanhduy.sg@gmail.com");
+      await expect(page.locator("footer")).toContainText("hello@duypham.me");
     });
 
     test("has correct meta tags", async ({ page }) => {

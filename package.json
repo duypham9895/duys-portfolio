@@ -10,7 +10,13 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "qa:contrast": "node scripts/qa/contrast.mjs",
+    "qa:scan": "node scripts/qa/scan-dist.mjs",
+    "worker:deploy": "CLOUDFLARE_API_TOKEN= npx --yes wrangler deploy --config workers/referral-tracker/wrangler.toml",
+    "worker:d1:init": "CLOUDFLARE_API_TOKEN= npx --yes wrangler d1 execute portfolio-referrals --remote --yes --config workers/referral-tracker/wrangler.toml --file workers/referral-tracker/schema.sql",
+    "worker:secret:discord": "CLOUDFLARE_API_TOKEN= npx --yes wrangler secret put DISCORD_WEBHOOK_URL --config workers/referral-tracker/wrangler.toml",
+    "worker:stats": "CLOUDFLARE_API_TOKEN= npx --yes wrangler d1 execute portfolio-referrals --remote --config workers/referral-tracker/wrangler.toml --command \"SELECT visitor_id, channel, is_bot, country, city, language, asn_org, created_at FROM referral_hits ORDER BY id DESC LIMIT 20\""
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
