@@ -200,4 +200,137 @@ describe("referral tracker worker", () => {
     });
     logSpy.mockRestore();
   });
+
+  it("protects /__radar with Zero-Trust Email OTP and blocks unauthorized emails or API calls", async () => {
+    const sentEmails: unknown[] = [];
+    let storedOtpHash: string | null = null;
+    let storedSessionHash: string | null = null;
+
+    const db: D1DatabaseLike = {
+      prepare: (query: string) => ({
+        bind: (...values: readonly unknown[]) => ({
+          run: async () => {
+            if (query.startsWith("INSERT INTO radar_otps")) {
+              storedOtpHash = values[0] as string;
+            } else if (query.startsWith("INSERT INTO radar_sessions")) {
+              storedSessionHash = values[0] as string;
+            }
+            return {};
+          },
+          first: async <T>() => {
+            if (query.includes("FROM radar_sessions") && values[0] === storedSessionHash) {
+              return { email: "phamanhduy.sg@gmail.com" } as unknown as T;
+            }
+            if (query.includes("FROM radar_otps") && values[0] === storedOtpHash) {
+              return { id: 1 } as unknown as T;
+            }
+            return null;
+          },
+          all: async <T>() => ({
+            results: query.includes("FROM referral_hits")
+              ? ([
+                  {
+                    id: 10,
+                    visitor_id: "#A4F91C",
+                    channel: "cv",
+                    path: "/cv?from=grab",
+                    country: "SG",
+                    city: "Singapore",
+                    region: "Central Singapore",
+                    asn_org: "Singtel Fibre",
+                    language: "en-SG",
+                    referer: null,
+                    user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) Chrome/130.0.0.0",
+                    is_bot: 0,
+                    created_at: "2026-11-07T03:00:00.000Z",
+                  },
+                ] as unknown as readonly T[])
+              : ([] as readonly T[]),
+          }),
+        }),
+      }),
+    };
+
+    const env = {
+      DB: db,
+      EMAIL: {
+        send: async (msg: unknown) => {
+          sentEmails.push(msg);
+        },
+      },
+    };
+
+    // 1. Unauthenticated GET /__radar renders login screen, not dashboard
+    const loginRes = await worker.fetch(new Request("https://www.duypham.me/__radar") as CfRequest, env);
+    expect(loginRes.status).toBe(200);
+    expect(loginRes.headers.get("X-Robots-Tag")).toBe("noindex, nofollow");
+    const loginHtml = await loginRes.text();
+    expect(loginHtml).toContain("ZERO TRUST OTP");
+    expect(loginHtml).not.toContain("#A4F91C");
+
+    // 2. Unauthenticated API call is rejected with 401
+    const unauthApi = await worker.fetch(
+      new Request("https://www.duypham.me/__radar/api/purge-bots", { method: "POST" }) as CfRequest,
+      env,
+    );
+    expect(unauthApi.status).toBe(401);
+
+    // 3. Unauthorized email is rejected with 403 and sends 0 emails
+    const badOtpReq = await worker.fetch(
+      new Request("https://www.duypham.me/__radar/auth/request-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: "intruder@example.com" }),
+      }) as CfRequest,
+      env,
+    );
+    expect(badOtpReq.status).toBe(403);
+    expect(sentEmails).toHaveLength(0);
+
+    // 4. Authorized owner email (hello@duypham.me) triggers OTP email
+    const goodOtpReq = await worker.fetch(
+      new Request("https://www.duypham.me/__radar/auth/request-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: "hello@duypham.me" }),
+      }) as CfRequest,
+      env,
+    );
+    expect(goodOtpReq.status).toBe(200);
+    expect(sentEmails).toHaveLength(1);
+    expect(storedOtpHash).toBeTruthy();
+
+    // Extract the 6-digit OTP from the sent raw MIME message
+    const rawMime = JSON.stringify(sentEmails[0]);
+    const codeMatch = rawMime.match(/Edge Radar OTP: ([0-9]{6})/);
+    expect(codeMatch).not.toBeNull();
+    const otpCode = codeMatch![1];
+
+    // 5. Verify OTP -> receives HttpOnly session cookie
+    const verifyRes = await worker.fetch(
+      new Request("https://www.duypham.me/__radar/auth/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: otpCode }),
+      }) as CfRequest,
+      env,
+    );
+    expect(verifyRes.status).toBe(200);
+    const setCookie = verifyRes.headers.get("Set-Cookie") ?? "";
+    expect(setCookie).toContain("__cf_radar_session=");
+    const sessionCookie = setCookie.split(";")[0];
+
+    // 6. Authenticated GET /__radar renders live D1 telemetry
+    const dashRes = await worker.fetch(
+      new Request("https://www.duypham.me/__radar", {
+        headers: { cookie: sessionCookie },
+      }) as CfRequest,
+      env,
+    );
+    expect(dashRes.status).toBe(200);
+    const dashHtml = await dashRes.text();
+    expect(dashHtml).toContain("#A4F91C");
+    expect(dashHtml).toContain("Singtel Fibre");
+    expect(dashHtml).toContain("/cv?from=grab");
+  });
 });

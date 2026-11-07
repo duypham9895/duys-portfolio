@@ -1,3 +1,5 @@
+import { handleRadarRequest } from "./dashboard";
+
 export type TrackedChannel = "cv" | "in" | "gh" | "resume_pdf" | "home" | "labs" | "page";
 
 export interface CfProperties {
@@ -18,14 +20,22 @@ export interface CfRequest extends Request {
   readonly cf?: CfProperties;
 }
 
+export interface D1BoundStatement {
+  run(): Promise<unknown>;
+  first<T = unknown>(): Promise<T | null>;
+  all<T = unknown>(): Promise<{ readonly results?: readonly T[] }>;
+}
+
 export interface D1PreparedStatement {
-  bind(...values: readonly unknown[]): {
-    run(): Promise<unknown>;
-  };
+  bind(...values: readonly unknown[]): D1BoundStatement;
 }
 
 export interface D1DatabaseLike {
   prepare(query: string): D1PreparedStatement;
+}
+
+export interface EmailSendBinding {
+  send(message: unknown): Promise<void>;
 }
 
 export interface WorkerEnv {
@@ -33,6 +43,8 @@ export interface WorkerEnv {
   readonly DB?: D1DatabaseLike;
   /** Optional Discord webhook URL for real-time human visit alerts. */
   readonly DISCORD_WEBHOOK_URL?: string;
+  /** Optional Cloudflare Email Routing send_email binding for Zero-Trust OTP. */
+  readonly EMAIL?: EmailSendBinding;
 }
 
 export interface WorkerExecutionContext {
@@ -73,7 +85,7 @@ const SHORT_LINK_CHANNELS: Readonly<Record<string, TrackedChannel>> = {
 
 const RESUME_PATHS = new Set(["/resume.pdf", "/resume-light.pdf", "/resume-dark.pdf"]);
 
-const IGNORED_PREFIXES = ["/_astro/", "/fonts/", "/icons/", "/cdn-cgi/"];
+const IGNORED_PREFIXES = ["/_astro/", "/fonts/", "/icons/", "/cdn-cgi/", "/__radar"];
 const IGNORED_EXACT = new Set([
   "/favicon.svg",
   "/favicon.ico",
@@ -284,44 +296,61 @@ export async function recordVisit(
     }
   }
 
-  // 3. Optional real-time Discord rich embed alert for non-bot hits.
+  // 3. Optional real-time Discord rich embed alert for non-bot hits (unless muted in radar_mutes).
   if (env.DISCORD_WEBHOOK_URL && !event.isBot) {
-    try {
-      const meta = CHANNEL_META[event.channel];
-      const locationText = formatLocationField(event);
-      const networkParts = [
-        event.asnOrg ?? "Unknown ISP",
-        event.asn ? `AS${event.asn}` : null,
-        event.colo ? `Edge: ${event.colo}` : null,
-      ].filter(Boolean);
-      const refererText = event.referer ?? "Direct / Bookmark / PDF";
+    let isMuted = false;
+    if (env.DB) {
+      try {
+        const stmt = env.DB.prepare(
+          `SELECT id FROM radar_mutes WHERE (kind = 'visitor_id' AND value = ?) OR (kind = 'asn_org' AND value = ?) LIMIT 1`,
+        ).bind(event.visitorId, event.asnOrg ?? "");
+        if (typeof stmt.first === "function") {
+          const mutedRow = await stmt.first<{ id: number }>();
+          isMuted = Boolean(mutedRow);
+        }
+      } catch {
+        isMuted = false;
+      }
+    }
 
-      await fetchImpl(env.DISCORD_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          embeds: [
-            {
-              title: meta.title,
-              color: meta.color,
-              fields: [
-                { name: "Visitor ID", value: `\`${event.visitorId}\``, inline: true },
-                { name: "Path", value: `\`${event.path}\``, inline: true },
-                { name: "Query Params", value: event.query ? `\`${event.query}\`` : "None", inline: true },
-                { name: "Location", value: locationText, inline: true },
-                { name: "Device / Browser", value: event.clientSummary, inline: true },
-                { name: "Browser Language", value: event.language ?? "Unknown", inline: true },
-                { name: "Network (ISP / ASN / Edge)", value: networkParts.join(" · "), inline: true },
-                { name: "Referer", value: refererText, inline: true },
-                { name: "Visitor Timezone", value: event.timezone ?? "Unknown", inline: true },
-              ],
-              timestamp: event.timestamp,
-            },
-          ],
-        }),
-      });
-    } catch (error) {
-      console.error("Webhook notification failed:", error);
+    if (!isMuted) {
+      try {
+        const meta = CHANNEL_META[event.channel];
+        const locationText = formatLocationField(event);
+        const networkParts = [
+          event.asnOrg ?? "Unknown ISP",
+          event.asn ? `AS${event.asn}` : null,
+          event.colo ? `Edge: ${event.colo}` : null,
+        ].filter(Boolean);
+        const refererText = event.referer ?? "Direct / Bookmark / PDF";
+
+        await fetchImpl(env.DISCORD_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            embeds: [
+              {
+                title: meta.title,
+                color: meta.color,
+                fields: [
+                  { name: "Visitor ID", value: `\`${event.visitorId}\``, inline: true },
+                  { name: "Path", value: `\`${event.path}\``, inline: true },
+                  { name: "Query Params", value: event.query ? `\`${event.query}\`` : "None", inline: true },
+                  { name: "Location", value: locationText, inline: true },
+                  { name: "Device / Browser", value: event.clientSummary, inline: true },
+                  { name: "Browser Language", value: event.language ?? "Unknown", inline: true },
+                  { name: "Network (ISP / ASN / Edge)", value: networkParts.join(" · "), inline: true },
+                  { name: "Referer", value: refererText, inline: true },
+                  { name: "Visitor Timezone", value: event.timezone ?? "Unknown", inline: true },
+                ],
+                timestamp: event.timestamp,
+              },
+            ],
+          }),
+        });
+      } catch (error) {
+        console.error("Webhook notification failed:", error);
+      }
     }
   }
 }
@@ -335,10 +364,17 @@ export default {
   ): Promise<Response> {
     const url = new URL(request.url);
 
+    // Route `/__radar*` to the Zero-Trust OTP Dashboard & Management API
+    if (url.pathname === "/__radar" || url.pathname.startsWith("/__radar/")) {
+      return handleRadarRequest(request, env, originFetch);
+    }
+
     // Self-visit opt-out / opt-in toggle via `?radar=off` or `?radar=on`
     const radarToggle = url.searchParams.get("radar");
     if (radarToggle === "off" || radarToggle === "on") {
       url.searchParams.delete("radar");
+      const referer = request.headers.get("referer");
+      const redirectTarget = referer && referer.includes("/__radar") ? new URL("/__radar", url.origin).toString() : url.toString();
       const domainAttr = cookieDomainAttr(url.hostname);
       const cookie =
         radarToggle === "off"
@@ -347,7 +383,7 @@ export default {
       return new Response(null, {
         status: 302,
         headers: {
-          Location: url.toString(),
+          Location: redirectTarget,
           "Cache-Control": "no-store",
           "Set-Cookie": cookie,
         },

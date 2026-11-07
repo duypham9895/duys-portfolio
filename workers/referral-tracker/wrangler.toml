@@ -1,21 +1,27 @@
 name = "duypham-referral-tracker"
 main = "index.ts"
-compatibility_date = "2026-10-01"
-account_id = "76cf12a5975b729026f1b1dd89005e53"
+compatibility_date = "2025-02-01"
+workers_dev = false
 
-# Attach across the zone so all page paths (/, /labs, /cv, /in, /gh, /resume.pdf) are tracked
+# Intercept all page views, short-link hops, and PDF downloads across duypham.me
 routes = [
   { pattern = "www.duypham.me/*", zone_name = "duypham.me" },
   { pattern = "duypham.me/cv*", zone_name = "duypham.me" },
   { pattern = "duypham.me/in*", zone_name = "duypham.me" },
-  { pattern = "duypham.me/gh*", zone_name = "duypham.me" }
+  { pattern = "duypham.me/gh*", zone_name = "duypham.me" },
 ]
 
-# Built-in Workers Observability (free 0.5 GB/day, 7-day retention)
+# Structured logs in Cloudflare Dashboard -> Workers & Pages -> Observability (Free tier: 0.5 GB/day)
 [observability]
 enabled = true
 
+# Cloudflare D1 Binding (Free tier: 5 GB storage, 5M reads/day, 100k writes/day)
 [[d1_databases]]
 binding = "DB"
 database_name = "portfolio-referrals"
 database_id = "f51a8c5f-74bd-417d-b542-7fef40ad04e4"
+
+# Cloudflare Email Routing native send_email binding (hard-locked to verified owner email for Zero-Trust OTP)
+[[send_email]]
+name = "EMAIL"
+destination_address = "phamanhduy.sg@gmail.com"

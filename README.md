@@ -14,6 +14,7 @@ Personal site and single-page resume for **Duy Pham** (`duypham.me`), built with
   - Logs page views, short-link redirects (`/cv`, `/in`, `/gh`), and PDF downloads (`/resume*.pdf`) with zero added latency via `ctx.waitUntil()`.
   - Sends rich 9-field Discord notifications (Visitor ID, Path, Query Params, Location + Google Maps link, Device/Browser, Browser Language, Network ASN/ISP/Colo, Referer, Visitor Timezone).
   - Supports self-visit muting on any device via `?radar=off` (sets `__cf_radar_ignore=1` cookie on `.duypham.me` for 1 year) and `?radar=on`.
+  - Includes a built-in **Portfolio Radar Dashboard (`/__radar`)** in Kit Room v2 + Night Stage Dark style, protected by **Zero-Trust Email OTP** (`cloudflare:email` `[[send_email]]` locked to owner email + SHA-256 D1 OTP/session store) with live D1 telemetry, Visitor Session Journey drill-down, Mute Rules (`radar_mutes`), bot purging, CSV export, and Discord webhook testing.
 
 ## Quality Gates
 
