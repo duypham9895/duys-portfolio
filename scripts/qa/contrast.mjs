@@ -7,7 +7,7 @@
 import { chromium } from "@playwright/test";
 
 const BASE = (process.argv[2] ?? "http://localhost:4321").replace(/\/$/, "");
-const PAGES = ["/", "/labs"];
+const PAGES = ["/", "/labs", "/404"];
 const WIDTHS = [1440, 390];
 const THEMES = ["light", "dark"];
 const UI_SELECTOR =

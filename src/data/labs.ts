@@ -65,18 +65,6 @@ export const labs: readonly LabProject[] = [
     accent: "#b8923a",
   },
   {
-    name: "Foray",
-    slug: "foray",
-    description:
-      "A campaign room for job hunting: capture applications, ingest recruiter emails, classify movement, and decide the next action.",
-    status: "Building",
-    type: "Job search tool",
-    tags: ["Careers", "Gmail", "TypeScript"],
-    githubUrl: "https://github.com/duypham9895/foray",
-    updatedAt: "2026-05-12",
-    accent: "#6f67d8",
-  },
-  {
     name: "Đà Lạt Random Picker",
     slug: "dalat-random-picker",
     description:

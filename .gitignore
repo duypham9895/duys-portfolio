@@ -46,6 +46,7 @@ public/resume-dark.pdf
 # local tooling output
 .enola/
 .playwright-mcp/
+.wrangler/
 
 # private content-rule terms (never commit)
 content-rules.local.json

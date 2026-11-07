@@ -1,0 +1,21 @@
+name = "duypham-referral-tracker"
+main = "index.ts"
+compatibility_date = "2026-10-01"
+account_id = "76cf12a5975b729026f1b1dd89005e53"
+
+# Attach across the zone so all page paths (/, /labs, /cv, /in, /gh, /resume.pdf) are tracked
+routes = [
+  { pattern = "www.duypham.me/*", zone_name = "duypham.me" },
+  { pattern = "duypham.me/cv*", zone_name = "duypham.me" },
+  { pattern = "duypham.me/in*", zone_name = "duypham.me" },
+  { pattern = "duypham.me/gh*", zone_name = "duypham.me" }
+]
+
+# Built-in Workers Observability (free 0.5 GB/day, 7-day retention)
+[observability]
+enabled = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "portfolio-referrals"
+database_id = "f51a8c5f-74bd-417d-b542-7fef40ad04e4"

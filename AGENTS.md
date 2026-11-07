@@ -16,3 +16,10 @@ Key routing rules:
 - Design system, brand → invoke design-consultation
 - Visual audit, design polish → invoke design-review
 - Architecture review → invoke plan-eng-review
+
+## Principal QA Standard
+
+Always proactively self-test all changes like a Principal QA Engineer before reporting completion:
+- Never leave testing to the user when you can execute and verify it yourself.
+- Run and verify the full quality gate suite: unit tests (`npm test`), build & PDF generation (`npm run build`), built HTML content-rule scan (`npm run qa:scan`), WCAG AA contrast audit across all pages/viewports/themes (`npm run qa:contrast`), and Playwright E2E tests (`npm run test:e2e`), adding new E2E tests whenever new routes or behaviors are introduced.
+- For edge/cloud deployments (e.g., Cloudflare Workers & D1), execute live end-to-end HTTP and database assertions against the deployed endpoint (redirect hops, cookies, cross-subdomain behavior, bot/ignore filters, and database persistence).

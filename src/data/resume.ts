@@ -38,7 +38,7 @@ export const resume: ResumeCopy = {
   titleLine: "Associate Product Manager · Technical PM direction",
   locationLine: "Ho Chi Minh City · Hybrid preferred · Open to relocation with company support",
   links: [
-    { label: "phamanhduy.sg@gmail.com", href: "mailto:phamanhduy.sg@gmail.com" },
+    { label: "hello@duypham.me", href: "mailto:hello@duypham.me" },
     { label: "+84 963 769 049", href: "tel:+84963769049" },
     { label: "linkedin.com/in/phamanhduy", href: "https://www.linkedin.com/in/phamanhduy" },
     { label: "duypham.me", href: "https://www.duypham.me/cv" },

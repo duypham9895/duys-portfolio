@@ -9,12 +9,12 @@ test.describe("Labs page", () => {
   test("renders the start list", async ({ page }) => {
     await expect(page).toHaveTitle(/Labs/);
     await expect(page.locator("h1")).toHaveText("Labs");
-    await expect(page.locator(".startlist tr.row")).toHaveCount(6);
+    await expect(page.locator(".startlist tr.row")).toHaveCount(5);
   });
 
   test("labels project links per v2", async ({ page }) => {
     await expect(page.locator('a[aria-label$=" live site"]')).toHaveCount(3);
-    await expect(page.locator('a[aria-label$=" on GitHub"]')).toHaveCount(6);
+    await expect(page.locator('a[aria-label$=" on GitHub"]')).toHaveCount(5);
   });
 
   test("filters by status", async ({ page }) => {
@@ -26,7 +26,7 @@ test.describe("Labs page", () => {
     await expect(page.locator("tr.empty")).toBeHidden();
 
     await filters.getByRole("button", { name: /^All/ }).click();
-    await expect(page.locator(".startlist tr.row:visible")).toHaveCount(6);
+    await expect(page.locator(".startlist tr.row:visible")).toHaveCount(5);
   });
 
   test("shows the empty state when no lab matches", async ({ page }) => {
@@ -58,7 +58,7 @@ test.describe("Labs without JavaScript", () => {
   test("hides the filters and shows every lab", async ({ page }) => {
     await page.goto("/labs");
     await expect(page.locator(".filters")).toBeHidden();
-    await expect(page.locator(".startlist tr.row:visible")).toHaveCount(6);
+    await expect(page.locator(".startlist tr.row:visible")).toHaveCount(5);
   });
 });
 
