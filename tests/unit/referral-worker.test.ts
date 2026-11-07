@@ -203,7 +203,14 @@ describe("referral tracker worker", () => {
 
   it("protects /__radar with Zero-Trust Email OTP and blocks unauthorized emails or API calls", async () => {
     const sentEmails: unknown[] = [];
-    let storedOtpHash: string | null = null;
+    let storedOtp: {
+      id: number;
+      code_hash: string;
+      ip: string | null;
+      attempts: number;
+      expires_at: string;
+      created_at: string;
+    } | null = null;
     let storedSessionHash: string | null = null;
 
     const db: D1DatabaseLike = {
@@ -211,7 +218,18 @@ describe("referral tracker worker", () => {
         bind: (...values: readonly unknown[]) => ({
           run: async () => {
             if (query.startsWith("INSERT INTO radar_otps")) {
-              storedOtpHash = values[0] as string;
+              storedOtp = {
+                id: 1,
+                code_hash: values[0] as string,
+                ip: (values[1] as string | null) ?? null,
+                attempts: 0,
+                expires_at: values[2] as string,
+                created_at: values[3] as string,
+              };
+            } else if (query.startsWith("UPDATE radar_otps SET attempts")) {
+              if (storedOtp) storedOtp.attempts = values[0] as number;
+            } else if (query.startsWith("DELETE FROM radar_otps") && !query.includes("expires_at <=")) {
+              storedOtp = null;
             } else if (query.startsWith("INSERT INTO radar_sessions")) {
               storedSessionHash = values[0] as string;
             }
@@ -221,8 +239,11 @@ describe("referral tracker worker", () => {
             if (query.includes("FROM radar_sessions") && values[0] === storedSessionHash) {
               return { email: "phamanhduy.sg@gmail.com" } as unknown as T;
             }
-            if (query.includes("FROM radar_otps") && values[0] === storedOtpHash) {
-              return { id: 1 } as unknown as T;
+            if (query.includes("SELECT created_at FROM radar_otps") && storedOtp) {
+              return { created_at: storedOtp.created_at } as unknown as T;
+            }
+            if (query.includes("SELECT id, code_hash, ip, attempts FROM radar_otps") && storedOtp) {
+              return storedOtp as unknown as T;
             }
             return null;
           },
@@ -291,14 +312,26 @@ describe("referral tracker worker", () => {
     const goodOtpReq = await worker.fetch(
       new Request("https://www.duypham.me/__radar/auth/request-otp", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "cf-connecting-ip": "203.0.113.10" },
         body: JSON.stringify({ email: "hello@duypham.me" }),
       }) as CfRequest,
       env,
     );
     expect(goodOtpReq.status).toBe(200);
     expect(sentEmails).toHaveLength(1);
-    expect(storedOtpHash).toBeTruthy();
+    expect(storedOtp?.code_hash).toBeTruthy();
+
+    // 4b. Immediate repeat OTP request within 60s cooldown is throttled with 429
+    const rapidOtpReq = await worker.fetch(
+      new Request("https://www.duypham.me/__radar/auth/request-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "cf-connecting-ip": "203.0.113.10" },
+        body: JSON.stringify({ email: "hello@duypham.me" }),
+      }) as CfRequest,
+      env,
+    );
+    expect(rapidOtpReq.status).toBe(429);
+    expect(sentEmails).toHaveLength(1);
 
     // Extract the 6-digit OTP from the sent raw MIME message
     const rawMime = JSON.stringify(sentEmails[0]);
@@ -310,7 +343,7 @@ describe("referral tracker worker", () => {
     const verifyRes = await worker.fetch(
       new Request("https://www.duypham.me/__radar/auth/verify-otp", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "cf-connecting-ip": "203.0.113.10" },
         body: JSON.stringify({ code: otpCode }),
       }) as CfRequest,
       env,
@@ -332,5 +365,120 @@ describe("referral tracker worker", () => {
     expect(dashHtml).toContain("#A4F91C");
     expect(dashHtml).toContain("Singtel Fibre");
     expect(dashHtml).toContain("/cv?from=grab");
+  });
+
+  it("locks and destroys OTP after 5 failed brute-force attempts or IP mismatch", async () => {
+    const sentEmails: unknown[] = [];
+    let storedOtp: {
+      id: number;
+      code_hash: string;
+      ip: string | null;
+      attempts: number;
+      expires_at: string;
+      created_at: string;
+    } | null = null;
+
+    const db: D1DatabaseLike = {
+      prepare: (query: string) => ({
+        bind: (...values: readonly unknown[]) => ({
+          run: async () => {
+            if (query.startsWith("INSERT INTO radar_otps")) {
+              storedOtp = {
+                id: 1,
+                code_hash: values[0] as string,
+                ip: (values[1] as string | null) ?? null,
+                attempts: 0,
+                expires_at: values[2] as string,
+                created_at: values[3] as string,
+              };
+            } else if (query.startsWith("UPDATE radar_otps SET attempts")) {
+              if (storedOtp) storedOtp.attempts = values[0] as number;
+            } else if (query.startsWith("DELETE FROM radar_otps") && !query.includes("expires_at <=")) {
+              storedOtp = null;
+            }
+            return {};
+          },
+          first: async <T>() => {
+            if (query.includes("SELECT created_at FROM radar_otps") && storedOtp) {
+              return { created_at: storedOtp.created_at } as unknown as T;
+            }
+            if (query.includes("SELECT id, code_hash, ip, attempts FROM radar_otps") && storedOtp) {
+              return storedOtp as unknown as T;
+            }
+            return null;
+          },
+          all: async <T>() => ({ results: [] as readonly T[] }),
+        }),
+      }),
+    };
+
+    const env = {
+      DB: db,
+      EMAIL: {
+        send: async (msg: unknown) => {
+          sentEmails.push(msg);
+        },
+      },
+    };
+
+    await worker.fetch(
+      new Request("https://www.duypham.me/__radar/auth/request-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "cf-connecting-ip": "203.0.113.10" },
+        body: JSON.stringify({ email: "hello@duypham.me" }),
+      }) as CfRequest,
+      env,
+    );
+
+    const rawMime = JSON.stringify(sentEmails[0]);
+    const validOtp = rawMime.match(/Edge Radar OTP: ([0-9]{6})/)![1];
+    const wrongOtp = validOtp === "000000" ? "999999" : "000000";
+
+    // Attempt 1: Valid OTP from a DIFFERENT IP is rejected with 401 (IP Pinning)
+    const wrongIpRes = await worker.fetch(
+      new Request("https://www.duypham.me/__radar/auth/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "cf-connecting-ip": "198.51.100.77" },
+        body: JSON.stringify({ code: validOtp }),
+      }) as CfRequest,
+      env,
+    );
+    expect(wrongIpRes.status).toBe(401);
+
+    // Attempts 2, 3, 4: Wrong OTP from the original IP -> 401 with remaining count
+    for (let i = 2; i <= 4; i++) {
+      const res = await worker.fetch(
+        new Request("https://www.duypham.me/__radar/auth/verify-otp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "cf-connecting-ip": "203.0.113.10" },
+          body: JSON.stringify({ code: wrongOtp }),
+        }) as CfRequest,
+        env,
+      );
+      expect(res.status).toBe(401);
+    }
+
+    // Attempt 5: 5th failed attempt locks & destroys the OTP with HTTP 429
+    const fifthRes = await worker.fetch(
+      new Request("https://www.duypham.me/__radar/auth/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "cf-connecting-ip": "203.0.113.10" },
+        body: JSON.stringify({ code: wrongOtp }),
+      }) as CfRequest,
+      env,
+    );
+    expect(fifthRes.status).toBe(429);
+    expect(storedOtp).toBeNull();
+
+    // Attempt 6: Even submitting the real OTP now fails with 401 because the OTP was destroyed
+    const afterLockRes = await worker.fetch(
+      new Request("https://www.duypham.me/__radar/auth/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "cf-connecting-ip": "203.0.113.10" },
+        body: JSON.stringify({ code: validOtp }),
+      }) as CfRequest,
+      env,
+    );
+    expect(afterLockRes.status).toBe(401);
   });
 });

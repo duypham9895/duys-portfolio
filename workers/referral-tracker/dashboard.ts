@@ -996,6 +996,28 @@ export async function handleRadarRequest(
     // Clean expired OTPs first
     await env.DB.prepare(`DELETE FROM radar_otps WHERE expires_at <= ?`).bind(nowIso).run();
 
+    // Enforce 60-second cooldown between OTP generations to prevent inbox flooding & brute-force resets
+    const latestOtp = await env.DB.prepare(
+      `SELECT created_at FROM radar_otps WHERE expires_at > ? ORDER BY id DESC LIMIT 1`,
+    )
+      .bind(nowIso)
+      .first<{ created_at: string }>();
+
+    if (latestOtp?.created_at) {
+      const elapsedMs = now.getTime() - Date.parse(latestOtp.created_at);
+      if (Number.isFinite(elapsedMs) && elapsedMs < 60_000) {
+        const waitSec = Math.max(1, Math.ceil((60_000 - elapsedMs) / 1000));
+        return jsonResponse(
+          { error: `Please wait ${waitSec}s before requesting a new OTP.` },
+          429,
+          { "Retry-After": String(waitSec) },
+        );
+      }
+    }
+
+    // Invalidate any previously issued OTP so only 1 OTP can ever be active at a time
+    await env.DB.prepare(`DELETE FROM radar_otps`).bind().run();
+
     const code = generateSixDigitOtp();
     const codeHash = await sha256Hex(code);
     const expiresIso = new Date(now.getTime() + 5 * 60 * 1000).toISOString();
@@ -1022,18 +1044,37 @@ export async function handleRadarRequest(
     const now = new Date();
     const nowIso = now.toISOString();
     const codeHash = await sha256Hex(code);
+    const requestIp = request.headers.get("cf-connecting-ip") ?? request.headers.get("x-forwarded-for");
 
-    const match = await env.DB.prepare(
-      `SELECT id FROM radar_otps WHERE code_hash = ? AND expires_at > ? AND attempts < 5 LIMIT 1`,
+    const activeOtp = await env.DB.prepare(
+      `SELECT id, code_hash, ip, attempts FROM radar_otps WHERE expires_at > ? ORDER BY id DESC LIMIT 1`,
     )
-      .bind(codeHash, nowIso)
-      .first<{ id: number }>();
+      .bind(nowIso)
+      .first<{ id: number; code_hash: string; ip: string | null; attempts: number }>();
 
-    if (!match) {
-      await env.DB.prepare(`UPDATE radar_otps SET attempts = attempts + 1 WHERE expires_at > ?`)
-        .bind(nowIso)
-        .run();
+    if (!activeOtp) {
       return jsonResponse({ error: "Invalid or expired OTP code." }, 401);
+    }
+
+    if (activeOtp.attempts >= 5) {
+      await env.DB.prepare(`DELETE FROM radar_otps WHERE id = ?`).bind(activeOtp.id).run();
+      return jsonResponse({ error: "Too many failed attempts. OTP locked — please request a new code." }, 429);
+    }
+
+    const ipMismatch = Boolean(activeOtp.ip && requestIp && activeOtp.ip !== requestIp);
+    if (ipMismatch || activeOtp.code_hash !== codeHash) {
+      const nextAttempts = activeOtp.attempts + 1;
+      if (nextAttempts >= 5) {
+        await env.DB.prepare(`DELETE FROM radar_otps WHERE id = ?`).bind(activeOtp.id).run();
+        return jsonResponse({ error: "Too many failed attempts. OTP locked — please request a new code." }, 429);
+      }
+      await env.DB.prepare(`UPDATE radar_otps SET attempts = ? WHERE id = ?`)
+        .bind(nextAttempts, activeOtp.id)
+        .run();
+      return jsonResponse(
+        { error: `Invalid OTP code (${5 - nextAttempts} attempts remaining).` },
+        401,
+      );
     }
 
     // Consume all active OTPs and issue a 30-day session
