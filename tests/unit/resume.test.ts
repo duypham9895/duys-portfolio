@@ -5,6 +5,7 @@ import { extractBodyText } from "../../scripts/resume/bodyText";
 import { renderTemplate } from "../../scripts/resume/template";
 import { transform } from "../../scripts/resume/transform";
 import { assertOnePage, countPdfPages, renderPdf } from "../../scripts/resume/render";
+import { personal } from "../../src/data/personal";
 
 const APPROVED_TEXT = readFileSync(resolve(__dirname, "../fixtures/resume-body.txt"), "utf8");
 
@@ -33,6 +34,7 @@ describe("resume PDF guard", { timeout: 60000 }, () => {
     const raw = pdf.toString("latin1");
     expect(raw).toContain("/StructTreeRoot");
     expect(raw).toContain("/FontFile2");
+    expect(raw).toContain(`/URI (mailto:${personal.contact.email})`);
   });
 
   it("throws on an oversized resume", async () => {
