@@ -56,7 +56,7 @@ export const resume: ResumeCopy = {
         "Delivery PM for the Ringkas AI Financial Assistant from mid-project, released on time; wrote its 3-phase rollout with cost gates and feature flags. Indonesia-based PMs owned testing and evaluation.",
         "Coordinated a major Indonesian e-wallet partner's security questionnaire with Engineering, AI and Compliance.",
         "Product Manager for platform changes: masked borrower contact details from lenders until an application is submitted to them, made the SPR issue date mandatory across CRM, consumer-app and API uploads, and let company admins change a user's login ID.",
-        "Owned the API documentation (payload reference and changelog) for a Saudi bank partner integrating with the CRM through a housing-fund-compatible API (10 operations). Tested it against the live APIs, corrected about 30 doc-vs-live gaps, and filed a pagination defect that engineering fixed; ran the response to the bank's UAT feedback. The integration is in UAT.",
+        "Co-owned the API documentation (payload reference and changelog) with the Head of Product for a Saudi bank partner integrating with the CRM through a housing-fund-compatible API (10 operations). Tested it against the live APIs, corrected about 30 doc-vs-live gaps, and filed a pagination defect that engineering fixed; ran the response to the bank's UAT feedback. The integration is in UAT.",
         "Wrote the PRD for document resubmission for Saudi lenders, wrote 13 demo test cases for a Saudi developer partner's CRM proof of value, and reviewed QA's 55-case UAT workbook, flagging problems in 37.",
         "Responsible for platform support tickets: root-cause with SQL, route code changes to Engineering, turn recurring Ops/CS pain into shipped change requests (Advanced Filter, cross-org switch, failure alerts).",
       ],
@@ -71,7 +71,7 @@ export const resume: ResumeCopy = {
       context: "B2B SaaS, invoice automation",
       bullets: [
         "Built VAT invoice extraction models (YOLO, Faster R-CNN, CRNN, VietOCR) through to production.",
-        "Shipped a Purchase Order processing service (database, APIs, serverless) with about 75% unit test coverage, handling files of up to 1,000 pages across about 30 partner templates.",
+        "Shipped a Purchase Order processing service (database, APIs, serverless) with about 75% unit test coverage, handling about 30 partner templates.",
       ],
     },
   ],
