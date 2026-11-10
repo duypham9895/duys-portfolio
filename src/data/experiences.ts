@@ -34,7 +34,7 @@ export const experiences: readonly Experience[] = [
       "Built a vision-language model (VLM) OCR proof of concept with the AI team: benchmarked **87% lower cost** against **74% higher latency**. Deprioritised for production after a company strategy shift",
       "Coordinated the security questionnaire response for a major Indonesian e-wallet partner, bringing Engineering, AI and Compliance into one response using system knowledge from my engineering years",
       "Product Manager for platform changes: masked borrower contact details from lenders until an application is submitted to them, made the **SPR issue date** mandatory across CRM, consumer-app and API uploads, and let company admins change a user's login ID",
-      "Owned the **API documentation** (payload reference and changelog) for a Saudi bank partner integrating with the CRM through a housing-fund-compatible API (10 operations). Tested it against the live APIs, corrected **about 30 doc-vs-live gaps**, and filed a pagination defect that engineering fixed; ran the response to the bank's UAT feedback. The integration is in UAT",
+      "Co-owned the **API documentation** (payload reference and changelog) with the Head of Product for a Saudi bank partner integrating with the CRM through a housing-fund-compatible API (10 operations). Tested it against the live APIs, corrected **about 30 doc-vs-live gaps**, and filed a pagination defect that engineering fixed; ran the response to the bank's UAT feedback. The integration is in UAT",
       "Wrote the PRD for **document resubmission** for Saudi lenders, wrote 13 demo test cases for a Saudi developer partner's CRM proof of value, and reviewed QA's **55-case UAT workbook**, flagging problems in 37",
       "As point of contact for platform support tickets, I triage and root-cause issues with hands-on SQL, route code changes to Engineering, and turn recurring Ops/CS pain into PRDs for shipped change requests: Advanced Filter, cross-org switch, real-time Discord alerts when KYC checks or bank submissions fail",
     ],
@@ -65,7 +65,7 @@ export const experiences: readonly Experience[] = [
     description: [
       "Translated enterprise retail clients' requirements into Oracle and SAP integration designs, and maintained the API contracts in production",
       "Built AI models for VAT invoice extraction (YOLO, Faster R-CNN, CRNN, VietOCR): worked across the pipeline from data collection through production and inference optimization",
-      "Shipped an end-to-end Purchase Order processing service (DB, APIs, Serverless, deployment) at **about 75% unit-test coverage**, handling files of **up to 1,000 pages** across **about 30 partner templates**",
+      "Shipped an end-to-end Purchase Order processing service (DB, APIs, Serverless, deployment) at **about 75% unit-test coverage**, handling **about 30 partner templates**",
     ],
   },
 ] as const;
