@@ -240,7 +240,7 @@ describe("labs data", () => {
   });
 
   it("features 3 valid slugs in order", () => {
-    expect(featured).toEqual(["split-bill", "pm-assessment-gym", "evoyage"]);
+    expect(featured).toEqual(["where-money-sleeps", "pm-assessment-gym", "evoyage"]);
     expect(featuredLabs.map((lab) => lab.slug)).toEqual(featured);
   });
 });

@@ -15,6 +15,19 @@ export interface LabProject {
 
 export const labs: readonly LabProject[] = [
   {
+    name: "Where Money Sleeps",
+    slug: "where-money-sleeps",
+    description:
+      "An interactive explainer decoding the hidden plumbing of card schemes, interbank settlement, and double-entry accounting in Vietnam.",
+    status: "Live",
+    type: "Financial explainer",
+    tags: ["Fintech", "Accounting", "Cloudflare"],
+    liveUrl: "https://wheremoneysleeps.duyslab.icu/",
+    githubUrl: "https://github.com/duypham9895/where-money-sleeps",
+    updatedAt: "2026-11-12",
+    accent: "#ebb553",
+  },
+  {
     name: "EVoyage",
     slug: "evoyage",
     description:
@@ -80,7 +93,7 @@ export const labs: readonly LabProject[] = [
 ];
 
 /** Slugs shown in the home Labs preview, in display order. */
-export const featured: readonly string[] = ["split-bill", "pm-assessment-gym", "evoyage"];
+export const featured: readonly string[] = ["where-money-sleeps", "pm-assessment-gym", "evoyage"];
 
 export const featuredLabs: readonly LabProject[] = featured.map((slug) => {
   const lab = labs.find((item) => item.slug === slug);
