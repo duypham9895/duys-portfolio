@@ -18,7 +18,7 @@ export const labs: readonly LabProject[] = [
     name: "Where Money Sleeps",
     slug: "where-money-sleeps",
     description:
-      "An interactive explainer decoding the hidden plumbing of card schemes, interbank settlement, and double-entry accounting in Vietnam.",
+      "Traces a card payment in Vietnam through card schemes, interbank settlement, and double-entry bank ledgers.",
     status: "Live",
     type: "Financial explainer",
     tags: ["Fintech", "Accounting", "Cloudflare"],
@@ -28,23 +28,10 @@ export const labs: readonly LabProject[] = [
     accent: "#ebb553",
   },
   {
-    name: "EVoyage",
-    slug: "evoyage",
-    description:
-      "Plan EV road trips with range calculations, charger-aware stops, and a route flow tuned for Vietnamese travel.",
-    status: "Live",
-    type: "Travel tool",
-    tags: ["EV", "Maps", "Next.js"],
-    liveUrl: "https://evoyage.duypham.me/",
-    githubUrl: "https://github.com/duypham9895/evoyage",
-    updatedAt: "2026-10-01",
-    accent: "#2f9e8f",
-  },
-  {
     name: "PM Bench",
     slug: "pm-assessment-gym",
     description:
-      "Practice for PM analytical assessments: a multiple-choice question bank with timed full mocks, topic drills, explanations, and weakest-topic tracking.",
+      "Timed multiple-choice mock tests and topic drills for PM analytical interviews, with answer breakdowns and weak-spot tracking.",
     status: "Live",
     type: "Product practice",
     tags: ["PM", "Analytics", "React"],
@@ -54,10 +41,23 @@ export const labs: readonly LabProject[] = [
     accent: "#b8541f",
   },
   {
+    name: "EVoyage",
+    slug: "evoyage",
+    description:
+      "Plans EV road trips across Vietnam with battery-range math and charging stops along the route.",
+    status: "Live",
+    type: "Travel tool",
+    tags: ["EV", "Maps", "Next.js"],
+    liveUrl: "https://evoyage.duypham.me/",
+    githubUrl: "https://github.com/duypham9895/evoyage",
+    updatedAt: "2026-10-01",
+    accent: "#2f9e8f",
+  },
+  {
     name: "Easel",
     slug: "easel",
     description:
-      "A couples wellbeing app concept that turns menstrual-cycle tracking into phase-aware guidance and timely support signals.",
+      "A couples app that turns menstrual-cycle tracking into practical daily notes for partners.",
     status: "Building",
     type: "AI companion",
     tags: ["AI", "Wellbeing", "TypeScript"],
@@ -69,7 +69,7 @@ export const labs: readonly LabProject[] = [
     name: "Split Bill",
     slug: "split-bill",
     description:
-      "A no-backend trip expense splitter for Vietnamese groups, with VND-first flows, VietQR support, and bilingual UI.",
+      "A client-side group expense splitter built for Vietnamese trips, with VND rounding, VietQR codes, and bilingual UI.",
     status: "Building",
     type: "Finance utility",
     tags: ["Finance", "VietQR", "TypeScript"],
@@ -81,7 +81,7 @@ export const labs: readonly LabProject[] = [
     name: "Đà Lạt Random Picker",
     slug: "dalat-random-picker",
     description:
-      "A lightweight picker for food and travel ideas in Đà Lạt, with categories, local storage, and mobile-friendly interactions.",
+      "Picks random food stops and places to visit in Đà Lạt, filtered by category and saved in browser storage.",
     status: "Live",
     type: "Local travel tool",
     tags: ["Travel", "Vietnam", "JavaScript"],

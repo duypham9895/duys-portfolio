@@ -35,25 +35,26 @@ export const personal: Personal = {
   fullName: "Duy Pham",
   title: "Associate Product Manager",
   positioning:
-    "Ex-software engineer working toward Technical Product Manager roles, building AI and platform products for Indonesian mortgage (KPR) fintech.",
-  location: "Based in Ho Chi Minh City · Hybrid preferred · Open to relocation with company support",
+    "Ex-software engineer shipping B2B AI agents, partner APIs, and digital lending products in Indonesian mortgage (KPR) fintech. Targeting Technical Product Manager roles.",
+  location:
+    "Based in Ho Chi Minh City, Vietnam · Hybrid, Remote, or International Relocation (Visa Sponsorship)",
   languages: ["Vietnamese (Native)", "English (Professional working)"],
-  education: "Ton Duc Thang University · Software Engineering · Degree not completed",
+  education: "Ton Duc Thang University · Software Engineering (Undergraduate coursework, non-degree)",
   about: {
     opener:
-      "Engineer first, product manager now: 5+ years at Bizzi and Ringkas, 3.5 of them in software engineering, and product at Ringkas since Aug 2024.",
+      "I wrote production backend and ML code for 3.5+ years at Bizzi and Ringkas before moving into product at Ringkas in Aug 2024 — 5+ years in fintech and B2B SaaS overall.",
     howIWork: [
       {
-        title: "Find the cause, not just a fix.",
-        body: "Trace the cause before committing to a costly fix: in case 01 I traced the OCR failures while the second-vendor PRD moved, and fixing the cause made the new vendor unnecessary.",
+        title: "Debug the cause before buying a tool.",
+        body: "When OCR failed ~60% of the time, I traced the image pipeline in parallel with a second-vendor PRD. Fixing an auth bug and two resize regressions lifted success from ~40% to ~89%. We kept the existing vendor and dropped the new contract.",
       },
       {
-        title: "Design for cost and risk.",
-        body: "The AI Financial Assistant went out in three phases behind cost gates and feature flags, with daily and global caps on anonymous usage to limit what it could cost.",
+        title: "Put hard ceilings on cost and risk.",
+        body: "Ringkas's AI Financial Assistant rolled out in three feature-flagged phases behind spend caps. Anonymous visitors hit strict daily and global limits; signed-in borrowers get higher quotas. That capped LLM bills and gave users a clear reason to register.",
       },
       {
-        title: "Bridge engineering and business.",
-        body: "I coordinate engineering work across Vietnam and Indonesia. For a major Indonesian e-wallet partner's security questionnaire, I brought Engineering, AI and Compliance into one cross-functional response, drawing on what I knew of the system from my engineering years.",
+        title: "Speak both payload and business.",
+        body: "I work across engineering in Vietnam and business teams in Indonesia and Saudi Arabia. I build workflow prototypes so engineers see edge cases before Design polishes visuals, test live partner APIs against specs, and align Engineering, AI, and Compliance on partner security reviews.",
       },
     ],
   },

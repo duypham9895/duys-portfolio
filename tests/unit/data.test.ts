@@ -26,10 +26,12 @@ describe("personal data", () => {
   // INPUTS #5–7, hardcoded here on purpose (INPUTS.md is not committed).
   it("has location, languages and education exactly as approved", () => {
     expect(personal.location).toBe(
-      "Based in Ho Chi Minh City · Hybrid preferred · Open to relocation with company support",
+      "Based in Ho Chi Minh City, Vietnam · Hybrid, Remote, or International Relocation (Visa Sponsorship)",
     );
     expect(personal.languages.join(" · ")).toBe("Vietnamese (Native) · English (Professional working)");
-    expect(personal.education).toBe("Ton Duc Thang University · Software Engineering · Degree not completed");
+    expect(personal.education).toBe(
+      "Ton Duc Thang University · Software Engineering (Undergraduate coursework, non-degree)",
+    );
   });
 
   it("has an About opener and 3 how-I-work lines", () => {
@@ -102,7 +104,7 @@ describe("experiences data", () => {
   });
 
   it("domain is set for APM and Bizzi only", () => {
-    expect(experiences[0].domain).toBe("Indonesian mortgage (KPR) fintech");
+    expect(experiences[0].domain).toBe("Indonesian mortgage (KPR) fintech · Digital lending");
     expect(experiences[1].domain).toBeUndefined();
     expect(experiences[2].domain).toBe("B2B SaaS / invoice automation");
   });
@@ -143,6 +145,9 @@ describe("skills data", () => {
     expect(product.skills.map((s) => s.title)).toContain("Support-led discovery");
     expect(product.subgroups?.[0].skills.map((s) => s.title)).toEqual([
       "PRD Writing",
+      "User Stories & Acceptance Criteria",
+      "Workflow Prototyping",
+      "UAT Governance",
       "Stakeholder Management",
       "Compliance & Risk Coordination",
     ]);
@@ -239,9 +244,10 @@ describe("labs data", () => {
     expect(labs.find((lab) => lab.slug === "easel")?.description).toContain("menstrual-cycle");
   });
 
-  it("features 3 valid slugs in order", () => {
+  it("features 3 valid slugs in order, matching the first 3 startlist rows", () => {
     expect(featured).toEqual(["where-money-sleeps", "pm-assessment-gym", "evoyage"]);
     expect(featuredLabs.map((lab) => lab.slug)).toEqual(featured);
+    expect(labs.slice(0, 3).map((lab) => lab.slug)).toEqual(featured);
   });
 });
 
@@ -250,6 +256,33 @@ describe("resume copy", () => {
 
   it("has one copy block per role", () => {
     expect(resume.roles).toHaveLength(experiences.length);
+  });
+
+  it("omits granular internal counts, eKYC OCR mislabeling, and local SPR acronym across web and PDF", () => {
+    const combined = [
+      personal.positioning,
+      personal.education,
+      personal.about.opener,
+      ...personal.about.howIWork.map((h) => `${h.title} ${h.body}`),
+      ...caseStudies.flatMap((cs) => [
+        cs.kicker,
+        cs.tagline,
+        ...cs.rows.flatMap((r) => [...r.paragraphs, r.side?.body ?? ""]),
+      ]),
+      ...experiences.flatMap((exp) => [exp.scope ?? "", ...exp.description]),
+      resume.titleLine,
+      resume.summary,
+      ...resume.roles.flatMap((role) => [role.scope ?? "", ...role.bullets]),
+      ...resume.skillLines.map((s) => `${s.label}: ${s.text}`),
+    ].join("\n");
+    expect(combined).not.toMatch(/\beKYC\s+OCR\b/i);
+    expect(combined).not.toMatch(/\bSPR\b/);
+    expect(combined).not.toMatch(/~?30\s+(?:doc|spec)-vs-live/i);
+    expect(combined).not.toMatch(/\b10\s+(?:operations|endpoints)\b/i);
+    expect(combined).not.toMatch(/\b13\b/);
+    expect(combined).not.toMatch(/\b55(?:-case)?\b/i);
+    expect(combined).not.toMatch(/\bin\s+37\b/i);
+    expect(combined).not.toMatch(/\b300\+\s*commits?\b/i);
   });
 
   it("every resume line appears verbatim in the approved resume text", () => {

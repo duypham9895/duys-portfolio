@@ -1,9 +1,8 @@
 import { personal } from "./personal";
 
 /**
- * Resume-only presentation copy, verbatim from the approved resume
- * (docs/mockups/cycling-theme/resume/resume.html). Facts such as companies,
- * titles and dates come from experiences.ts.
+ * Single-page ATS-optimized resume copy, strictly synchronized with personal.ts,
+ * experiences.ts, skills.ts, and certifications.ts.
  */
 
 export interface ResumeRole {
@@ -35,8 +34,9 @@ export interface ResumeCopy {
 }
 
 export const resume: ResumeCopy = {
-  titleLine: "Associate Product Manager · Technical PM direction",
-  locationLine: "Ho Chi Minh City · Hybrid preferred · Open to relocation with company support",
+  titleLine: "Associate Product Manager · Platform, APIs & AI (Ex-Software Engineer)",
+  locationLine:
+    "Ho Chi Minh City, Vietnam · Hybrid, Remote, or International Relocation (Visa Sponsorship)",
   links: [
     { label: "hello@duypham.me", href: "mailto:hello@duypham.me" },
     { label: "+84 963 769 049", href: "tel:+84963769049" },
@@ -45,47 +45,52 @@ export const resume: ResumeCopy = {
     { label: "github.com/duypham9895", href: "https://github.com/duypham9895" },
   ],
   summary:
-    "Product manager with 5+ years in software, 3.5 as a software engineer. Drives platform features from PRD to delivery at Ringkas, an Indonesian mortgage (KPR) fintech, including Pillar Portal for a B2B AI-agent platform. Lifted OCR success from about 40% to 89% with Engineering, without adding a vendor.",
+    "Product Manager with 5+ years in software (3.5+ as Software Engineer; moved internally to PM at Ringkas). Ships B2B Generative AI agents, partner APIs, and digital mortgage lending products from PRD and user stories to production. Lifted OCR success from ~40% to ~89% without a new vendor. Targeting Technical Product Manager roles.",
   roles: [
     {
       scope:
-        "drive features across the Ringkas platform end to end, from PRD through engineering delivery and technical QA. Work directly with Design, QA, Engineering and Data; report to the Head of Product.",
+        "Moved from SWE to PM. Own platform & AI features end to end (PRD, user stories, acceptance criteria, prototyping, delivery, UAT) with Design, Engineering, QA, and Data; report to the Head of Product.",
       bullets: [
-        "Owned Pillar Portal requirements, PRD to production, for a B2B AI-agent platform used in demos and enterprise tenders. Pillar's chat-widget SDK is rolling out to a first enterprise client.",
-        "Traced OCR failures in parallel with second-vendor work; with Engineering, fixed an auth error and frontend/backend image resizing, lifting success from about 40% to 89%; vendor kept.",
-        "Delivery PM for the Ringkas AI Financial Assistant from mid-project, released on time; wrote its 3-phase rollout with cost gates and feature flags. Indonesia-based PMs owned testing and evaluation.",
-        "Coordinated a major Indonesian e-wallet partner's security questionnaire with Engineering, AI and Compliance.",
-        "Product Manager for platform changes: masked borrower contact details from lenders until an application is submitted to them, made the SPR issue date mandatory across CRM, consumer-app and API uploads, and let company admins change a user's login ID.",
-        "Co-owned the API documentation (payload reference and changelog) with the Head of Product for a Saudi bank partner integrating with the CRM through a housing-fund-compatible API (10 operations). Tested it against the live APIs, corrected about 30 doc-vs-live gaps, and filed a pagination defect that engineering fixed; ran the response to the bank's UAT feedback. The integration is in UAT.",
-        "Wrote the PRD for document resubmission for Saudi lenders, wrote 13 demo test cases for a Saudi developer partner's CRM proof of value, and reviewed QA's 55-case UAT workbook, flagging problems in 37.",
-        "Responsible for platform support tickets: root-cause with SQL, route code changes to Engineering, turn recurring Ops/CS pain into shipped change requests (Advanced Filter, cross-org switch, failure alerts).",
+        "Owned Pillar Portal requirements (PRD to production) for a B2B Generative AI agent platform with prompt governance; powers enterprise tenders and a chat-widget SDK rolling out to a first client.",
+        "Traced OCR failures alongside second-vendor work; fixed auth and image-resize bugs with Engineering (~40% to ~89% success, avoiding a vendor) and benchmarked a VLM OCR PoC (−87% cost, +74% latency).",
+        "Delivery PM from mid-project for Ringkas AI Financial Assistant (on-time release); wrote 3-phase rollout specs with feature flags, spend caps, and tiered limits to cap LLM cost and drive sign-ups.",
+        "Co-owned API integration specs (payload reference, changelog) with Head of Product for a Saudi bank CRM integration; tested live APIs, fixed spec-vs-live payload gaps, filed a pagination bug, and ran UAT response.",
+        "Wrote the document-resubmission PRD for Saudi lenders, authored CRM demo test scenarios for a Saudi developer, and audited QA's User Acceptance Testing (UAT) suite before partner sign-off.",
+        "Shipped borrower PII masking before lender submission, mandatory booking-letter date validation across CRM/app/APIs, and tenant login-ID admin controls; led an e-wallet security & compliance response.",
+        "Owned support triage & support-led discovery: root-caused defects via SQL analytics, prioritized backlog fixes, and shipped PRDs for recurring Ops/CS pain (Advanced Filter, multi-org switch, KYC/bank alerts).",
       ],
     },
     {
       bullets: [
-        "Built core modules of the in-house loan platform (now Ringkas CRM, where developers, banks and agents run mortgage applications) in 300+ commits across a Node.js/GraphQL backend and React frontend: eKYC vendor integration, application status transitions, KPR asset forms, organization and workgroup management, and account security (OTP-verified login-ID change, forced password reset).",
-        "Shipped bank contract signing (akad) to production with the team in April 2023, then built its backend on the rebuilt platform in 2024. Ran production data-fix scripts and investigated support bugs on the CRM.",
+        "Built core mortgage loan platform (Ringkas CRM) modules across Node.js, GraphQL, and React (eKYC integration, loan workflows, KPR forms, org/workgroup management, OTP security) replacing outsourced delivery; challenged PRDs with PM & Design.",
+        "Shipped digital bank contract signing (akad) to production (2023), rebuilt its backend in-house (2024), and audited Ops/CS reporting datapoints during Data Analyst handoff.",
       ],
     },
     {
-      context: "B2B SaaS, invoice automation",
+      context: "B2B SaaS · FinTech & Invoice Automation",
       bullets: [
-        "Built VAT invoice extraction models (YOLO, Faster R-CNN, CRNN, VietOCR) through to production.",
-        "Shipped a Purchase Order processing service (database, APIs, serverless) with about 75% unit test coverage, handling about 30 partner templates.",
+        "Translated enterprise retail requirements into SAP & Oracle integration specs, maintained API contracts, and shipped a serverless Purchase Order service (~75% test coverage, ~30 partner templates).",
+        "Trained and deployed production Computer Vision / Deep Learning OCR models for VAT invoice extraction (YOLO, Faster R-CNN, CRNN, VietOCR).",
       ],
     },
   ],
   skillLines: [
     {
       label: "Product",
-      text: "Delivery & execution · Prioritization · Staged rollouts & reversible bets · Support-led discovery",
+      text: "PRD Writing, User Stories, Acceptance Criteria, Backlog Prioritization, UAT, Stakeholders, Figma",
     },
-    { label: "Technical", text: "SQL · API design review · LLM and AI products · OCR · System architecture" },
     {
-      label: "Engineering background",
-      text: "Python · TypeScript · Node.js · React · AWS · Serverless · PostgreSQL",
+      label: "Technical & AI",
+      text: "API Specs & Integration, GraphQL, SQL Analytics, GenAI (LLM, Agents, Prompts), OCR, Postman, Notion",
     },
-    { label: "Languages", text: personal.languages.join(" · ") },
+    {
+      label: "Domain & Stack",
+      text: "Fintech, Digital Lending, eKYC, B2B SaaS, SAP/Oracle, Python, TypeScript, Node.js, React, PostgreSQL, AWS",
+    },
+    {
+      label: "Languages & Certs",
+      text: "Vietnamese (Native), English (Professional) · Coursera Product Management, Anthropic Claude 101",
+    },
   ],
   education: personal.education,
 };

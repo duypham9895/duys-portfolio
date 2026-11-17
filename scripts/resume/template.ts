@@ -83,7 +83,7 @@ function renderRole(role: ResumeRoleView): string {
   const context = role.context ? `\n    <div class="context">${escapeHtml(role.context)}</div>` : "";
   const bullets = role.bullets.map((b) => `      <li>${escapeHtml(b)}</li>`).join("\n");
   return `  <div class="role">
-    <div class="role-line">${escapeHtml(role.jobTitle)} | ${escapeHtml(role.companyName)} <span class="dates">| ${escapeHtml(role.dates)}</span></div>${scope}${context}
+    <h3 class="role-line">${escapeHtml(role.jobTitle)} | ${escapeHtml(role.companyName)} <span class="dates">| ${escapeHtml(role.dates)}</span></h3>${scope}${context}
     <ul>
 ${bullets}
     </ul>
@@ -109,7 +109,7 @@ export function renderTemplate(data: ResumeData): string {
 <body>
 <div class="page">
 
-  <div class="name">${escapeHtml(data.name)}</div>
+  <h1 class="name">${escapeHtml(data.name)}</h1>
   <div class="title">${escapeHtml(data.titleLine)}</div>
   <div class="meta">${escapeHtml(data.locationLine)}</div>
   <div class="meta">

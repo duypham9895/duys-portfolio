@@ -95,9 +95,13 @@ test.describe("Portfolio page", () => {
       await expect(page.locator("#skills")).toContainText("PRD Writing");
     });
 
-    test("has Certifications section with all 7", async ({ page }) => {
+    test("has Certifications section with all 7 and Education placed below the fold", async ({ page }) => {
+      await expect(page.locator(".hero .profile")).not.toContainText("Education");
       await expect(page.locator("#certifications")).toBeVisible();
       await expect(page.locator("#certifications a")).toHaveCount(7);
+      await expect(page.locator("#certifications .engline")).toContainText(
+        "Ton Duc Thang University · Software Engineering (Undergraduate coursework, non-degree)"
+      );
     });
 
     test("social links use https", async ({ page }) => {

@@ -33,6 +33,8 @@ describe("resume PDF guard", { timeout: 60000 }, () => {
     expect(() => assertOnePage(pdf)).not.toThrow();
     const raw = pdf.toString("latin1");
     expect(raw).toContain("/StructTreeRoot");
+    expect(raw).toContain("/S /H1");
+    expect(raw).toContain("/S /H3");
     expect(raw).toContain("/FontFile2");
     expect(raw).toContain(`/URI (mailto:${personal.contact.email})`);
   });
