@@ -44,27 +44,29 @@ export const caseStudies: readonly CaseStudy[] = [
     id: "case1",
     kicker: "Case 01 · Ringkas · OCR",
     title: "Fix the cause, not the vendor: an OCR investigation",
-    tagline: "A second OCR vendor was being integrated. I traced the failures in parallel.",
+    tagline: "A second OCR vendor was in integration. I debugged the live pipeline in parallel.",
     stat: { value: "~40% → ~89%", label: "OCR success rate" },
     rows: [
       {
         label: "Context",
         paragraphs: [
-          "OCR on the Ringkas platform was succeeding only about 40% of the time, and I was writing the PRD to add a second OCR vendor on top of the existing one.",
+          "ID-card (KTP) OCR on the Ringkas platform succeeded only ~40% of the time, and I was writing the PRD to integrate a second OCR vendor.",
         ],
       },
       {
         label: "Problem",
-        paragraphs: ["A new vendor is costly to integrate, and the root cause of the failures had not been established."],
+        paragraphs: [
+          "Adding a second vendor meant new contract and engineering cost, yet nobody had checked why the existing pipeline was failing.",
+        ],
       },
       {
         label: "Options",
         paragraphs: [],
         options: [
-          { key: "A", text: "Rely on the second vendor to lift the success rate." },
+          { key: "A", text: "Integrate the second vendor and rely on fallback routing to lift accuracy." },
           {
             key: "B",
-            text: "Find and fix the cause in the current setup in parallel, so the new vendor is needed only if the fix fails.",
+            text: "Trace and fix the live pipeline in parallel so the new vendor is needed only if the fix falls short.",
             chosen: true,
           },
         ],
@@ -73,51 +75,51 @@ export const caseStudies: readonly CaseStudy[] = [
         label: "Decision",
         key: true,
         paragraphs: [
-          "I kept the vendor PRD moving and traced the failures in parallel, betting that fixing the defect would be cheaper than a new integration. The risk I took on: time spent on a fix that might not hold.",
-          "The failure logs pointed to two causes: about 30% of attempts were rejected as too small, and another 15–30% failed on an authentication error with the OCR vendor, which Engineering and I fixed. Tracing the pipeline, I found one source of the too-small images in the frontend: it was shrinking the KTP image below the size the OCR vendor accepts. When success slipped in mid-2025, I traced the backend layer too: a minimum-size resize I had written as an engineer, which a later refactor had changed. That history is why I knew where to look.",
+          "I kept the vendor PRD moving while digging into the production error logs. The risk was spending my own hours on a root cause that might sit inside the vendor's black box.",
+          "Logs exposed two defects on our side: ~30% of uploads failed minimum-resolution checks, and 15–30% failed on a vendor authentication bug. Engineering and I fixed the auth flow first, then found the web frontend was downscaling KTP photos below the vendor's pixel threshold. When accuracy dipped again in mid-2025, I traced a backend minimum-size resize I had written as an engineer that a later refactor had altered.",
         ],
       },
       {
         label: "Outcome",
         key: true,
         paragraphs: [
-          "After the frontend and authentication fixes, OCR success rose from **about 40% to about 87%**. After the backend fix, it recovered to **about 89%**, its average over the year since. We kept the existing vendor, and the second-vendor work was dropped.",
+          "Frontend and auth fixes lifted OCR success from **~40% to ~87%**. Restoring the backend resize brought it to **~89%**, where it held over the next year. The existing vendor stayed, and we dropped the second-vendor integration.",
         ],
         side: {
           label: "Side track · VLM proof of concept",
-          body: "With the AI team, I built a vision-language model (VLM) OCR proof of concept. The benchmark showed **87% lower cost** against **74% higher latency**. It was R&D only and never went to production: a company strategy shift left too few resources, so moving it forward lost priority.",
+          body: "With the AI team, I built a vision-language model (VLM) OCR proof of concept and benchmarked **87% lower cost** against **74% higher latency**. It stayed in R&D after a company strategy shift moved engineering capacity elsewhere.",
         },
       },
     ],
   },
   {
     id: "case2",
-    kicker: "Case 02 · Ringkas · Pillar",
+    kicker: "Case 02 · Ringkas · Pillar AI Platform",
     title: "Why partners can't rewrite the AI agents they run",
     tagline:
-      "Pillar is Ringkas's B2B agent platform. The hardest call was how much of each agent a partner could change.",
+      "Pillar is Ringkas's B2B AI-agent platform. The hardest call was how much prompt control enterprise partners get.",
     stat: { value: "In production", label: "Powers demos & enterprise tenders", word: true },
     rows: [
       {
         label: "Context",
         paragraphs: [
-          "Pillar is built so B2B partners can run their own AI agents. Each agent is configured in Pillar Portal (by Ringkas today, with partner self-serve in a later phase), and Pillar ChatApp serves it to their customers.",
+          "Pillar lets B2B partners deploy domain AI agents to their customers. Operators configure each agent in Pillar Portal (managed by Ringkas first, with partner self-serve planned next), and Pillar ChatApp serves the widget.",
         ],
       },
       {
         label: "Problem",
         paragraphs: [
-          "Partners want to tune their agent to their business, but every agent still has to behave the way Ringkas has defined and tested.",
+          "Enterprise partners want to tailor tone and business rules, while Ringkas remains accountable for compliance, safety, and accuracy.",
         ],
       },
       {
         label: "Options",
         paragraphs: [],
         options: [
-          { key: "1", text: "Let partners edit the whole agent: model, prompt and skills." },
+          { key: "1", text: "Let partners edit the entire agent: model, system prompt, and skills." },
           {
             key: "2",
-            text: "Keep Ringkas's base prompt and template fixed, and let partners append their own instructions on top.",
+            text: "Lock Ringkas's base prompt, model, and skills template, and let partners append scoped instructions on top.",
             chosen: true,
           },
         ],
@@ -126,17 +128,17 @@ export const caseStudies: readonly CaseStudy[] = [
         label: "Decision",
         key: true,
         paragraphs: [
-          "I recommended option 2, and it is the design the platform is built on.",
-          "Ringkas defines the base prompt, model and skills, and each partner's instructions are appended on top.",
-          "The trade-off: partners get less freedom to change the core, and in return every agent runs on a base Ringkas controls.",
-          "I also proposed the upgrade rule: when a partner moves to a newer template, their customers keep the same chat link, their content and cost settings carry over, their earlier appended instructions are shown for review and must be re-applied, and the agent returns to Draft for Ringkas's review before it goes live again.",
+          "I recommended option 2, and Engineering built Pillar on that prompt-governance model.",
+          "Ringkas owns the base system prompt, model, and toolset; each partner appends business instructions in a separate layer.",
+          "The trade-off: partners get less freedom to alter core behavior, and in return every live agent stays inside guardrails Ringkas has tested.",
+          "I also defined the template-upgrade workflow: when an agent moves to a newer base template, its public chat URL and cost caps stay intact, partners re-apply their custom instructions, and the agent returns to Draft for Ringkas's review before going live.",
         ],
       },
       {
         label: "Outcome",
         key: true,
         paragraphs: [
-          "Deployed to production. Ringkas demos it and uses it in enterprise tenders; separately, the widget SDK is rolling out to a first enterprise client.",
+          "Live in production. Ringkas runs demos on Pillar and uses it in enterprise tenders; the embeddable chat-widget SDK is rolling out to a first enterprise client.",
         ],
       },
     ],

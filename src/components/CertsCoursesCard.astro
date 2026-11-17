@@ -1,5 +1,6 @@
 ---
 import { certifications } from "../data/certifications";
+import { personal } from "../data/personal";
 import { parseMonth } from "../lib/seasonStrip";
 
 const SHOWN = 3;
@@ -38,5 +39,9 @@ const year = (date: string): string => date.slice(-4);
         </details>
       )}
     </div>
+  </div>
+  <div class="engline reveal">
+    <span class="label">Education</span>
+    <p>{personal.education}</p>
   </div>
 </section>

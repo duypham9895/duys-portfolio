@@ -26,5 +26,10 @@ Key routing rules:
 - Filter job scans to associate and PM-level roles; exclude senior, lead, staff, principal, and head titles.
 - Run this project in Docker, not by launching it directly with npm.
 - Do not say Duy doesn't make mockups; he builds prototypes so Engineering can visualize workflows, and Design later refines them into final visuals.
+- Do not include granular internal task, endpoint, gap, test-case, or commit counts in CV PDF or website portfolio copy: omit exact Saudi API endpoint/operation counts (`10`), Saudi spec-vs-live gap counts (`~30` / `30`), Saudi demo test-case counts (`13`), QA UAT workbook counts (`55` / `37`), and Ringkas commit counts (`300+`), replacing commit volume with concrete engineering achievements grounded in commit history.
+- Never label the Ringkas OCR investigation (`~40% → ~89%`) as `eKYC OCR` — it is OCR only, with no KYC (`eKYC` applies solely to the Ringkas SWE vendor-integration module).
+- Omit obscure local acronyms like `SPR`; describe domain concepts in plain English.
+- Question every fact before adding ATS keywords: never attach unverified tech stacks, causal reasons, titles, or role labels without direct source proof or explicit confirmation from Duy.
+- Apply `anti-ai-writing` (`A1–A5`) to all CV PDF and website portfolio copy.
 - Always proactively self-test changes like a Principal QA Engineer before reporting completion: never ask the user to manually test what can be verified automatically (unit tests, build, dist content scan, WCAG AA contrast audit, Playwright E2E for every route including new pages, cross-checking website vs. PDF copy, and live production/edge verification for deployed Workers/APIs).
 <!-- end claude-reflect -->

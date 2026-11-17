@@ -21,25 +21,25 @@ export const skillGroups: readonly SkillGroup[] = [
     category: "Product",
     skills: [
       {
-        title: "Delivery & execution",
+        title: "End-to-end delivery & execution",
         primary: true,
-        story: "PRD to production across Engineering, Design, QA and Data.",
+        story: "PRD, user stories, acceptance criteria, and UAT sign-off across Engineering, Design, QA, and Data.",
       },
       {
-        title: "Prioritization (cost/benefit trade-offs)",
+        title: "Backlog prioritization & cost trade-offs",
         primary: true,
-        story: "OCR fix made a second vendor unnecessary; VLM deprioritised; anonymous usage caps.",
+        story: "Root-cause OCR fix avoided a second vendor; tiered LLM quotas capped anonymous spend; VLM PoC deprioritized after a strategy shift.",
       },
       {
-        title: "Staged rollouts & reversible bets",
+        title: "Staged rollouts & feature flags",
         primary: true,
-        story: "3-phase rollout behind feature flags; second-vendor work dropped once the OCR cause was fixed.",
+        story: "3-phase AI assistant release behind spend caps and admin feature flags so every widening step stayed reversible.",
       },
       {
         title: "Support-led discovery",
         primary: true,
         story:
-          "Point of contact for platform support tickets: triage → route code changes to Engineering → recurring pain into PRDs.",
+          "Triage production tickets with SQL, isolate root causes for Engineering, and turn recurring Ops/CS bottlenecks into PRDs.",
       },
     ],
     subgroups: [
@@ -47,6 +47,9 @@ export const skillGroups: readonly SkillGroup[] = [
         heading: "Also",
         skills: [
           { title: "PRD Writing" },
+          { title: "User Stories & Acceptance Criteria" },
+          { title: "Workflow Prototyping" },
+          { title: "UAT Governance" },
           { title: "Stakeholder Management" },
           { title: "Compliance & Risk Coordination" },
         ],
@@ -56,12 +59,14 @@ export const skillGroups: readonly SkillGroup[] = [
   {
     category: "Technical depth",
     skills: [
-      { title: "AI / ML Products", primary: true },
-      { title: "API Design Review", primary: true },
+      { title: "Generative AI & LLM Agents", primary: true },
+      { title: "API Specs & System Integration", primary: true },
       { title: "SQL for Analytics", primary: true },
-      { title: "LLM / Chatbot" },
+      { title: "OCR & Computer Vision" },
+      { title: "Digital Lending & eKYC" },
       { title: "System Architecture" },
       { title: "Source Code Investigation" },
+      { title: "Data Privacy & PII Controls" },
     ],
     subgroups: [
       {
@@ -81,6 +86,7 @@ export const skillGroups: readonly SkillGroup[] = [
       { title: "AWS" },
       { title: "PostgreSQL" },
       { title: "Serverless" },
+      { title: "SAP & Oracle Integration" },
       { title: "Git" },
     ],
   },
