@@ -329,6 +329,9 @@ h2.h {
 
 .seasons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; list-style: none; padding: 0; margin: 0; align-items: start; }
 .season.lead { grid-column: 1 / -1; }
+.season.in-group { grid-column: 1 / -1; }
+.co-group { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.co-group .co { font-weight: 700; font-size: 20px; }
 .season.lead ul { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 36px; }
 .season { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
 .season .band { height: 10px; background: var(--band); }

@@ -109,9 +109,9 @@ describe("experiences data", () => {
     expect(experiences[2].domain).toBe("B2B SaaS / invoice automation");
   });
 
-  it("APM role has scope and the same-team tag", () => {
+  it("APM role has scope; the Ringkas company header replaces the same-team tag", () => {
     expect(experiences[0].scope).toContain("Report to the Head of Product");
-    expect(experiences[0].tag).toBe("Same team, new role");
+    expect(experiences[0].tag).toBeUndefined();
   });
 
   it("each experience has description bullets", () => {

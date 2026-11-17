@@ -7,9 +7,10 @@ linkedin.com/in/phamanhduy ·
 duypham.me ·
 github.com/duypham9895
 Summary
-Product Manager with 5+ years in software (3.5+ as Software Engineer; moved internally to PM at Ringkas). Ships B2B Generative AI agents, partner APIs, and digital mortgage lending products from PRD and user stories to production. Lifted OCR success from ~40% to ~89% without a new vendor. Targeting Technical Product Manager roles.
+Product Manager with nearly 4 years at Ringkas: engineer first, PM since Aug 2024. Ships B2B Generative AI agents, partner APIs, and digital mortgage lending products from PRD and user stories to production. Lifted OCR success from ~40% to ~89% without a new vendor. Targeting Technical Product Manager roles.
 Experience
-Associate Product Manager | Ringkas (PT Ringkas Asia Technology) | Aug 2024 - Present
+Ringkas (PT Ringkas Asia Technology) | Dec 2022 - Present
+Associate Product Manager | Aug 2024 - Present
 Scope: Moved from SWE to PM. Own platform & AI features end to end (PRD, user stories, acceptance criteria, prototyping, delivery, UAT) with Design, Engineering, QA, and Data; report to the Head of Product.
 Owned Pillar Portal requirements (PRD to production) for a B2B Generative AI agent platform with prompt governance; powers enterprise tenders and a chat-widget SDK rolling out to a first client.
 Traced OCR failures alongside second-vendor work; fixed auth and image-resize bugs with Engineering (~40% to ~89% success, avoiding a vendor) and benchmarked a VLM OCR PoC (−87% cost, +74% latency).
@@ -18,7 +19,7 @@ Co-owned API integration specs (payload reference, changelog) with Head of Produ
 Wrote the document-resubmission PRD for Saudi lenders, authored CRM demo test scenarios for a Saudi developer, and audited QA's User Acceptance Testing (UAT) suite before partner sign-off.
 Shipped borrower PII masking before lender submission, mandatory booking-letter date validation across CRM/app/APIs, and tenant login-ID admin controls; led an e-wallet security & compliance response.
 Owned support triage & support-led discovery: root-caused defects via SQL analytics, prioritized backlog fixes, and shipped PRDs for recurring Ops/CS pain (Advanced Filter, multi-org switch, KYC/bank alerts).
-Software Engineer | Ringkas (PT Ringkas Asia Technology) | Dec 2022 - Jul 2024
+Software Engineer | Dec 2022 - Jul 2024
 Rebuilt the bank decision page and fixed contract-signing (akad) bugs before the April 2023 release. Built the akad confirmation API in 2024.
 Built core modules of the new platform, now Ringkas CRM (Node.js/GraphQL, React): the bank submission form and an async eKYC pipeline that starts the credit check automatically.
 Challenged PRDs with PM and Design; covered the Data Analyst gap and took over the data-lake ETL.
