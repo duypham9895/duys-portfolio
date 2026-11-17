@@ -62,8 +62,9 @@ export const resume: ResumeCopy = {
     },
     {
       bullets: [
-        "Built core mortgage loan platform (Ringkas CRM) modules across Node.js, GraphQL, and React (eKYC integration, loan workflows, KPR forms, org/workgroup management, OTP security) replacing outsourced delivery; challenged PRDs with PM & Design.",
-        "Shipped digital bank contract signing (akad) to production (2023), rebuilt its backend in-house (2024), and audited Ops/CS reporting datapoints during Data Analyst handoff.",
+        "Rebuilt the bank decision page and fixed contract-signing (akad) bugs before the April 2023 release. Built the akad confirmation API in 2024.",
+        "Built core modules of the new platform, now Ringkas CRM (Node.js/GraphQL, React): the bank submission form and an async eKYC pipeline that starts the credit check automatically.",
+        "Challenged PRDs with PM and Design; covered the Data Analyst gap and took over the data-lake ETL.",
       ],
     },
     {
