@@ -45,7 +45,7 @@ export const resume: ResumeCopy = {
     { label: "github.com/duypham9895", href: "https://github.com/duypham9895" },
   ],
   summary:
-    "Product Manager with 5+ years in software (3.5+ as Software Engineer; moved internally to PM at Ringkas). Ships B2B Generative AI agents, partner APIs, and digital mortgage lending products from PRD and user stories to production. Lifted OCR success from ~40% to ~89% without a new vendor. Targeting Technical Product Manager roles.",
+    "Product Manager with nearly 4 years at Ringkas: engineer first, PM since Aug 2024. Ships B2B Generative AI agents, partner APIs, and digital mortgage lending products from PRD and user stories to production. Lifted OCR success from ~40% to ~89% without a new vendor. Targeting Technical Product Manager roles.",
   roles: [
     {
       scope:

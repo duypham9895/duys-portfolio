@@ -25,7 +25,6 @@ export const experiences: readonly Experience[] = [
     domain: "Indonesian mortgage (KPR) fintech · Digital lending",
     scope:
       "Transitioned internally from Software Engineer · Own platform and AI features end to end across PRD, user stories, acceptance criteria, workflow prototyping, engineering delivery, and UAT · Work directly with Design, QA, Engineering, and Data · Report to the Head of Product",
-    tag: "Same team, new role",
     description: [
       "Owned end-to-end product requirements (PRD to production) for **Pillar Portal**, the configuration layer of Ringkas's B2B Generative AI agent platform with prompt-template governance. Pillar powers product demos and enterprise tenders, and its embeddable chat-widget SDK is rolling out to a first enterprise client",
       "Delivery PM from mid-project for **Ringkas AI Financial Assistant** in Indonesia's mortgage (KPR) market: ran cross-team delivery and release readiness for an on-time release, and wrote the 3-phase rollout specs with feature flags and spend caps so each phase stayed reversible",

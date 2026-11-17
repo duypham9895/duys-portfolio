@@ -59,7 +59,10 @@ const STYLE = `
     margin: 6.5pt 0 2.5pt;
   }
 
+  .company-line { font-size: 10.5pt; font-weight: 600; margin-top: 5pt; }
+  .company-line:first-child { margin-top: 0; }
   .role { margin-top: 5pt; }
+  .company-line + .role { margin-top: 1.5pt; }
   .role:first-of-type { margin-top: 0; }
   /* Title and dates stay in one left-aligned text flow (no flex/float) so
      block-grouping ATS parsers keep the dates next to their role. */
@@ -82,8 +85,14 @@ function renderRole(role: ResumeRoleView): string {
   const scope = role.scope ? `\n    <p class="scope">Scope: ${escapeHtml(role.scope)}</p>` : "";
   const context = role.context ? `\n    <div class="context">${escapeHtml(role.context)}</div>` : "";
   const bullets = role.bullets.map((b) => `      <li>${escapeHtml(b)}</li>`).join("\n");
-  return `  <div class="role">
-    <h3 class="role-line">${escapeHtml(role.jobTitle)} | ${escapeHtml(role.companyName)} <span class="dates">| ${escapeHtml(role.dates)}</span></h3>${scope}${context}
+  const companyLine = role.group
+    ? `  <h3 class="company-line">${escapeHtml(role.group.companyName)} <span class="dates">| ${escapeHtml(role.group.dates)}</span></h3>\n`
+    : "";
+  const title = role.grouped
+    ? escapeHtml(role.jobTitle)
+    : `${escapeHtml(role.jobTitle)} | ${escapeHtml(role.companyName)}`;
+  return `${companyLine}  <div class="role">
+    <h3 class="role-line">${title} <span class="dates">| ${escapeHtml(role.dates)}</span></h3>${scope}${context}
     <ul>
 ${bullets}
     </ul>

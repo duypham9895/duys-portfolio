@@ -33,6 +33,16 @@ const coursesSentence = (gap: StripGapSegment): string =>
     .join(", ")}.`;
 
 const earliest = roleSegments[0]?.experience.startDate;
+
+// Consecutive roles at one company (newest first) share one company header, so a promotion reads as one tenure.
+const sameCompany = (i: number, j: number): boolean =>
+  j >= 0 && j < experiences.length && experiences[i].companyName === experiences[j].companyName;
+const inCompanyRun = (i: number): boolean => sameCompany(i, i - 1) || sameCompany(i, i + 1);
+const companyRunDates = (i: number): string => {
+  let oldest = i;
+  while (sameCompany(i, oldest + 1)) oldest += 1;
+  return `${experiences[oldest].startDate} – ${experiences[i].endDate ?? "Present"}`;
+};
 const dateLine = (experience: (typeof experiences)[number]): string =>
   `${experience.startDate} – ${experience.endDate ?? "Present"}${experience.domain ? ` · ${experience.domain}` : ""}`;
 ---
@@ -93,18 +103,24 @@ const dateLine = (experience: (typeof experiences)[number]): string =>
       const gap = gapAfter(experience);
       return (
         <>
+          {inCompanyRun(i) && !sameCompany(i, i - 1) && (
+            <li class="co-group">
+              <a class="co" href={experience.companyUrl} target="_blank" rel="noopener">{experience.companyName}</a>
+              <span class="label dates">{companyRunDates(i)}</span>
+            </li>
+          )}
           {gap && (
             <li class="m-break">
               <span class="ln">{BETWEEN} · {gap.label}<span class="sr-only">.</span></span>
               <p>{coursesSentence(gap)}</p>
             </li>
           )}
-          <li class:list={["season", "reveal", { lead: i === 0 }]} style={`--band: ${BAND[chronoIndex(experience)]}`}>
+          <li class:list={["season", "reveal", { lead: i === 0, "in-group": inCompanyRun(i) }]} style={`--band: ${BAND[chronoIndex(experience)]}`}>
             <span class="band" aria-hidden="true"></span>
             <div class="season-body">
               <div class="slabel">{experience.tag && <span class="tag-same">{experience.tag}</span>}</div>
               <h3>{experience.jobTitle}</h3>
-              <a class="co" href={experience.companyUrl} target="_blank" rel="noopener">{experience.companyName}</a>
+              {!inCompanyRun(i) && <a class="co" href={experience.companyUrl} target="_blank" rel="noopener">{experience.companyName}</a>}
               <span class="label dates">{dateLine(experience)}</span>
               {experience.scope && <p class="scope"><span class="label">Scope</span>{experience.scope}</p>}
               <ul>
