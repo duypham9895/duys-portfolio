@@ -33,7 +33,7 @@ export interface Personal {
 
 export const personal: Personal = {
   fullName: "Duy Pham",
-  title: "Associate Product Manager",
+  title: "Product Manager",
   positioning:
     "Ex-software engineer shipping B2B AI agents, partner APIs, and digital lending products in Indonesian mortgage (KPR) fintech. Targeting Technical Product Manager roles.",
   location:

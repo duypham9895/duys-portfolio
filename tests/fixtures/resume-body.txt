@@ -1,5 +1,5 @@
 Duy Pham
-Associate Product Manager · Platform, APIs & AI (Ex-Software Engineer)
+Product Manager · Platform, APIs & AI (Ex-Software Engineer)
 Ho Chi Minh City, Vietnam · Hybrid, Remote, or International Relocation (Visa Sponsorship)
 hello@duypham.me ·
 +84 963 769 049 ·
@@ -10,7 +10,7 @@ Summary
 Product Manager with nearly 4 years at Ringkas: engineer first, PM since Aug 2024. Ships B2B Generative AI agents, partner APIs, and digital mortgage lending products from PRD and user stories to production. Lifted OCR success from ~40% to ~89% without a new vendor. Targeting Technical Product Manager roles.
 Experience
 Ringkas (PT Ringkas Asia Technology) | Dec 2022 - Present
-Associate Product Manager | Aug 2024 - Present
+Product Manager | Aug 2024 - Present
 Scope: Moved from SWE to PM. Own platform & AI features end to end (PRD, user stories, acceptance criteria, prototyping, delivery, UAT) with Design, Engineering, QA, and Data; report to the Head of Product.
 Owned Pillar Portal requirements (PRD to production) for a B2B Generative AI agent platform with prompt governance; powers enterprise tenders and a chat-widget SDK rolling out to a first client.
 Traced OCR failures alongside second-vendor work; fixed auth and image-resize bugs with Engineering (~40% to ~89% success, avoiding a vendor) and benchmarked a VLM OCR PoC (−87% cost, +74% latency).

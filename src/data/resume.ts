@@ -34,7 +34,7 @@ export interface ResumeCopy {
 }
 
 export const resume: ResumeCopy = {
-  titleLine: "Associate Product Manager · Platform, APIs & AI (Ex-Software Engineer)",
+  titleLine: "Product Manager · Platform, APIs & AI (Ex-Software Engineer)",
   locationLine:
     "Ho Chi Minh City, Vietnam · Hybrid, Remote, or International Relocation (Visa Sponsorship)",
   links: [
