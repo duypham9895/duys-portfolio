@@ -15,7 +15,7 @@ describe("personal data", () => {
   });
 
   it("has correct title", () => {
-    expect(personal.title).toBe("Associate Product Manager");
+    expect(personal.title).toBe("Product Manager");
   });
 
   it("has a positioning line aimed at Technical PM roles", () => {
@@ -78,13 +78,13 @@ describe("experiences data", () => {
     const current = experiences.filter((exp) => exp.endDate === null);
     expect(current).toHaveLength(1);
     expect(current[0].companyName).toContain("Ringkas");
-    expect(current[0].jobTitle).toBe("Associate Product Manager");
+    expect(current[0].jobTitle).toBe("Product Manager");
   });
 
-  it("APM Ringkas is first (current role)", () => {
+  it("PM Ringkas is first (current role)", () => {
     expect(experiences[0].companyName).toContain("Ringkas");
     expect(experiences[0].endDate).toBeNull();
-    expect(experiences[0].jobTitle).toBe("Associate Product Manager");
+    expect(experiences[0].jobTitle).toBe("Product Manager");
   });
 
   it("SWE Ringkas is second (prior internal role)", () => {
@@ -103,13 +103,13 @@ describe("experiences data", () => {
     expect(experiences.map((exp) => exp.shortCompany)).toEqual(["Ringkas", "Ringkas", "Bizzi Vietnam"]);
   });
 
-  it("domain is set for APM and Bizzi only", () => {
+  it("domain is set for PM and Bizzi only", () => {
     expect(experiences[0].domain).toBe("Indonesian mortgage (KPR) fintech · Digital lending");
     expect(experiences[1].domain).toBeUndefined();
     expect(experiences[2].domain).toBe("B2B SaaS / invoice automation");
   });
 
-  it("APM role has scope; the Ringkas company header replaces the same-team tag", () => {
+  it("PM role has scope; the Ringkas company header replaces the same-team tag", () => {
     expect(experiences[0].scope).toContain("Report to the Head of Product");
     expect(experiences[0].tag).toBeUndefined();
   });
@@ -258,8 +258,9 @@ describe("resume copy", () => {
     expect(resume.roles).toHaveLength(experiences.length);
   });
 
-  it("omits granular internal counts, eKYC OCR mislabeling, and local SPR acronym across web and PDF", () => {
+  it("omits granular internal counts, eKYC OCR mislabeling, Associate title, and local SPR acronym across web and PDF", () => {
     const combined = [
+      personal.title,
       personal.positioning,
       personal.education,
       personal.about.opener,
@@ -269,12 +270,13 @@ describe("resume copy", () => {
         cs.tagline,
         ...cs.rows.flatMap((r) => [...r.paragraphs, r.side?.body ?? ""]),
       ]),
-      ...experiences.flatMap((exp) => [exp.scope ?? "", ...exp.description]),
+      ...experiences.flatMap((exp) => [exp.jobTitle, exp.scope ?? "", ...exp.description]),
       resume.titleLine,
       resume.summary,
       ...resume.roles.flatMap((role) => [role.scope ?? "", ...role.bullets]),
       ...resume.skillLines.map((s) => `${s.label}: ${s.text}`),
     ].join("\n");
+    expect(combined).not.toMatch(/\bAssociate\b/i);
     expect(combined).not.toMatch(/\beKYC\s+OCR\b/i);
     expect(combined).not.toMatch(/\bSPR\b/);
     expect(combined).not.toMatch(/~?30\s+(?:doc|spec)-vs-live/i);

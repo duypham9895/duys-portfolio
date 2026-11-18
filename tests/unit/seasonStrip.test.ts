@@ -8,22 +8,22 @@ const widths = (now: Date) => seasonStrip(experiences, now).segments.map((s) => 
 describe("seasonStrip on 2026-10-25", () => {
   const strip = seasonStrip(experiences, new Date("2026-10-25T00:00:00Z"));
 
-  it("runs chronologically: Bizzi, gap, Ringkas SWE, Ringkas APM", () => {
+  it("runs chronologically: Bizzi, gap, Ringkas SWE, Ringkas PM", () => {
     expect(strip.segments.map((s) => s.kind)).toEqual(["role", "gap", "role", "role"]);
     expect(strip.segments.map((s) => s.label)).toEqual([
       "Bizzi Vietnam · Software Engineer",
       "SEP–NOV 2022",
       "Ringkas · Software Engineer",
-      "Ringkas · Associate Product Manager",
+      "Ringkas · Product Manager",
     ]);
   });
 
   it("uses month-start boundaries with the end month included", () => {
-    const [bizzi, gap, swe, apm] = strip.segments;
+    const [bizzi, gap, swe, pm] = strip.segments;
     expect([bizzi.start, bizzi.end]).toEqual(["2020-10-01", "2022-09-01"]);
     expect([gap.start, gap.end]).toEqual(["2022-09-01", "2022-12-01"]);
     expect([swe.start, swe.end]).toEqual(["2022-12-01", "2024-08-01"]);
-    expect([apm.start, apm.end]).toEqual(["2024-08-01", "2026-10-25"]);
+    expect([pm.start, pm.end]).toEqual(["2024-08-01", "2026-10-25"]);
   });
 
   it("has widths 31.60 / 4.11 / 27.49 / 36.79 summing to 100", () => {

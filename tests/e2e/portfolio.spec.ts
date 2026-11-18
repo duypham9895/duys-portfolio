@@ -21,8 +21,10 @@ test.describe("Portfolio page", () => {
     test("hero shows name and title", async ({ page }) => {
       const h1 = page.locator(".hero h1");
       await expect(h1).toContainText("Duy Pham");
-      await expect(h1).toContainText("Associate Product Manager");
+      await expect(h1).toContainText("Product Manager");
+      await expect(h1).not.toContainText("Associate");
       await expect(page.locator(".hero .bib-name")).toHaveText("Duy Pham");
+      await expect(page.locator(".navbar .nav-id small")).toHaveText("PM · RINGKAS");
     });
 
     test("renders no images (no avatar)", async ({ page }) => {
@@ -33,7 +35,8 @@ test.describe("Portfolio page", () => {
       await expect(page.locator("#experience")).toBeVisible();
       const roles = page.locator("#experience .season h3");
       await expect(roles).toHaveCount(3);
-      await expect(roles.first()).toContainText("Associate Product Manager");
+      await expect(roles.first()).toContainText("Product Manager");
+      await expect(roles.first()).not.toContainText("Associate");
       await expect(roles.nth(1)).toContainText("Software Engineer");
       await expect(roles.last()).toContainText("Software Engineer");
     });
@@ -46,9 +49,9 @@ test.describe("Portfolio page", () => {
       await expect(names).toHaveText([
         "Bizzi Vietnam · Software Engineer",
         "Ringkas · Software Engineer",
-        "Ringkas · Associate Product Manager",
+        "Ringkas · Product Manager",
       ]);
-      // Bizzi (seg-a) first, a gap, then Ringkas SWE (seg-b), Ringkas APM (seg-c) last.
+      // Bizzi (seg-a) first, a gap, then Ringkas SWE (seg-b), Ringkas PM (seg-c) last.
       const track = await page
         .locator(".strip-track span")
         .evaluateAll((spans) => spans.map((span) => span.className));
@@ -137,12 +140,19 @@ test.describe("Portfolio page", () => {
 
     test("has correct meta tags", async ({ page }) => {
       expect(await page.title()).toContain("Duy Pham");
+      expect(await page.title()).toContain("Product Manager");
+      expect(await page.title()).not.toContain("Associate");
 
       const description = await page.locator('meta[name="description"]').getAttribute("content");
-      expect(description).toContain("Associate Product Manager");
+      expect(description).toContain("Product Manager");
+      expect(description).not.toContain("Associate");
 
       const ogTitle = await page.locator('meta[property="og:title"]').getAttribute("content");
       expect(ogTitle).toContain("Duy Pham");
+
+      const ogAlt = await page.locator('meta[property="og:image:alt"]').getAttribute("content");
+      expect(ogAlt).toContain("Duy Pham, Product Manager");
+      expect(ogAlt).not.toContain("Associate");
 
       const canonical = await page.locator('link[rel="canonical"]').getAttribute("href");
       expect(canonical).toBe("https://www.duypham.me/");
@@ -153,6 +163,7 @@ test.describe("Portfolio page", () => {
       const data = JSON.parse(jsonLd!);
       expect(data["@type"]).toBe("Person");
       expect(data.name).toBe("Duy Pham");
+      expect(data.jobTitle).toBe("Product Manager");
     });
 
     test("has no banned or private copy", async ({ page }) => {

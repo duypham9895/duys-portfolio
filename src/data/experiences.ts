@@ -16,7 +16,7 @@ export interface Experience {
 
 export const experiences: readonly Experience[] = [
   {
-    jobTitle: "Associate Product Manager",
+    jobTitle: "Product Manager",
     companyName: "Ringkas (PT Ringkas Asia Technology)",
     shortCompany: "Ringkas",
     companyUrl: "https://ringkas.co.id",

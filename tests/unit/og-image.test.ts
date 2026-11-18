@@ -7,9 +7,9 @@ const png = readFileSync(resolve(process.cwd(), "public/og-image.png"));
 const robots = readFileSync(resolve(process.cwd(), "public/robots.txt"), "utf8");
 
 // SHA-256 of the approved OG card v3-B2 (bib card, tile left, footer divider,
-// centre-safe for square crops). Changing it means a new mockup review first, then
-// updating this hash on purpose.
-const APPROVED_SHA256 = "1133840674d53d3d803bdfe0cfb9d38f90f4aff5e6055202eb45c7ef76e9e7a1";
+// centre-safe for square crops, Product Manager title). Changing it means a new
+// mockup review first, then updating this hash on purpose.
+const APPROVED_SHA256 = "4aacfba0d6dbe3de65d53183555c267414b0eee0f57a5434e4962b5bacf4938a";
 
 describe("OG image", () => {
   it("is byte-identical to the approved card v3-B2", () => {
