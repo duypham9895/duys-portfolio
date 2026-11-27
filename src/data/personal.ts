@@ -60,7 +60,7 @@ export const personal: Personal = {
   },
   contact: {
     location: "Ho Chi Minh City, Vietnam",
-    email: "hello@duypham.me",
+    email: "phamanhduy.sg@gmail.com",
     phone: "+84 963 769 049",
   },
   socials: [
