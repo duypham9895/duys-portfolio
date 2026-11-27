@@ -38,7 +38,7 @@ export const resume: ResumeCopy = {
   locationLine:
     "Ho Chi Minh City, Vietnam · Hybrid, Remote, or International Relocation (Visa Sponsorship)",
   links: [
-    { label: "hello@duypham.me", href: "mailto:hello@duypham.me" },
+    { label: personal.contact.email, href: `mailto:${personal.contact.email}` },
     { label: "+84 963 769 049", href: "tel:+84963769049" },
     { label: "linkedin.com/in/phamanhduy", href: "https://www.linkedin.com/in/phamanhduy" },
     { label: "duypham.me", href: "https://www.duypham.me/cv" },

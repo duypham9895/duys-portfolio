@@ -133,9 +133,16 @@ test.describe("Portfolio page", () => {
       expect(response.headers()["content-type"]).toContain("application/pdf");
     });
 
-    test("has footer with email", async ({ page }) => {
+    test("has contact email across hero and footer without stale email", async ({ page }) => {
       await expect(page.locator("footer")).toBeVisible();
-      await expect(page.locator("footer")).toContainText("hello@duypham.me");
+      await expect(page.locator("footer")).toContainText("phamanhduy.sg@gmail.com");
+      await expect(page.locator("footer a.mail")).toHaveAttribute("href", "mailto:phamanhduy.sg@gmail.com");
+      await expect(page.locator(".hero .profile")).toContainText("phamanhduy.sg@gmail.com");
+      await expect(page.locator(".hero .bib-actions a.btn-primary")).toHaveAttribute(
+        "href",
+        "mailto:phamanhduy.sg@gmail.com",
+      );
+      await expect(page.locator("body")).not.toContainText("hello@duypham.me");
     });
 
     test("has correct meta tags", async ({ page }) => {

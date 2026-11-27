@@ -44,7 +44,7 @@ describe("personal data", () => {
   });
 
   it("has contact info", () => {
-    expect(personal.contact.email).toBe("hello@duypham.me");
+    expect(personal.contact.email).toBe("phamanhduy.sg@gmail.com");
     expect(personal.contact.phone).toMatch(/^\+84/);
     expect(personal.contact.location).toContain("Ho Chi Minh");
   });
